@@ -43,3 +43,8 @@
 -keepclassmembers class * implements com.mapswithme.util.Gsonable {
   <init>(...);
 }
+
+# 友盟
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}

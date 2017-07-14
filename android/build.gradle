@@ -7,7 +7,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:2.3.2'
+    classpath 'com.android.tools.build:gradle:2.3.3'
     classpath 'io.fabric.tools:gradle:1.+'
   }
 }
@@ -77,6 +77,10 @@ dependencies {
   // Java concurrency annotations
   compile 'net.jcip:jcip-annotations:1.0'
   compile 'com.android.support:multidex:1.0.1'
+
+  // 友盟
+  compile 'com.umeng.analytics:analytics:latest.integration'
+
 }
 
 def getDate() {

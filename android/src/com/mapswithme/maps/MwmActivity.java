@@ -99,6 +99,7 @@ import com.mapswithme.util.sharing.ShareOption;
 import com.mapswithme.util.sharing.SharingHelper;
 import com.mapswithme.util.statistics.AlohaHelper;
 import com.mapswithme.util.statistics.Statistics;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.Locale;
@@ -1092,6 +1093,8 @@ public class MwmActivity extends BaseMwmFragmentActivity
     if (mNavAnimationController != null)
       mNavAnimationController.onResume();
     mPlacePage.onActivityResume();
+
+    MobclickAgent.onResume(this);
   }
 
   @Override
@@ -1134,6 +1137,8 @@ public class MwmActivity extends BaseMwmFragmentActivity
     if (mPlacePage != null)
       mPlacePage.onActivityPause();
     super.onPause();
+
+    MobclickAgent.onPause(this);
   }
 
   @Override
