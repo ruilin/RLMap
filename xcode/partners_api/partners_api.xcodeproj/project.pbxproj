@@ -1,0 +1,504 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3430643C1E9FBCF500DC7665 /* mopub_ads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3430643A1E9FBCF500DC7665 /* mopub_ads.cpp */; };
+		3430643D1E9FBCF500DC7665 /* mopub_ads.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3430643B1E9FBCF500DC7665 /* mopub_ads.hpp */; };
+		346E88961E9D087400D4CE9B /* ads_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 346E888F1E9D087400D4CE9B /* ads_base.cpp */; };
+		346E88971E9D087400D4CE9B /* ads_base.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 346E88901E9D087400D4CE9B /* ads_base.hpp */; };
+		346E88981E9D087400D4CE9B /* ads_engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 346E88911E9D087400D4CE9B /* ads_engine.cpp */; };
+		346E88991E9D087400D4CE9B /* ads_engine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 346E88921E9D087400D4CE9B /* ads_engine.hpp */; };
+		346E889A1E9D087400D4CE9B /* banner.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 346E88931E9D087400D4CE9B /* banner.hpp */; };
+		346E889B1E9D087400D4CE9B /* rb_ads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 346E88941E9D087400D4CE9B /* rb_ads.cpp */; };
+		346E889C1E9D087400D4CE9B /* rb_ads.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 346E88951E9D087400D4CE9B /* rb_ads.hpp */; };
+		3488B0371E9D11860068AFD8 /* ads_engine_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 346E889D1E9D088200D4CE9B /* ads_engine_tests.cpp */; };
+		3488B0381E9D11890068AFD8 /* rb_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 346E889E1E9D088200D4CE9B /* rb_tests.cpp */; };
+		3488B0391E9D118D0068AFD8 /* facebook_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DBC1C501E4B14810016897F /* facebook_tests.cpp */; };
+		3D47B2811F00F94D000828D2 /* mopub_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D47B2801F00F94D000828D2 /* mopub_tests.cpp */; };
+		3D47B29A1F054C89000828D2 /* taxi_base.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D47B2961F054C89000828D2 /* taxi_base.cpp */; };
+		3D47B29B1F054C89000828D2 /* taxi_countries.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D47B2971F054C89000828D2 /* taxi_countries.cpp */; };
+		3D47B29C1F054C89000828D2 /* taxi_countries.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3D47B2981F054C89000828D2 /* taxi_countries.hpp */; };
+		3D47B29D1F054C89000828D2 /* taxi_places.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3D47B2991F054C89000828D2 /* taxi_places.hpp */; };
+		3D47B2AC1F14BE89000828D2 /* cian_api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D47B2AA1F14BE89000828D2 /* cian_api.cpp */; };
+		3D47B2AD1F14BE89000828D2 /* cian_api.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3D47B2AB1F14BE89000828D2 /* cian_api.hpp */; };
+		3D47B2AF1F14BE94000828D2 /* cian_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3D47B2AE1F14BE94000828D2 /* cian_tests.cpp */; };
+		3D47B2B11F14FA14000828D2 /* utils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3D47B2B01F14FA14000828D2 /* utils.hpp */; };
+		3DBC1C541E4B14920016897F /* facebook_ads.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DBC1C521E4B14920016897F /* facebook_ads.cpp */; };
+		3DBC1C551E4B14920016897F /* facebook_ads.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3DBC1C531E4B14920016897F /* facebook_ads.hpp */; };
+		3DFEBF851EF82BEA00317D5C /* viator_api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFEBF831EF82BEA00317D5C /* viator_api.cpp */; };
+		3DFEBF861EF82BEA00317D5C /* viator_api.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3DFEBF841EF82BEA00317D5C /* viator_api.hpp */; };
+		3DFEBF891EF82C1300317D5C /* viator_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFEBF871EF82C1300317D5C /* viator_tests.cpp */; };
+		3DFEBF9A1EFBFC1500317D5C /* taxi_base.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3DFEBF941EFBFC1500317D5C /* taxi_base.hpp */; };
+		3DFEBF9B1EFBFC1500317D5C /* taxi_engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFEBF951EFBFC1500317D5C /* taxi_engine.cpp */; };
+		3DFEBF9C1EFBFC1500317D5C /* taxi_engine.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3DFEBF961EFBFC1500317D5C /* taxi_engine.hpp */; };
+		3DFEBF9D1EFBFC1500317D5C /* taxi_provider.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3DFEBF971EFBFC1500317D5C /* taxi_provider.hpp */; };
+		3DFEBF9E1EFBFC1500317D5C /* yandex_api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFEBF981EFBFC1500317D5C /* yandex_api.cpp */; };
+		3DFEBF9F1EFBFC1500317D5C /* yandex_api.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 3DFEBF991EFBFC1500317D5C /* yandex_api.hpp */; };
+		3DFEBFA31EFBFC2300317D5C /* taxi_engine_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFEBFA01EFBFC2300317D5C /* taxi_engine_tests.cpp */; };
+		3DFEBFA41EFBFC2300317D5C /* yandex_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3DFEBFA11EFBFC2300317D5C /* yandex_tests.cpp */; };
+		F67E75251DB8F06F00D6741F /* opentable_api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F67E75231DB8F06F00D6741F /* opentable_api.cpp */; };
+		F67E75261DB8F06F00D6741F /* opentable_api.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F67E75241DB8F06F00D6741F /* opentable_api.hpp */; };
+		F6B536401DA520E40067EEA5 /* booking_api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6B5363C1DA520E40067EEA5 /* booking_api.cpp */; };
+		F6B536411DA520E40067EEA5 /* booking_api.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F6B5363D1DA520E40067EEA5 /* booking_api.hpp */; };
+		F6B536421DA520E40067EEA5 /* uber_api.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6B5363E1DA520E40067EEA5 /* uber_api.cpp */; };
+		F6B536431DA520E40067EEA5 /* uber_api.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F6B5363F1DA520E40067EEA5 /* uber_api.hpp */; };
+		F6B536671DA522D90067EEA5 /* booking_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6B536451DA5213D0067EEA5 /* booking_tests.cpp */; };
+		F6B536681DA522D90067EEA5 /* uber_tests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6B536461DA5213D0067EEA5 /* uber_tests.cpp */; };
+		F6B5366B1DA5230C0067EEA5 /* testingmain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6B536691DA523060067EEA5 /* testingmain.cpp */; };
+		F6B5366C1DA523430067EEA5 /* libpartners_api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B536341DA5209F0067EEA5 /* libpartners_api.a */; };
+		F6B536741DA523D60067EEA5 /* libbase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B536711DA523D60067EEA5 /* libbase.a */; };
+		F6B536751DA523D60067EEA5 /* libjansson.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B536721DA523D60067EEA5 /* libjansson.a */; };
+		F6B536761DA523D60067EEA5 /* libplatform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B536731DA523D60067EEA5 /* libplatform.a */; };
+		F6B536781DA523EF0067EEA5 /* libindexer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B536771DA523EF0067EEA5 /* libindexer.a */; };
+		F6B5367B1DA524030067EEA5 /* libalohalitics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B536791DA524030067EEA5 /* libalohalitics.a */; };
+		F6B5367E1DA5242A0067EEA5 /* libcoding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B5367D1DA5242A0067EEA5 /* libcoding.a */; };
+		F6B536801DA5243B0067EEA5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B5367F1DA5243B0067EEA5 /* libz.tbd */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3430643A1E9FBCF500DC7665 /* mopub_ads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mopub_ads.cpp; sourceTree = "<group>"; };
+		3430643B1E9FBCF500DC7665 /* mopub_ads.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mopub_ads.hpp; sourceTree = "<group>"; };
+		346E888F1E9D087400D4CE9B /* ads_base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ads_base.cpp; sourceTree = "<group>"; };
+		346E88901E9D087400D4CE9B /* ads_base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ads_base.hpp; sourceTree = "<group>"; };
+		346E88911E9D087400D4CE9B /* ads_engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ads_engine.cpp; sourceTree = "<group>"; };
+		346E88921E9D087400D4CE9B /* ads_engine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ads_engine.hpp; sourceTree = "<group>"; };
+		346E88931E9D087400D4CE9B /* banner.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = banner.hpp; sourceTree = "<group>"; };
+		346E88941E9D087400D4CE9B /* rb_ads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rb_ads.cpp; sourceTree = "<group>"; };
+		346E88951E9D087400D4CE9B /* rb_ads.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = rb_ads.hpp; sourceTree = "<group>"; };
+		346E889D1E9D088200D4CE9B /* ads_engine_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ads_engine_tests.cpp; sourceTree = "<group>"; };
+		346E889E1E9D088200D4CE9B /* rb_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rb_tests.cpp; sourceTree = "<group>"; };
+		3475E0E11DBF581B004C7E69 /* common-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "common-debug.xcconfig"; path = "../common-debug.xcconfig"; sourceTree = "<group>"; };
+		3475E0E21DBF581B004C7E69 /* common-release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "common-release.xcconfig"; path = "../common-release.xcconfig"; sourceTree = "<group>"; };
+		3D47B2801F00F94D000828D2 /* mopub_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mopub_tests.cpp; sourceTree = "<group>"; };
+		3D47B2961F054C89000828D2 /* taxi_base.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = taxi_base.cpp; sourceTree = "<group>"; };
+		3D47B2971F054C89000828D2 /* taxi_countries.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = taxi_countries.cpp; sourceTree = "<group>"; };
+		3D47B2981F054C89000828D2 /* taxi_countries.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = taxi_countries.hpp; sourceTree = "<group>"; };
+		3D47B2991F054C89000828D2 /* taxi_places.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = taxi_places.hpp; sourceTree = "<group>"; };
+		3D47B2AA1F14BE89000828D2 /* cian_api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cian_api.cpp; sourceTree = "<group>"; };
+		3D47B2AB1F14BE89000828D2 /* cian_api.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cian_api.hpp; sourceTree = "<group>"; };
+		3D47B2AE1F14BE94000828D2 /* cian_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cian_tests.cpp; sourceTree = "<group>"; };
+		3D47B2B01F14FA14000828D2 /* utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = utils.hpp; sourceTree = "<group>"; };
+		3DBC1C501E4B14810016897F /* facebook_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = facebook_tests.cpp; sourceTree = "<group>"; };
+		3DBC1C521E4B14920016897F /* facebook_ads.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = facebook_ads.cpp; sourceTree = "<group>"; };
+		3DBC1C531E4B14920016897F /* facebook_ads.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = facebook_ads.hpp; sourceTree = "<group>"; };
+		3DFEBF831EF82BEA00317D5C /* viator_api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = viator_api.cpp; sourceTree = "<group>"; };
+		3DFEBF841EF82BEA00317D5C /* viator_api.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = viator_api.hpp; sourceTree = "<group>"; };
+		3DFEBF871EF82C1300317D5C /* viator_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = viator_tests.cpp; sourceTree = "<group>"; };
+		3DFEBF941EFBFC1500317D5C /* taxi_base.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = taxi_base.hpp; sourceTree = "<group>"; };
+		3DFEBF951EFBFC1500317D5C /* taxi_engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = taxi_engine.cpp; sourceTree = "<group>"; };
+		3DFEBF961EFBFC1500317D5C /* taxi_engine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = taxi_engine.hpp; sourceTree = "<group>"; };
+		3DFEBF971EFBFC1500317D5C /* taxi_provider.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = taxi_provider.hpp; sourceTree = "<group>"; };
+		3DFEBF981EFBFC1500317D5C /* yandex_api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yandex_api.cpp; sourceTree = "<group>"; };
+		3DFEBF991EFBFC1500317D5C /* yandex_api.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = yandex_api.hpp; sourceTree = "<group>"; };
+		3DFEBFA01EFBFC2300317D5C /* taxi_engine_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = taxi_engine_tests.cpp; sourceTree = "<group>"; };
+		3DFEBFA11EFBFC2300317D5C /* yandex_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yandex_tests.cpp; sourceTree = "<group>"; };
+		F67E75231DB8F06F00D6741F /* opentable_api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = opentable_api.cpp; sourceTree = "<group>"; };
+		F67E75241DB8F06F00D6741F /* opentable_api.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = opentable_api.hpp; sourceTree = "<group>"; };
+		F6B536341DA5209F0067EEA5 /* libpartners_api.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libpartners_api.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6B5363C1DA520E40067EEA5 /* booking_api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = booking_api.cpp; sourceTree = "<group>"; };
+		F6B5363D1DA520E40067EEA5 /* booking_api.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = booking_api.hpp; sourceTree = "<group>"; };
+		F6B5363E1DA520E40067EEA5 /* uber_api.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uber_api.cpp; sourceTree = "<group>"; };
+		F6B5363F1DA520E40067EEA5 /* uber_api.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = uber_api.hpp; sourceTree = "<group>"; };
+		F6B536451DA5213D0067EEA5 /* booking_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = booking_tests.cpp; sourceTree = "<group>"; };
+		F6B536461DA5213D0067EEA5 /* uber_tests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uber_tests.cpp; sourceTree = "<group>"; };
+		F6B536501DA522BB0067EEA5 /* partners_api_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = partners_api_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6B536691DA523060067EEA5 /* testingmain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = testingmain.cpp; path = ../../testing/testingmain.cpp; sourceTree = "<group>"; };
+		F6B536711DA523D60067EEA5 /* libbase.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libbase.a; path = "../../../omim-xcode-build/Debug/libbase.a"; sourceTree = "<group>"; };
+		F6B536721DA523D60067EEA5 /* libjansson.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjansson.a; path = "../../../omim-xcode-build/Debug/libjansson.a"; sourceTree = "<group>"; };
+		F6B536731DA523D60067EEA5 /* libplatform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libplatform.a; path = "../../../omim-xcode-build/Debug/libplatform.a"; sourceTree = "<group>"; };
+		F6B536771DA523EF0067EEA5 /* libindexer.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libindexer.a; path = "../../../omim-xcode-build/Debug/libindexer.a"; sourceTree = "<group>"; };
+		F6B536791DA524030067EEA5 /* libalohalitics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libalohalitics.a; path = "../../../omim-xcode-build/Debug/libalohalitics.a"; sourceTree = "<group>"; };
+		F6B5367D1DA5242A0067EEA5 /* libcoding.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcoding.a; path = "../../../omim-xcode-build/Debug/libcoding.a"; sourceTree = "<group>"; };
+		F6B5367F1DA5243B0067EEA5 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F6B536311DA5209F0067EEA5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6B5364D1DA522BB0067EEA5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6B536801DA5243B0067EEA5 /* libz.tbd in Frameworks */,
+				F6B5367E1DA5242A0067EEA5 /* libcoding.a in Frameworks */,
+				F6B5367B1DA524030067EEA5 /* libalohalitics.a in Frameworks */,
+				F6B536781DA523EF0067EEA5 /* libindexer.a in Frameworks */,
+				F6B536741DA523D60067EEA5 /* libbase.a in Frameworks */,
+				F6B536751DA523D60067EEA5 /* libjansson.a in Frameworks */,
+				F6B536761DA523D60067EEA5 /* libplatform.a in Frameworks */,
+				F6B5366C1DA523430067EEA5 /* libpartners_api.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F6B5362B1DA5209F0067EEA5 = {
+			isa = PBXGroup;
+			children = (
+				3475E0E11DBF581B004C7E69 /* common-debug.xcconfig */,
+				3475E0E21DBF581B004C7E69 /* common-release.xcconfig */,
+				F6B536441DA521060067EEA5 /* partners_api_tests */,
+				F6B5363B1DA520B20067EEA5 /* partners_api */,
+				F6B536351DA5209F0067EEA5 /* Products */,
+				F6B5366E1DA523A70067EEA5 /* Support files */,
+				F6B536701DA523D60067EEA5 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F6B536351DA5209F0067EEA5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F6B536341DA5209F0067EEA5 /* libpartners_api.a */,
+				F6B536501DA522BB0067EEA5 /* partners_api_test.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F6B5363B1DA520B20067EEA5 /* partners_api */ = {
+			isa = PBXGroup;
+			children = (
+				3D47B2B01F14FA14000828D2 /* utils.hpp */,
+				3D47B2AA1F14BE89000828D2 /* cian_api.cpp */,
+				3D47B2AB1F14BE89000828D2 /* cian_api.hpp */,
+				3D47B2961F054C89000828D2 /* taxi_base.cpp */,
+				3D47B2971F054C89000828D2 /* taxi_countries.cpp */,
+				3D47B2981F054C89000828D2 /* taxi_countries.hpp */,
+				3D47B2991F054C89000828D2 /* taxi_places.hpp */,
+				3DFEBF831EF82BEA00317D5C /* viator_api.cpp */,
+				3DFEBF841EF82BEA00317D5C /* viator_api.hpp */,
+				3DFEBF941EFBFC1500317D5C /* taxi_base.hpp */,
+				3DFEBF951EFBFC1500317D5C /* taxi_engine.cpp */,
+				3DFEBF961EFBFC1500317D5C /* taxi_engine.hpp */,
+				3DFEBF971EFBFC1500317D5C /* taxi_provider.hpp */,
+				3DFEBF981EFBFC1500317D5C /* yandex_api.cpp */,
+				3DFEBF991EFBFC1500317D5C /* yandex_api.hpp */,
+				3430643A1E9FBCF500DC7665 /* mopub_ads.cpp */,
+				3430643B1E9FBCF500DC7665 /* mopub_ads.hpp */,
+				346E888F1E9D087400D4CE9B /* ads_base.cpp */,
+				346E88901E9D087400D4CE9B /* ads_base.hpp */,
+				346E88911E9D087400D4CE9B /* ads_engine.cpp */,
+				346E88921E9D087400D4CE9B /* ads_engine.hpp */,
+				346E88931E9D087400D4CE9B /* banner.hpp */,
+				346E88941E9D087400D4CE9B /* rb_ads.cpp */,
+				346E88951E9D087400D4CE9B /* rb_ads.hpp */,
+				3DBC1C521E4B14920016897F /* facebook_ads.cpp */,
+				3DBC1C531E4B14920016897F /* facebook_ads.hpp */,
+				F67E75231DB8F06F00D6741F /* opentable_api.cpp */,
+				F67E75241DB8F06F00D6741F /* opentable_api.hpp */,
+				F6B5363C1DA520E40067EEA5 /* booking_api.cpp */,
+				F6B5363D1DA520E40067EEA5 /* booking_api.hpp */,
+				F6B5363E1DA520E40067EEA5 /* uber_api.cpp */,
+				F6B5363F1DA520E40067EEA5 /* uber_api.hpp */,
+			);
+			name = partners_api;
+			path = ../../partners_api;
+			sourceTree = SOURCE_ROOT;
+		};
+		F6B536441DA521060067EEA5 /* partners_api_tests */ = {
+			isa = PBXGroup;
+			children = (
+				3D47B2AE1F14BE94000828D2 /* cian_tests.cpp */,
+				3D47B2801F00F94D000828D2 /* mopub_tests.cpp */,
+				3DFEBF871EF82C1300317D5C /* viator_tests.cpp */,
+				3DFEBFA01EFBFC2300317D5C /* taxi_engine_tests.cpp */,
+				3DFEBFA11EFBFC2300317D5C /* yandex_tests.cpp */,
+				346E889D1E9D088200D4CE9B /* ads_engine_tests.cpp */,
+				346E889E1E9D088200D4CE9B /* rb_tests.cpp */,
+				3DBC1C501E4B14810016897F /* facebook_tests.cpp */,
+				F6B536691DA523060067EEA5 /* testingmain.cpp */,
+				F6B536451DA5213D0067EEA5 /* booking_tests.cpp */,
+				F6B536461DA5213D0067EEA5 /* uber_tests.cpp */,
+			);
+			name = partners_api_tests;
+			path = ../../partners_api/partners_api_tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		F6B5366E1DA523A70067EEA5 /* Support files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Support files";
+			path = ../routing;
+			sourceTree = "<group>";
+		};
+		F6B536701DA523D60067EEA5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F6B5367F1DA5243B0067EEA5 /* libz.tbd */,
+				F6B5367D1DA5242A0067EEA5 /* libcoding.a */,
+				F6B536791DA524030067EEA5 /* libalohalitics.a */,
+				F6B536771DA523EF0067EEA5 /* libindexer.a */,
+				F6B536711DA523D60067EEA5 /* libbase.a */,
+				F6B536721DA523D60067EEA5 /* libjansson.a */,
+				F6B536731DA523D60067EEA5 /* libplatform.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F6B536321DA5209F0067EEA5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D47B29C1F054C89000828D2 /* taxi_countries.hpp in Headers */,
+				346E88971E9D087400D4CE9B /* ads_base.hpp in Headers */,
+				3D47B29D1F054C89000828D2 /* taxi_places.hpp in Headers */,
+				F67E75261DB8F06F00D6741F /* opentable_api.hpp in Headers */,
+				F6B536411DA520E40067EEA5 /* booking_api.hpp in Headers */,
+				3430643D1E9FBCF500DC7665 /* mopub_ads.hpp in Headers */,
+				3D47B2B11F14FA14000828D2 /* utils.hpp in Headers */,
+				3DFEBF861EF82BEA00317D5C /* viator_api.hpp in Headers */,
+				346E889C1E9D087400D4CE9B /* rb_ads.hpp in Headers */,
+				3DFEBF9A1EFBFC1500317D5C /* taxi_base.hpp in Headers */,
+				3D47B2AD1F14BE89000828D2 /* cian_api.hpp in Headers */,
+				346E889A1E9D087400D4CE9B /* banner.hpp in Headers */,
+				3DFEBF9F1EFBFC1500317D5C /* yandex_api.hpp in Headers */,
+				3DFEBF9D1EFBFC1500317D5C /* taxi_provider.hpp in Headers */,
+				346E88991E9D087400D4CE9B /* ads_engine.hpp in Headers */,
+				3DFEBF9C1EFBFC1500317D5C /* taxi_engine.hpp in Headers */,
+				F6B536431DA520E40067EEA5 /* uber_api.hpp in Headers */,
+				3DBC1C551E4B14920016897F /* facebook_ads.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		F6B536331DA5209F0067EEA5 /* partners_api */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6B536381DA5209F0067EEA5 /* Build configuration list for PBXNativeTarget "partners_api" */;
+			buildPhases = (
+				F6B536301DA5209F0067EEA5 /* Sources */,
+				F6B536311DA5209F0067EEA5 /* Frameworks */,
+				F6B536321DA5209F0067EEA5 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = partners_api;
+			productName = partners_api;
+			productReference = F6B536341DA5209F0067EEA5 /* libpartners_api.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		F6B5364F1DA522BB0067EEA5 /* partners_api_test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6B536641DA522BB0067EEA5 /* Build configuration list for PBXNativeTarget "partners_api_test" */;
+			buildPhases = (
+				F6B5364C1DA522BB0067EEA5 /* Sources */,
+				F6B5364D1DA522BB0067EEA5 /* Frameworks */,
+				F6B5364E1DA522BB0067EEA5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = partners_api_test;
+			productName = partnes_api_test;
+			productReference = F6B536501DA522BB0067EEA5 /* partners_api_test.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F6B5362C1DA5209F0067EEA5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = maps.me;
+				TargetAttributes = {
+					F6B536331DA5209F0067EEA5 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+					F6B5364F1DA522BB0067EEA5 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = F6B5362F1DA5209F0067EEA5 /* Build configuration list for PBXProject "partners_api" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F6B5362B1DA5209F0067EEA5;
+			productRefGroup = F6B536351DA5209F0067EEA5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F6B536331DA5209F0067EEA5 /* partners_api */,
+				F6B5364F1DA522BB0067EEA5 /* partners_api_test */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F6B5364E1DA522BB0067EEA5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F6B536301DA5209F0067EEA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DFEBFA41EFBFC2300317D5C /* yandex_tests.cpp in Sources */,
+				3430643C1E9FBCF500DC7665 /* mopub_ads.cpp in Sources */,
+				346E88961E9D087400D4CE9B /* ads_base.cpp in Sources */,
+				3DFEBF891EF82C1300317D5C /* viator_tests.cpp in Sources */,
+				3DFEBF851EF82BEA00317D5C /* viator_api.cpp in Sources */,
+				3D47B2811F00F94D000828D2 /* mopub_tests.cpp in Sources */,
+				F6B536421DA520E40067EEA5 /* uber_api.cpp in Sources */,
+				3DFEBF9B1EFBFC1500317D5C /* taxi_engine.cpp in Sources */,
+				346E889B1E9D087400D4CE9B /* rb_ads.cpp in Sources */,
+				3DBC1C541E4B14920016897F /* facebook_ads.cpp in Sources */,
+				3D47B2AF1F14BE94000828D2 /* cian_tests.cpp in Sources */,
+				346E88981E9D087400D4CE9B /* ads_engine.cpp in Sources */,
+				3D47B29B1F054C89000828D2 /* taxi_countries.cpp in Sources */,
+				F67E75251DB8F06F00D6741F /* opentable_api.cpp in Sources */,
+				3DFEBFA31EFBFC2300317D5C /* taxi_engine_tests.cpp in Sources */,
+				F6B536401DA520E40067EEA5 /* booking_api.cpp in Sources */,
+				3D47B29A1F054C89000828D2 /* taxi_base.cpp in Sources */,
+				3DFEBF9E1EFBFC1500317D5C /* yandex_api.cpp in Sources */,
+				3D47B2AC1F14BE89000828D2 /* cian_api.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6B5364C1DA522BB0067EEA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3488B0371E9D11860068AFD8 /* ads_engine_tests.cpp in Sources */,
+				F6B5366B1DA5230C0067EEA5 /* testingmain.cpp in Sources */,
+				F6B536671DA522D90067EEA5 /* booking_tests.cpp in Sources */,
+				3488B0391E9D118D0068AFD8 /* facebook_tests.cpp in Sources */,
+				3488B0381E9D11890068AFD8 /* rb_tests.cpp in Sources */,
+				F6B536681DA522D90067EEA5 /* uber_tests.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F6B536361DA5209F0067EEA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3475E0E11DBF581B004C7E69 /* common-debug.xcconfig */;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(OMIM_ROOT)/3party/jansson/src",
+				);
+			};
+			name = Debug;
+		};
+		F6B536371DA5209F0067EEA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3475E0E21DBF581B004C7E69 /* common-release.xcconfig */;
+			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(OMIM_ROOT)/3party/jansson/src",
+				);
+			};
+			name = Release;
+		};
+		F6B536391DA5209F0067EEA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F6B5363A1DA5209F0067EEA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		F6B536651DA522BB0067EEA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"OMIM_UNIT_TEST_WITH_QT_EVENT_LOOP=1",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/../../iphone/Maps/MAPSME.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = partners_api_test;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F6B536661DA522BB0067EEA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"OMIM_UNIT_TEST_WITH_QT_EVENT_LOOP=1",
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/../../iphone/Maps/MAPSME.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = partners_api_test;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F6B5362F1DA5209F0067EEA5 /* Build configuration list for PBXProject "partners_api" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6B536361DA5209F0067EEA5 /* Debug */,
+				F6B536371DA5209F0067EEA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6B536381DA5209F0067EEA5 /* Build configuration list for PBXNativeTarget "partners_api" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6B536391DA5209F0067EEA5 /* Debug */,
+				F6B5363A1DA5209F0067EEA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F6B536641DA522BB0067EEA5 /* Build configuration list for PBXNativeTarget "partners_api_test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F6B536651DA522BB0067EEA5 /* Debug */,
+				F6B536661DA522BB0067EEA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F6B5362C1DA5209F0067EEA5 /* Project object */;
+}

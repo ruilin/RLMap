@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!--
+    Supported voice languages. Should have language[-country][:code] format.
+    Where:
+      language - two-letter ISO 639-1 language code.
+      country - two-letter ISO 3166-1 (alpha-2) country code.
+      code - internal language code to be set in the core.
+             If not specified, language is used.
+
+    Chinese is an exception. Matching is based on country code:
+    zh_TW, zh_MO and zh_HK correspond to zh-Hant.
+    Otherwise we consider that this is zh-Hans.
+
+    TODO: Move language list to core.
+  -->
+  <string-array name="tts_languages_supported"
+                translatable="false">
+    <item>en</item>
+    <item>ru</item>
+    <item>es</item>
+    <item>de</item>
+    <item>fr</item>
+    <item>zh-TW:zh-Hant</item>
+    <item>zh-CN:zh-Hans</item>
+    <item>pt</item>
+    <item>th</item>
+    <item>tr</item>
+    <item>ar</item>
+    <item>cs</item>
+    <item>da</item>
+    <item>el</item>
+    <item>fi</item>
+    <item>hi</item>
+    <item>hu</item>
+    <item>id</item>
+    <item>it</item>
+    <item>ja</item>
+    <item>ko</item>
+    <item>nl</item>
+    <item>pl</item>
+    <item>ro</item>
+    <item>fa</item>
+    <item>uk</item>
+    <item>vi</item>
+  </string-array>
+
+  <string-array name="tts_language_names"
+                translatable="false">
+    <item>English</item>
+    <item>Русский</item>
+    <item>Español</item>
+    <item>Deutsch</item>
+    <item>Français</item>
+    <item>中文繁體</item>
+    <item>中文简体</item>
+    <item>Português</item>
+    <item>ภาษาไทย</item>
+    <item>Türkçe</item>
+    <item>العربية</item>
+    <item>Čeština</item>
+    <item>Dansk</item>
+    <item>Ελληνικά</item>
+    <item>Suomi</item>
+    <item>हिंदी</item>
+    <item>Magyar</item>
+    <item>Indonesia</item>
+    <item>Italiano</item>
+    <item>日本語</item>
+    <item>한국어</item>
+    <item>Nederlands</item>
+    <item>Polski</item>
+    <item>Română</item>
+    <item>فارسی</item>
+    <item>Українська</item>
+    <item>Tiếng Việt</item>
+  </string-array>
+</resources>

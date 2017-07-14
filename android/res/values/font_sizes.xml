@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- BASE TEXT SIZES -->
+
+  <!-- we use slightly greater font sizes, then in default material styles -->
+  <dimen name="text_size_display_2">40sp</dimen>
+  <dimen name="text_size_display_1">36sp</dimen>
+  <dimen name="text_size_headline">28sp</dimen>
+  <dimen name="text_size_title">24sp</dimen>
+  <dimen name="text_size_toolbar">20sp</dimen>
+  <dimen name="text_size_body_1">16sp</dimen>
+  <dimen name="text_size_body_2">16sp</dimen>
+  <dimen name="text_size_body_3">14sp</dimen>
+  <dimen name="text_size_body_4">12sp</dimen>
+  <dimen name="text_size_caption">14sp</dimen>
+  <dimen name="text_size_icon_title">10sp</dimen>
+  <dimen name="text_size_button">16sp</dimen>
+
+  <!-- BASE TEXT SIZES -->
+
+  <!-- -->
+
+  <!-- direction fragment -->
+
+  <dimen name="text_direction_dist">52sp</dimen>
+  <dimen name="text_direction_subtitle">22sp</dimen>
+  <dimen name="text_direction_title">58sp</dimen>
+
+  <!-- direction fragment -->
+
+  <!-- -->
+
+  <dimen name="text_size_routing_number">16sp</dimen>
+  <dimen name="text_size_routing_dimension">12sp</dimen>
+  <dimen name="text_size_routing_dimension_inline">20sp</dimen>
+  <dimen name="text_size_routing_plan_detail">16sp</dimen>
+  <dimen name="text_size_routing_plan_detail_arrival">14sp</dimen>
+  <dimen name="text_size_time_picker">56sp</dimen>
+
+  <dimen name="text_size_nav_street">17sp</dimen>
+  <dimen name="text_size_nav_next_turn">24sp</dimen>
+  <dimen name="text_size_nav_circle_exit">12sp</dimen>
+  <dimen name="text_size_nav_number">24sp</dimen>
+  <dimen name="text_size_nav_dimension">20sp</dimen>
+
+  <dimen name="text_size_banner">8sp</dimen>
+</resources>

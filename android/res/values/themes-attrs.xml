@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="ThemeAttrs">
+    <attr name="fullscreenDialogTheme" format="reference"/>
+    <attr name="windowBackgroundForced" format="reference|color"/>
+
+    <attr name="cardFrame" format="reference"/>
+    <attr name="cardBackground" format="reference"/>
+
+    <attr name="clickableBackground" format="reference"/>
+    <attr name="statusBar" format="color"/>
+    <attr name="secondary" format="color"/>
+    <attr name="panel" format="color"/>
+    <attr name="sidePanel" format="color"/>
+    <attr name="iconTint" format="color"/>
+    <attr name="iconTintLight" format="color"/>
+    <attr name="counterTextColor" format="color"/>
+
+    <attr name="zoomPlus" format="reference"/>
+    <attr name="zoomMinus" format="reference"/>
+
+    <attr name="ppBackground" format="color"/>
+    <attr name="ppButtonsBackground" format="color"/>
+    <attr name="ppPreviewHeadOpen" format="reference"/>
+    <attr name="ppPreviewHeadClosed" format="reference"/>
+    <attr name="ppRatingBackground" format="color"/>
+    <attr name="ppRatingText" format="color"/>
+    <attr name="ppPositive" format="reference"/>
+    <attr name="ppNegative" format="reference"/>
+
+    <attr name="navNextTurnFrame" format="reference"/>
+    <attr name="navNextNextTurnFrame" format="reference"/>
+
+    <attr name="buttonBackground" format="reference"/>
+    <attr name="buttonTextColor" format="color"/>
+    <attr name="buttonTextColorDisabled" format="color"/>
+    <attr name="buttonDialogTextColor" format="color"/>
+
+    <attr name="accentButtonBackground" format="reference"/>
+    <attr name="accentButtonRoundBackground" format="reference"/>
+    <attr name="accentButtonTextColor" format="color"/>
+    <attr name="accentButtonTextColorDisabled" format="color"/>
+
+    <attr name="redButtonBackground" format="reference"/>
+    <attr name="redButtonTextColor" format="color"/>
+    <attr name="redButtonTextColorDisabled" format="color"/>
+
+    <attr name="startButtonBackground" format="reference"/>
+
+    <attr name="circleAccent" format="reference"/>
+
+    <attr name="menuBackground" format="color"/>
+    <attr name="menuBackgroundOpen" format="color"/>
+
+    <attr name="myPositionButtonAnimation" format="reference"/>
+    <attr name="wheelPendingAnimation" format="reference"/>
+    <attr name="trafficLoadingAnimation" format="reference"/>
+
+    <attr name="navButtonsTheme" format="reference"/>
+    <attr name="downloaderTheme" format="reference"/>
+    <attr name="navigationTheme" format="reference"/>
+
+    <attr name="fabAdd" format="reference"/>
+
+    <attr name="routingButtonHint" format="color"/>
+    <attr name="routingButtonPressedHint" format="color"/>
+    <attr name="routingButtonActivatedHint" format="color"/>
+
+    <attr name="bannerText" format="color"/>
+    <attr name="bannerBackground" format="color"/>
+    <attr name="bannerButtonBackground" format="color"/>
+    <attr name="adsBackground" format="reference"/>
+    <attr name="adsText" format="color"/>
+    <attr name="adsActionBackground" format="reference"/>
+    <attr name="textBannerTitle" format="color"/>
+
+    <attr name="steadyIconTint" format="color"/>
+    <attr name="steadyIconBackground" format="reference"/>
+    <attr name="activeIconTint" format="color"/>
+    <attr name="activeIconBackground" format="reference"/>
+
+    <attr name="warmGray" format="color"/>
+
+    <attr name="localAdSearchResBackground" format="color"/>
+
+    <attr name="tagBackground" format="reference"/>
+
+    <attr name="viatorMore" format="reference"/>
+  </declare-styleable>
+
+  <declare-styleable name="ThemeAttrs.NavButtons">
+    <attr name="nav_background" format="reference"/>
+  </declare-styleable>
+
+  <declare-styleable name="ThemeAttrs.Downloader">
+    <attr name="status_done" format="reference"/>
+    <attr name="status_downloadable" format="reference"/>
+    <attr name="status_failed" format="reference"/>
+    <attr name="status_updatable" format="reference"/>
+    <attr name="status_folder" format="reference"/>
+    <attr name="status_folder_done" format="reference"/>
+  </declare-styleable>
+
+  <declare-styleable name="ThemeAttrs.Navigation">
+    <attr name="newsMarker" format="reference"/>
+    <attr name="searchLayoutBackground" format="reference"/>
+  </declare-styleable>
+</resources>

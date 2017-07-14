@@ -1,0 +1,92 @@
+#include "drape_frontend/text_handle.hpp"
+
+#include "drape/texture_manager.hpp"
+
+#include "base/logging.hpp"
+
+namespace df
+{
+
+TextHandle::TextHandle(dp::OverlayID const & id, strings::UniString const & text,
+                       dp::Anchor anchor, uint64_t priority, int fixedHeight,
+                       ref_ptr<dp::TextureManager> textureManager,
+                       bool isBillboard)
+  : OverlayHandle(id, anchor, priority, isBillboard)
+  , m_forceUpdateNormals(false)
+  , m_isLastVisible(false)
+  , m_text(text)
+  , m_textureManager(textureManager)
+  , m_glyphsReady(false)
+  , m_fixedHeight(fixedHeight)
+{}
+
+TextHandle::TextHandle(dp::OverlayID const & id, strings::UniString const & text,
+                       dp::Anchor anchor, uint64_t priority, int fixedHeight,
+                       ref_ptr<dp::TextureManager> textureManager,
+                       gpu::TTextDynamicVertexBuffer && normals,
+                       bool isBillboard)
+  : OverlayHandle(id, anchor, priority, isBillboard)
+  , m_buffer(move(normals))
+  , m_forceUpdateNormals(false)
+  , m_isLastVisible(false)
+  , m_text(text)
+  , m_textureManager(textureManager)
+  , m_glyphsReady(false)
+  , m_fixedHeight(fixedHeight)
+{}
+
+void TextHandle::GetAttributeMutation(ref_ptr<dp::AttributeBufferMutator> mutator) const
+{
+  bool const isVisible = IsVisible();
+  if (!m_forceUpdateNormals && m_isLastVisible == isVisible)
+    return;
+
+  TOffsetNode const & node = GetOffsetNode(gpu::TextDynamicVertex::GetDynamicStreamID());
+  ASSERT(node.first.GetElementSize() == sizeof(gpu::TextDynamicVertex), ());
+  ASSERT(node.second.m_count == m_buffer.size(), ());
+
+  uint32_t const byteCount = static_cast<uint32_t>(m_buffer.size()) * sizeof(gpu::TextDynamicVertex);
+  void * buffer = mutator->AllocateMutationBuffer(byteCount);
+  if (isVisible)
+    memcpy(buffer, m_buffer.data(), byteCount);
+  else
+    memset(buffer, 0, byteCount);
+
+  dp::MutateNode mutateNode;
+  mutateNode.m_region = node.second;
+  mutateNode.m_data = make_ref(buffer);
+  mutator->AddMutation(node.first, mutateNode);
+
+  m_isLastVisible = isVisible;
+}
+
+bool TextHandle::Update(ScreenBase const & screen)
+{
+  if (!m_glyphsReady)
+    m_glyphsReady = m_textureManager->AreGlyphsReady(m_text, m_fixedHeight);
+
+  return m_glyphsReady;
+}
+
+bool TextHandle::IndexesRequired() const
+{
+  // Disable indices usage for text handles.
+  return false;
+}
+
+void TextHandle::SetForceUpdateNormals(bool forceUpdate) const
+{
+  m_forceUpdateNormals = forceUpdate;
+}
+
+#ifdef DEBUG_OVERLAYS_OUTPUT
+string TextHandle::GetOverlayDebugInfo()
+{
+  ostringstream out;
+  out << "Text Priority(" << GetPriority() << ") " << GetOverlayID().m_featureId.m_index
+      << "-" << GetOverlayID().m_index << " " << strings::ToUtf8(m_text);
+  return out.str();
+}
+#endif
+
+} // namespace df
