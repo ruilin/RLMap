@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>booking_addr_match.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>41</integer>
+		</dict>
+		<key>booking_quality_check.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>40</integer>
+		</dict>
+		<key>generator_tests.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>39</integer>
+		</dict>
+		<key>generator_tool.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>38</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>6726C21C1A4C2BBD005EEA39</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6737465E1CF4639F005E6D1F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>675341571A3F54D800A0A8C3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6796245C1D100F2500AE4E3C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
