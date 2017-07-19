@@ -104,12 +104,12 @@
     android:key="@string/pref_navigation"
     android:title="@string/prefs_group_route"
     android:order="3">
-    <ListPreference
-      android:key="@string/pref_map_style"
-      android:title="@string/pref_map_style_title"
-      android:entries="@array/map_style"
-      android:entryValues="@array/map_style_values"
-      android:order="1"/>
+    <!--<ListPreference-->
+      <!--android:key="@string/pref_map_style"-->
+      <!--android:title="@string/pref_map_style_title"-->
+      <!--android:entries="@array/map_style"-->
+      <!--android:entryValues="@array/map_style_values"-->
+      <!--android:order="1"/>-->
     <SwitchPreferenceCompat
       android:key="@string/pref_3d"
       android:title="@string/pref_map_3d_title"

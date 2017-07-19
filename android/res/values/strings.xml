@@ -33,7 +33,7 @@
 	<string name="downloading">Downloading…</string>
 	<string name="get_it_now">Get it now</string>
 	<!-- Text to show occasionaly with a proposal to Like our program on Facebook -->
-	<string name="share_on_facebook_text">Thank you for using MAPS.ME! Do you like the app? Tell your friends about it! This is the best thanks you could give us.</string>
+	<string name="share_on_facebook_text">Thank you for using RLMap! Do you like the app? Tell your friends about it! This is the best thanks you could give us.</string>
 	<!-- Settings/Downloader - size string, only strings different from English should be translated -->
 	<string name="kb">kB</string>
 	<!-- Choose measurement on first launch alert - choose metric system button -->
@@ -96,8 +96,8 @@
 	<string name="country_status_download_failed">Download has failed</string>
 	<!-- Button text for the button under the country_status_download_failed message -->
 	<string name="try_again">Try Again</string>
-	<string name="app_name">MAPS.ME</string>
-	<string name="about_menu_title">About MAPS.ME</string>
+	<string name="app_name">RLMap</string>
+	<string name="about_menu_title">About RLMap</string>
 	<string name="downloading_touch_to_cancel">Downloading %d%%, touch to cancel</string>
 	<string name="downloaded_touch_to_delete">Downloaded (%s), touch to delete</string>
 	<string name="connection_settings">Connection Settings</string>
@@ -106,7 +106,7 @@
 	<string name="unsupported_phone">The app requires hardware accelerated OpenGL. Unfortunately, your device is not supported.</string>
 	<string name="download">Download</string>
 	<string name="external_storage_is_not_available">SD card/USB storage with downloaded maps is not available</string>
-	<string name="disconnect_usb_cable">Please disconnect USB cable or insert memory card to use MAPS.ME</string>
+	<string name="disconnect_usb_cable">Please disconnect USB cable or insert memory card to use RLMap</string>
 	<string name="not_enough_free_space_on_sdcard">Please free up some space on the SD card/USB storage first in order to use the app</string>
 	<string name="not_enough_memory">Not enough memory to launch app</string>
 	<string name="free_space_for_country">Please free %1$s on your device first in order to download %2$s</string>
@@ -133,7 +133,7 @@
 	<!-- Show popup notification on app start when we have out-of-date maps -->
 	<string name="advise_update_maps">Update available for the following maps:</string>
 	<!-- Show popup notification in Pro version that Lite can be deleted -->
-	<string name="suggest_uninstall_lite">You don\'t need MAPS.ME Lite any more, so you can uninstall it.</string>
+	<string name="suggest_uninstall_lite">You don\'t need RLMap Lite any more, so you can uninstall it.</string>
 	<!-- Show popup notification on top of the map when country was downloaded. -->
 	<string name="download_country_success">%s downloaded successfully</string>
 	<!-- Show popup notification on top of the map when country download has failed. -->
@@ -163,9 +163,9 @@
 	<!-- Add bookmark dialog - bookmark set, Bookmarks dialog - Bookmark set cell -->
 	<string name="set">Set</string>
 	<!-- Text hint in Bookmarks dialog when no any bookmarks are added -->
-	<string name="bookmarks_usage_hint">You have no bookmarks yet.\nTap on any place on the map to add a bookmark.\nBookmarks from other sources can also be imported and displayed in MAPS.ME. Open KML/KMZ file with saved bookmarks from email, Dropbox or weblink.</string>
+	<string name="bookmarks_usage_hint">You have no bookmarks yet.\nTap on any place on the map to add a bookmark.\nBookmarks from other sources can also be imported and displayed in RLMap. Open KML/KMZ file with saved bookmarks from email, Dropbox or weblink.</string>
 	<!-- Text hint in Bookmarks dialog when at least one bookmark is added -->
-	<string name="bookmarks_usage_hint_import_only">Bookmarks from other sources can be imported and displayed in MAPS.ME. Open a KML/KMZ file with saved bookmarks from email, Dropbox or a weblink.</string>
+	<string name="bookmarks_usage_hint_import_only">Bookmarks from other sources can be imported and displayed in RLMap. Open a KML/KMZ file with saved bookmarks from email, Dropbox or a weblink.</string>
 	<!-- Settings button in system menu -->
 	<string name="settings">Settings</string>
 	<!-- Header of settings activity where user defines storage path -->
@@ -227,9 +227,9 @@
 	<!-- Button text -->
 	<string name="share_by_email">Share by email</string>
 	<!-- Email Subject when sharing bookmarks category -->
-	<string name="share_bookmarks_email_subject">MAPS.ME bookmarks were shared with you</string>
+	<string name="share_bookmarks_email_subject">RLMap bookmarks were shared with you</string>
 	<!-- Email text when sharing bookmarks category -->
-	<string name="share_bookmarks_email_body">Hello!\n\nAttached are my bookmarks from MAPS.ME offline maps. Please open them if you have MAPS.ME installed. Or, if you don\'t, download the app for your iOS or Android device by following this link: http://maps.me/get?kmz\n\nEnjoy traveling with MAPS.ME!</string>
+	<string name="share_bookmarks_email_body">Hello!\n\nAttached are my bookmarks from RLMap offline maps. Please open them if you have RLMap installed. Or, if you don\'t, download the app for your iOS or Android device by following this link: https://www.pgyer.com/rlmap\n\nEnjoy traveling with RLMap!</string>
 	<!-- message title of loading file -->
 	<string name="load_kmz_title">Loading Bookmarks</string>
 	<!-- Kmz file successful loading -->
@@ -249,19 +249,19 @@
 	<!-- Alert message that downloading is in progress. -->
 	<string name="downloading_is_active">Map download is in progress now.</string>
 	<!-- Message that will be shown in alert view, when we ask user to leave review on App Store -->
-	<string name="appStore_message">Hope you enjoy using MAPS.ME! If so, please rate or review the app at the App Store. It takes less than a minute but can really help us. Thanks for your support!</string>
+	<string name="appStore_message">Hope you enjoy using RLMap! If so, please rate or review the app at the App Store. It takes less than a minute but can really help us. Thanks for your support!</string>
 	<!-- No, thanks -->
 	<string name="no_thanks">No, thanks</string>
 	<!-- Share one specific bookmark using SMS, %1$@ contains ge0:// and %2$@ http://ge0.me link. @NOTE non-ascii symbols in the link will make 70 bytes sms instead of 140 -->
-	<string name="bookmark_share_sms">Hey, check out my pin at MAPS.ME! %1$s or %2$s Don\'t have offline maps installed? Download here: http://maps.me/get</string>
+	<string name="bookmark_share_sms">Hey, check out my pin at RLMap! %1$s or %2$s Don\'t have offline maps installed? Download here: https://www.pgyer.com/rlmap</string>
 	<!-- Share my position using SMS, %1$@ contains ge0:// and %2$@ http://ge0.me link WITHOUT NAME. @NOTE non-ascii symbols in the link will make 70 bytes sms instead of 140 -->
-	<string name="my_position_share_sms">Hey, check out my current location in MAPS.ME! %1$s or %2$s Don\'t have offline maps? Download here: http://maps.me/get</string>
+	<string name="my_position_share_sms">Hey, check out my current location in RLMap! %1$s or %2$s Don\'t have offline maps? Download here: https://www.pgyer.com/rlmap</string>
 	<!-- Subject for emailed bookmark -->
-	<string name="bookmark_share_email_subject">Hey, check out my pin in MAPS.ME!</string>
+	<string name="bookmark_share_email_subject">Hey, check out my pin in RLMap!</string>
 	<!-- Share one specific bookmark using EMail, %1$@ is bookmark's name, %2$@ is ge0:// link and %3$@ http://ge0.me -->
-	<string name="bookmark_share_email">Hi,\n\nI pinned: %1$s on the MAPS.ME offline map of the world. Click this link %2$s or this one %3$s to see the place on the map.\n\nThanks.</string>
+	<string name="bookmark_share_email">Hi,\n\nI pinned: %1$s on the RLMap offline map of the world. Click this link %2$s or this one %3$s to see the place on the map.\n\nThanks.</string>
 	<!-- Subject for emailed position -->
-	<string name="my_position_share_email_subject">Hey, check out my current location on the MAPS.ME map!</string>
+	<string name="my_position_share_email_subject">Hey, check out my current location on the RLMap map!</string>
 	<!-- Share my position using EMail, %1$@ is ge0:// and %2$@ is http://ge0.me link WITHOUT NAME -->
 	<string name="my_position_share_email">Hi,\n\nI\'m here now: %1$s. Click this link %2$s or this one %3$s to see the place on the map.\n\nThanks.</string>
 	<!-- Android share by Message/SMS button text (including SMS) -->
@@ -381,19 +381,19 @@
 	<!-- text of notification -->
 	<string name="download_map_notification">Download the map of the place where you are</string>
 	<!-- text of notification -->
-	<string name="pro_version_is_free_today">Full version of MAPS.ME is free today! Download now and tell your friends.</string>
+	<string name="pro_version_is_free_today">Full version of RLMap is free today! Download now and tell your friends.</string>
 	<!-- Dialog for transferring maps from lite to pro. -->
-	<string name="move_lite_maps_to_pro">We are transferring your downloaded maps from MAPS.ME Lite to MAPS.ME. It may take a few minutes.</string>
+	<string name="move_lite_maps_to_pro">We are transferring your downloaded maps from RLMap Lite to RLMap. It may take a few minutes.</string>
 	<!-- Message to display when maps moved. -->
-	<string name="move_lite_maps_to_pro_ok">Your downloaded maps are successfully transferred to MAPS.ME.</string>
+	<string name="move_lite_maps_to_pro_ok">Your downloaded maps are successfully transferred to RLMap.</string>
 	<!-- Message to display when maps move failed. -->
-	<string name="move_lite_maps_to_pro_failed">Your maps failed to transfer. Please delete MAPS.ME Lite and download the maps again.</string>
+	<string name="move_lite_maps_to_pro_failed">Your maps failed to transfer. Please delete RLMap Lite and download the maps again.</string>
 	<!-- Text in menu -->
 	<string name="settings_and_more">Settings &amp; More</string>
 	<!-- Text in menu -->
 	<string name="website">Website</string>
 	<!-- Text in menu -->
-	<string name="maps_me_community">MAPS.ME Community</string>
+	<string name="maps_me_community">RLMap Community</string>
 	<!-- Text in menu -->
 	<string name="like_on_facebook">Like on Facebook</string>
 	<!-- Text in menu -->
@@ -413,11 +413,11 @@
 	<!-- Text in menu -->
 	<string name="report_a_bug">Report a bug</string>
 	<!-- Email subject -->
-	<string name="subscribe_me_subject">Please subscribe me to the MAPS.ME newsletter</string>
+	<string name="subscribe_me_subject">Please subscribe me to the RLMap newsletter</string>
 	<!-- Email body -->
 	<string name="subscribe_me_body">I want to be the first to learn about the latest news, app updates, and promotions. I understand that I can cancel my subscription at any time.</string>
 	<!-- About text -->
-	<string name="about_text">MAPS.ME offers the fastest offline maps of all the cities, all countries of the world. Travel with full confidence: wherever you are, MAPS.ME helps to locate yourself on the map, find the nearest restaurant, hotel, bank, gas station etc. It doesn’t require internet connection.\n\nWe are always working on new features and would love to hear from you on how you think we could improve MAPS.ME. If you have any problems with the app, don\'t hesitate to contact us at support\@maps.me. We respond to every request!\n\nDo you like MAPS.ME and want to support us? There are some simple and absolutely free ways:\n\n- post a review at your App Market\n- like our Facebook page http://www.facebook.com/mapswithme\n- or just tell about MAPS.ME to your mom, friends and colleagues :)\n\nThank you for being with us. We appreciate your support very much!\n\nP.S. We take map data from OpenStreetMap, a mapping project similar to Wikipedia, which allows users to create and edit maps. If you see something is missing or wrong on the map, you can correct the maps directly at http://openstreetmap.org, and your changes will appear in MAPS.ME app with the next version release.</string>
+	<string name="about_text">RLMap offers the fastest offline maps of all the cities, all countries of the world. Travel with full confidence: wherever you are, RLMap helps to locate yourself on the map, find the nearest restaurant, hotel, bank, gas station etc. It doesn’t require internet connection.\n\nWe are always working on new features and would love to hear from you on how you think we could improve RLMap. If you have any problems with the app, don\'t hesitate to contact us at zruilin@126.com. We respond to every request!\n\nDo you like RLMap and want to support us? There are some simple and absolutely free ways:\n\n- post a review at your App Market\n- like our Facebook page http://www.facebook.com/mapswithme\n- or just tell about RLMap to your mom, friends and colleagues :)\n\nThank you for being with us. We appreciate your support very much!\n\nP.S. We take map data from OpenStreetMap, a mapping project similar to Wikipedia, which allows users to create and edit maps. If you see something is missing or wrong on the map, you can correct the maps directly at http://openstreetmap.org, and your changes will appear in RLMap app with the next version release.</string>
 	<!-- Alert text -->
 	<string name="email_error_body">The email client has not been set up. Please configure it or use any other way to contact us at %s</string>
 	<!-- Alert title -->
@@ -429,7 +429,7 @@
 	<!-- Update map suggestion -->
 	<string name="routing_map_outdated">Please update the map to create a route</string>
 	<!-- Update maps suggestion -->
-	<string name="routing_update_maps">The new version of MAPS.ME allows creating routes from your current position to a destination point. Please update maps to use this feature.</string>
+	<string name="routing_update_maps">The new version of RLMap allows creating routes from your current position to a destination point. Please update maps to use this feature.</string>
 	<!-- Update all button text -->
 	<string name="downloader_update_all_button">Update All</string>
 	<!-- Cancel all button text -->
@@ -446,7 +446,7 @@
 	<string name="downloader_downloading">Downloading:</string>
 	<string name="downloader_search_results">Found</string>
 	<!-- Disclaimer message -->
-	<string name="routing_disclaimer">Creating routes in MAPS.ME app, please keep in mind the following:\n\n  - Suggested routes can be considered as recommendations only.\n - Road conditions, traffic rules and signs have higher priority than navigation advice.\n - The map may be incorrect or outdated, and routes may not be created the best possible way.\n\n  Be safe on roads and take care of yourself!</string>
+	<string name="routing_disclaimer">Creating routes in RLMap app, please keep in mind the following:\n\n  - Suggested routes can be considered as recommendations only.\n - Road conditions, traffic rules and signs have higher priority than navigation advice.\n - The map may be incorrect or outdated, and routes may not be created the best possible way.\n\n  Be safe on roads and take care of yourself!</string>
 	<!-- Outdated maps category -->
 	<string name="downloader_outdated_maps">Outdated</string>
 	<!-- Up to date maps category -->
@@ -501,9 +501,9 @@
 	<!-- Text for rating dialog -->
 	<string name="rating_just_rated">I’ve just rated your app</string>
 	<!-- Text for rating dialog -->
-	<string name="rating_user_since">I’ve been a MAPS.ME user since %s</string>
+	<string name="rating_user_since">I’ve been a RLMap user since %s</string>
 	<!-- Text for rating dialog -->
-	<string name="rating_do_like_maps">Do you like MAPS.ME?</string>
+	<string name="rating_do_like_maps">Do you like RLMap?</string>
 	<!-- Text for rating dialog -->
 	<string name="rating_tap_star">Tap a star to rate our app.</string>
 	<!-- Text for rating dialog -->
@@ -519,7 +519,7 @@
 	<!-- Text for routing error dialog -->
 	<string name="routing_download_map">Get map</string>
 	<!-- Text for routing error dialog -->
-	<string name="routing_download_map_and_routing">Download updated map and routing data to get all MAPS.ME features.</string>
+	<string name="routing_download_map_and_routing">Download updated map and routing data to get all RLMap features.</string>
 	<!-- Text for routing error dialog -->
 	<string name="routing_get_routing_data">Get routing data</string>
 	<!-- Text for routing error dialog -->
@@ -635,7 +635,7 @@
 	<!-- Text for routing::IRouter::FileTooOld dialog. -->
 	<string name="dialog_routing_download_and_update_maps">Download and update all map along the projected path to calculate route.</string>
 	<string name="rate_alert_title">Like the app?</string>
-	<string name="rate_alert_default_message">Thank you for using MAPS.ME. Please rate the app. Your feedback helps us improve our product.</string>
+	<string name="rate_alert_default_message">Thank you for using RLMap. Please rate the app. Your feedback helps us improve our product.</string>
 	<string name="rate_alert_five_star_message">Hooray! We love you, too!</string>
 	<string name="rate_alert_four_star_message">Thank you, we will do our best!</string>
 	<string name="rate_alert_less_than_four_star_message">Any idea how we can make it better?</string>
@@ -694,7 +694,7 @@
 	<string name="editor_report_problem_no_place_title">The place does not exist</string>
 	<string name="editor_report_problem_under_construction_title">Сlosed for maintenance</string>
 	<string name="editor_report_problem_duplicate_place_title">Duplicated place</string>
-	<string name="first_launch_congrats_title">MAPS.ME is ready to use</string>
+	<string name="first_launch_congrats_title">RLMap is ready to use</string>
 	<string name="first_launch_congrats_text">Search and navigate everywhere in the world offline, free of charge.</string>
 	<string name="migrate_title">Important!</string>
 	<!-- Android uses image instead of text. -->
@@ -799,28 +799,28 @@
 	<string name="whatsnew_search_message">We have significantly improved the search by address. See for yourself.</string>
 	<string name="whatsnew_editor_title">Edit the map*</string>
 	<string name="whatsnew_editor_message_1">Add new places to the map, and edit existing ones directly from the app.</string>
-	<string name="whatsnew_editor_message_2">* MAPS.ME uses OpenStreetMap community data.</string>
+	<string name="whatsnew_editor_message_2">* RLMap uses OpenStreetMap community data.</string>
 	<string name="onboarding_offline_navigation_title">You will never get lost again</string>
 	<string name="onboarding_offline_navigation_message">Plan optimal car and pedestrian routes, even when there is no Internet connection!</string>
 	<string name="onboarding_offline_navigation_title_2">Offline navigation</string>
 	<string name="onboarding_offline_navigation_message_2">Plan optimal car and pedestrian routes.</string>
-	<string name="onboarding_offline_maps_title">MAPS.ME — use the maps of the entire world without an Internet connection</string>
+	<string name="onboarding_offline_maps_title">RLMap — use the maps of the entire world without an Internet connection</string>
 	<string name="onboarding_offline_maps_message">Download the maps for the desired area once, and use the navigation and search functions without an Internet connection.</string>
 	<string name="onboarding_notifications_message">To receive the latest maps, get updates notifications</string>
 	<string name="onboarding_notifications_title">Enable updates notifications</string>
 	<string name="onboarding_location_title">Help us find you</string>
-	<string name="onboarding_location_message">In order for you to use navigation and the other app functions, MAPS.ME needs access to your geoposition.</string>
-	<string name="onboarding_permissions_title">Allow MAPS.ME access to storage and location</string>
+	<string name="onboarding_location_message">In order for you to use navigation and the other app functions, RLMap needs access to your geoposition.</string>
+	<string name="onboarding_permissions_title">Allow RLMap access to storage and location</string>
 	<string name="onboarding_permissions_message">So you can download maps, see places and traffic near you and use navigation.</string>
 	<string name="onboarding_storage_permissions_title">Grant access</string>
-	<string name="onboarding_storage_permissions_message">Change permissions settings in your device. Needs a storage access to use MAPS.ME.</string>
-	<string name="onboarding_detail_permissions_title">MAPS.ME needs access to</string>
+	<string name="onboarding_storage_permissions_message">Change permissions settings in your device. Needs a storage access to use RLMap.</string>
+	<string name="onboarding_detail_permissions_title">RLMap needs access to</string>
 	<string name="onboarding_detail_permissions_storage_title">Storage</string>
 	<string name="onboarding_detail_permissions_storage_message">To save and use downloaded maps offline and save bookmarks.</string>
 	<string name="onboarding_detail_permissions_location_title">Location</string>
 	<string name="onboarding_detail_permissions_location_message">To see places and traffic near you and use navigation.</string>
 	<string name="onboarding_detail_permissions_storage_path_message">You can also change a destination to save downloaded maps.</string>
-	<string name="onboarding_welcome_title">Welcome to MAPS.ME</string>
+	<string name="onboarding_welcome_title">Welcome to RLMap</string>
 	<string name="onboarding_welcome_first_subtitle">Free, fast, detailed and entirely offline maps with turn-by-turn navigation.</string>
 	<string name="onboarding_welcome_second_subtitle">By launching the application, you agree to &lt;a href=\"http://legal.my.com/us/maps/tou/\">Terms&lt;/a> of Use and &lt;a href=\"https://legal.my.com/us/maps/privacy/\">Privacy Policy&lt;/a>.</string>
 	<string name="dialog_incorrect_feature_position">Change location</string>
@@ -829,7 +829,7 @@
 	<string name="no_migration_during_navigation">Updating is not allowed during navigation.</string>
 	<!-- Error dialog no space -->
 	<string name="migration_no_space_message">To download, you need more space. Please delete any unnecessary data.</string>
-	<string name="editor_sharing_title">I improved the MAPS.ME maps</string>
+	<string name="editor_sharing_title">I improved the RLMap maps</string>
 	<string name="editor_comment_will_be_sent">We will make sure to send your comments to the map editors.</string>
 	<string name="editor_unsupported_category_message">You have added an object whose category we do not support yet. It will appear on the map in the future.</string>
 	<!-- Downloaded 10 **of** 20 <- it is that "of" -->
@@ -846,7 +846,7 @@
 	<string name="placepage_unknown_place">Unknown Place</string>
 	<string name="editor_other_info">Additional info</string>
 	<string name="editor_detailed_description_hint">Detailed comment</string>
-	<string name="editor_detailed_description">Your suggested map changes will be sent to the OpenStreetMap community. Describe any additional details that cannot be edited in MAPS.ME.</string>
+	<string name="editor_detailed_description">Your suggested map changes will be sent to the OpenStreetMap community. Describe any additional details that cannot be edited in RLMap.</string>
 	<string name="editor_more_about_osm">More about OpenStreetMap</string>
 	<string name="editor_operator">Owner</string>
 	<string name="editor_tag_description">Enter company, organization or individual responsible for the facilities.</string>
@@ -867,7 +867,7 @@
 	<string name="current_location_unknown_error_title">Current location is unknown.</string>
 	<string name="current_location_unknown_error_message">An error occurred while searching for your location. Check that your device is working properly and try again later.</string>
 	<string name="whatsnew_update_editor_title">We\'ve updated the map editor</string>
-	<string name="whatsnew_update_editor_message">MAPS.ME users have already made 200,000 map changes. Together we are making the most detailed maps in the world. Join us!</string>
+	<string name="whatsnew_update_editor_message">RLMap users have already made 200,000 map changes. Together we are making the most detailed maps in the world. Join us!</string>
 	<!-- Additional text in whats new -->
 	<string name="whatsnew_update_editor_message_update">Update all maps to use Map Editor.</string>
 	<string name="location_services_disabled_header">Location services are disabled</string>
@@ -956,7 +956,7 @@
 	<!-- For sharing via SMS and so on -->
 	<string name="sharing_call_action_look">Check out</string>
 	<string name="continue_recent_track_background_button">Continue</string>
-	<string name="recent_track_background_dialog_message">MAPS.ME uses your geoposition in the background for recording your recently traveled route.</string>
+	<string name="recent_track_background_dialog_message">RLMap uses your geoposition in the background for recording your recently traveled route.</string>
 	<string name="whatsnew_car_navigation_header">User-friendly vehicle navigation</string>
 	<string name="whatsnew_car_navigation_message">• The navigation elements take up less space.\n• We display the speed and have added auto zoom.</string>
 	<string name="whatsnew_cycle_navigation_2_header">Bike navigation</string>
@@ -964,15 +964,15 @@
 	<string name="whatsnew_booking_2_header">Easy hotel search</string>
 	<string name="whatsnew_booking_2_message">The search results show the hotel rating and price category.</string>
 	<string name="whatsnew_cycle_navigation_header">Bike navigation (beta version)</string>
-	<string name="whatsnew_cycle_navigation_message">We are testing bike navigation for the new season. Try your favorite bike route with MAPS.ME, and share your opinion with us.</string>
+	<string name="whatsnew_cycle_navigation_message">We are testing bike navigation for the new season. Try your favorite bike route with RLMap, and share your opinion with us.</string>
 	<!-- Rate on Google Play (Android only) -->
 	<string name="rate_gp">Rate on Google Play</string>
 	<!-- Share with friends: menu item title -->
 	<string name="tell_friends">Tell a Friend</string>
 	<!-- Share with friends: sharing text -->
-	<string name="tell_friends_text">Hi! Install MAPS.ME!</string>
+	<string name="tell_friends_text">Hi! Install RLMap!</string>
 	<!-- About short text (below logo) -->
-	<string name="about_description">MAPS.ME is an essential offline application for travelling. MAPS.ME is based on OpenStreetMap data and allows editing it.</string>
+	<string name="about_description">RLMap is an essential offline application for travelling. RLMap is based on OpenStreetMap data and allows editing it.</string>
 	<!-- Text in menu -->
 	<string name="blog">Blog</string>
 	<!-- Hint near allow statictics checkbox -->
@@ -1029,7 +1029,7 @@
 	<string name="chat">Geochat</string>
 	<!-- Verb. Text on a button that opens the chat. -->
 	<string name="chat_open">Open</string>
-	<string name="whatsnew_uber_header">MAPS.ME &amp; Uber</string>
+	<string name="whatsnew_uber_header">RLMap &amp; Uber</string>
 	<string name="whatsnew_uber_message">Order a taxi directly from the app!</string>
 	<string name="dialog_taxi_offline">Taxi ordering is unavailable in offline mode.</string>
 	<string name="dialog_taxi_error">Taxi ordering is temporarily unavailable.</string>
@@ -1046,7 +1046,7 @@
 	<string name="traffic_update_maps_text">To display traffic data, maps must be updated.</string>
 	<string name="traffic_outdated">Traffic data is outdated.</string>
 	<string name="big_font">Increase font size on the map</string>
-	<string name="traffic_update_app">Please update MAPS.ME</string>
+	<string name="traffic_update_app">Please update RLMap</string>
 	<!-- "traffic" as in road congestion -->
 	<string name="traffic_update_app_message">To display traffic data, the application must be updated.</string>
 	<!-- "traffic" as in "road congestion" -->
