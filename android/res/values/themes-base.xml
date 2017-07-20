@@ -106,107 +106,107 @@
   </style>
 
   <!-- Night theme -->
-  <style name="MwmTheme.Night.Base" parent="Theme.AppCompat.NoActionBar">
-    <item name="android:listViewStyle">@style/MwmWidget.ListView</item>
-    <item name="android:textViewStyle">@style/MwmWidget.TextView</item>
+  <!--<style name="MwmTheme.Night.Base" parent="Theme.AppCompat.NoActionBar">-->
+    <!--<item name="android:listViewStyle">@style/MwmWidget.ListView</item>-->
+    <!--<item name="android:textViewStyle">@style/MwmWidget.TextView</item>-->
 
-    <item name="android:textColorPrimary">@color/text_light</item>
-    <item name="android:textColorPrimaryInverse">@color/text_dark</item>
-    <item name="android:textColorSecondary">@color/text_light_subtitle</item>
-    <item name="android:windowBackground">?windowBackgroundForced</item>
-    <item name="android:colorPrimaryDark" tools:targetApi="lollipop">?statusBar</item>
-    <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
-    <item name="android:fontFamily" tools:targetApi="jelly_bean">@string/robotoRegular</item>
-    <item name="android:colorBackgroundCacheHint">@null</item>
-    <item name="android:windowActionBarOverlay">true</item>
-    <item name="clickableBackground">?selectableItemBackground</item>
-    <item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>
+    <!--<item name="android:textColorPrimary">@color/text_light</item>-->
+    <!--<item name="android:textColorPrimaryInverse">@color/text_dark</item>-->
+    <!--<item name="android:textColorSecondary">@color/text_light_subtitle</item>-->
+    <!--<item name="android:windowBackground">?windowBackgroundForced</item>-->
+    <!--<item name="android:colorPrimaryDark" tools:targetApi="lollipop">?statusBar</item>-->
+    <!--<item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>-->
+    <!--<item name="android:fontFamily" tools:targetApi="jelly_bean">@string/robotoRegular</item>-->
+    <!--<item name="android:colorBackgroundCacheHint">@null</item>-->
+    <!--<item name="android:windowActionBarOverlay">true</item>-->
+    <!--<item name="clickableBackground">?selectableItemBackground</item>-->
+    <!--<item name="android:statusBarColor" tools:targetApi="lollipop">@android:color/transparent</item>-->
 
-    <item name="alertDialogTheme">@style/MwmTheme.Night.DialogFragment</item>
-    <item name="windowBackgroundForced">@color/bg_window_night</item>
-    <item name="cardFrame">@drawable/card_frame_night</item>
-    <item name="cardBackground">@color/bg_cards_night</item>
-    <item name="fullscreenDialogTheme">@style/MwmTheme.DialogFragment.Fullscreen.Night</item>
+    <!--<item name="alertDialogTheme">@style/MwmTheme.Night.DialogFragment</item>-->
+    <!--<item name="windowBackgroundForced">@color/bg_window_night</item>-->
+    <!--&lt;!&ndash;<item name="cardFrame">@drawable/card_frame_night</item>&ndash;&gt;-->
+    <!--<item name="cardBackground">@color/bg_cards_night</item>-->
+    <!--<item name="fullscreenDialogTheme">@style/MwmTheme.DialogFragment.Fullscreen.Night</item>-->
 
-    <item name="colorPrimary">@color/bg_primary_night</item>
-    <item name="colorControlNormal">?secondary</item>
-    <item name="colorAccent">@color/base_accent_night</item>
-    <item name="panel">@color/bg_panel_night</item>
-    <item name="sidePanel">@color/bg_side_panel_night</item>
-    <item name="iconTint">@color/icon_tint_night</item>
-    <item name="iconTintLight">@color/icon_tint_light_night</item>
-    <item name="counterTextColor">?android:textColorPrimary</item>
+    <!--<item name="colorPrimary">@color/bg_primary_night</item>-->
+    <!--<item name="colorControlNormal">?secondary</item>-->
+    <!--<item name="colorAccent">@color/base_accent_night</item>-->
+    <!--<item name="panel">@color/bg_panel_night</item>-->
+    <!--<item name="sidePanel">@color/bg_side_panel_night</item>-->
+    <!--<item name="iconTint">@color/icon_tint_night</item>-->
+    <!--<item name="iconTintLight">@color/icon_tint_light_night</item>-->
+    <!--<item name="counterTextColor">?android:textColorPrimary</item>-->
 
-    <item name="secondary">@color/text_light_hint</item>
-    <item name="dividerHorizontal">@color/divider_night</item>
+    <!--<item name="secondary">@color/text_light_hint</item>-->
+    <!--<item name="dividerHorizontal">@color/divider_night</item>-->
 
-    <item name="ppBackground">@color/bg_cards_night</item>
-    <item name="ppButtonsBackground">@color/bg_window_night</item>
-    <item name="ppPreviewHeadOpen">@drawable/bg_place_page_head_open_night</item>
-    <item name="ppPreviewHeadClosed">@drawable/bg_place_page_head_closed_night</item>
+    <!--<item name="ppBackground">@color/bg_cards_night</item>-->
+    <!--<item name="ppButtonsBackground">@color/bg_window_night</item>-->
+    <!--&lt;!&ndash;<item name="ppPreviewHeadOpen">@drawable/bg_place_page_head_open_night</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="ppPreviewHeadClosed">@drawable/bg_place_page_head_closed_night</item>&ndash;&gt;-->
 
-    <item name="navNextTurnFrame">@drawable/bg_nav_next_turn_night</item>
-    <item name="navNextNextTurnFrame">@drawable/bg_nav_next_next_turn_night</item>
+    <!--&lt;!&ndash;<item name="navNextTurnFrame">@drawable/bg_nav_next_turn_night</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="navNextNextTurnFrame">@drawable/bg_nav_next_next_turn_night</item>&ndash;&gt;-->
 
-    <item name="buttonBackground">@drawable/button_night</item>
-    <item name="buttonTextColor">@color/button_text_night</item>
-    <item name="buttonTextColorDisabled">@color/button_text_disabled_night</item>
-    <item name="buttonDialogTextColor">@color/base_accent_night</item>
+    <!--&lt;!&ndash;<item name="buttonBackground">@drawable/button_night</item>&ndash;&gt;-->
+    <!--<item name="buttonTextColor">@color/button_text_night</item>-->
+    <!--<item name="buttonTextColorDisabled">@color/button_text_disabled_night</item>-->
+    <!--<item name="buttonDialogTextColor">@color/base_accent_night</item>-->
 
-    <item name="accentButtonBackground">@drawable/button_accent_night</item>
-    <item name="accentButtonRoundBackground">@drawable/button_accent_round_night</item>
-    <item name="accentButtonTextColor">@color/button_accent_text_night</item>
-    <item name="accentButtonTextColorDisabled">@color/button_accent_text_disabled_night</item>
+    <!--&lt;!&ndash;<item name="accentButtonBackground">@drawable/button_accent_night</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="accentButtonRoundBackground">@drawable/button_accent_round_night</item>&ndash;&gt;-->
+    <!--<item name="accentButtonTextColor">@color/button_accent_text_night</item>-->
+    <!--<item name="accentButtonTextColorDisabled">@color/button_accent_text_disabled_night</item>-->
 
-    <item name="redButtonBackground">@drawable/button_red</item>
-    <item name="redButtonTextColor">@color/button_red_text</item>
-    <item name="redButtonTextColorDisabled">@color/button_red_text_disabled</item>
+    <!--<item name="redButtonBackground">@drawable/button_red</item>-->
+    <!--<item name="redButtonTextColor">@color/button_red_text</item>-->
+    <!--<item name="redButtonTextColorDisabled">@color/button_red_text_disabled</item>-->
 
-    <item name="startButtonBackground">@drawable/button_start_night</item>
+    <!--&lt;!&ndash;<item name="startButtonBackground">@drawable/button_start_night</item>&ndash;&gt;-->
 
-    <item name="circleAccent">@drawable/circle_accent_night</item>
+    <!--&lt;!&ndash;<item name="circleAccent">@drawable/circle_accent_night</item>&ndash;&gt;-->
 
-    <item name="menuBackground">@color/bg_menu_night</item>
-    <item name="menuBackgroundOpen">@color/bg_menu_open_night</item>
+    <!--<item name="menuBackground">@color/bg_menu_night</item>-->
+    <!--<item name="menuBackgroundOpen">@color/bg_menu_open_night</item>-->
 
-    <item name="myPositionButtonAnimation">@drawable/anim_myposition_pending_night</item>
-    <item name="wheelPendingAnimation">@drawable/anim_spinner_pending</item>
-    <item name="trafficLoadingAnimation">@drawable/anim_traffic_loading_night</item>
+    <!--&lt;!&ndash;<item name="myPositionButtonAnimation">@drawable/anim_myposition_pending_night</item>&ndash;&gt;-->
+    <!--<item name="wheelPendingAnimation">@drawable/anim_spinner_pending</item>-->
+    <!--&lt;!&ndash;<item name="trafficLoadingAnimation">@drawable/anim_traffic_loading_night</item>&ndash;&gt;-->
 
-    <item name="navButtonsTheme">@style/MwmTheme.NavButtons.Night</item>
-    <item name="downloaderTheme">@style/MwmTheme.Downloader.Night</item>
-    <item name="navigationTheme">@style/MwmTheme.Navigation.Night</item>
+    <!--&lt;!&ndash;<item name="navButtonsTheme">@style/MwmTheme.NavButtons.Night</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="downloaderTheme">@style/MwmTheme.Downloader.Night</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="navigationTheme">@style/MwmTheme.Navigation.Night</item>&ndash;&gt;-->
 
-    <item name="fabAdd">@drawable/ic_fab_add_night</item>
+    <!--&lt;!&ndash;<item name="fabAdd">@drawable/ic_fab_add_night</item>&ndash;&gt;-->
 
-    <item name="routingButtonHint">@color/routing_button_tint</item>
-    <item name="routingButtonActivatedHint">?statusBar</item>
-    <item name="routingButtonPressedHint">@color/routing_button_pressed_tint</item>
+    <!--<item name="routingButtonHint">@color/routing_button_tint</item>-->
+    <!--<item name="routingButtonActivatedHint">?statusBar</item>-->
+    <!--<item name="routingButtonPressedHint">@color/routing_button_pressed_tint</item>-->
 
-    <item name="ppRatingBackground">@color/bg_placepage_rating_night</item>
-    <item name="ppRatingText">@color/text_placepage_rating_night</item>
-    <item name="ppPositive">@drawable/ic_positive_review_night</item>
-    <item name="ppNegative">@drawable/ic_negative_review_night</item>
+    <!--<item name="ppRatingBackground">@color/bg_placepage_rating_night</item>-->
+    <!--<item name="ppRatingText">@color/text_placepage_rating_night</item>-->
+    <!--&lt;!&ndash;<item name="ppPositive">@drawable/ic_positive_review_night</item>&ndash;&gt;-->
+    <!--&lt;!&ndash;<item name="ppNegative">@drawable/ic_negative_review_night</item>&ndash;&gt;-->
 
-    <item name="bannerText">@color/text_banner_color_night</item>
-    <item name="bannerBackground">@color/bg_banner_color_night</item>
-    <item name="bannerButtonBackground">@color/bg_banner_button_night</item>
-    <item name="adsBackground">@drawable/bg_ads_night</item>
-    <item name="adsText">@color/text_ads_color_night</item>
-    <item name="adsActionBackground">@drawable/bg_ads_action_night</item>
-    <item name="textBannerTitle">@color/white_60</item>
+    <!--<item name="bannerText">@color/text_banner_color_night</item>-->
+    <!--<item name="bannerBackground">@color/bg_banner_color_night</item>-->
+    <!--<item name="bannerButtonBackground">@color/bg_banner_button_night</item>-->
+    <!--&lt;!&ndash;<item name="adsBackground">@drawable/bg_ads_night</item>&ndash;&gt;-->
+    <!--<item name="adsText">@color/text_ads_color_night</item>-->
+    <!--&lt;!&ndash;<item name="adsActionBackground">@drawable/bg_ads_action_night</item>&ndash;&gt;-->
+    <!--<item name="textBannerTitle">@color/white_60</item>-->
 
-    <item name="steadyIconTint">@color/white_secondary</item>
-    <item name="steadyIconBackground">@drawable/bg_steady_icon_night</item>
-    <item name="activeIconTint">@color/bg_cards_night</item>
-    <item name="activeIconBackground">@drawable/bg_active_icon_night</item>
+    <!--<item name="steadyIconTint">@color/white_secondary</item>-->
+    <!--&lt;!&ndash;<item name="steadyIconBackground">@drawable/bg_steady_icon_night</item>&ndash;&gt;-->
+    <!--<item name="activeIconTint">@color/bg_cards_night</item>-->
+    <!--&lt;!&ndash;<item name="activeIconBackground">@drawable/bg_active_icon_night</item>&ndash;&gt;-->
 
-    <item name="warmGray">@color/warm_gray_night</item>
+    <!--<item name="warmGray">@color/warm_gray_night</item>-->
 
-    <item name="localAdSearchResBackground">@color/search_local_ads_customer_result_night</item>
+    <!--<item name="localAdSearchResBackground">@color/search_local_ads_customer_result_night</item>-->
 
-    <item name="tagBackground">@drawable/bg_tag_night</item>
+    <!--&lt;!&ndash;<item name="tagBackground">@drawable/bg_tag_night</item>&ndash;&gt;-->
 
-    <item name="viatorMore">@drawable/ic_viator_more_night</item>
-  </style>
+    <!--&lt;!&ndash;<item name="viatorMore">@drawable/ic_viator_more_night</item>&ndash;&gt;-->
+  <!--</style>-->
 </resources>

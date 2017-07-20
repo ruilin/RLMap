@@ -116,10 +116,7 @@ public class DotPager implements ViewPager.OnPageChangeListener
     {
       boolean isCurPage = i == currentPage;
       @DrawableRes int dotDrawable;
-      if (ThemeUtils.isNightTheme())
-        dotDrawable = isCurPage ? R.drawable.news_marker_active_night : R.drawable.news_marker_inactive_night;
-      else
-        dotDrawable = isCurPage ? R.drawable.news_marker_active : R.drawable.news_marker_inactive;
+      dotDrawable = isCurPage ? R.drawable.news_marker_active : R.drawable.news_marker_inactive;
       mDots[i].setImageResource(dotDrawable);
     }
   }

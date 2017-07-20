@@ -100,7 +100,7 @@ public final class ThemeUtils
       return R.style.MwmTheme_CardBg;
 
     if (isNightTheme(theme))
-      return R.style.MwmTheme_Night_CardBg;
+      return R.style.MwmTheme_CardBg;
 
     throw new IllegalArgumentException("Attempt to apply unsupported theme: " + theme);
   }

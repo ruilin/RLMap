@@ -230,8 +230,7 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHolder>
     {
       super(view);
 
-      int resId = ThemeUtils.isNightTheme() ? R.drawable.search_la_customer_result_night
-                                            : R.drawable.search_la_customer_result;
+      int resId = R.drawable.search_la_customer_result;
 
       view.setBackgroundDrawable(mSearchFragment.getResources().getDrawable(resId));
     }
@@ -240,8 +239,7 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.BaseViewHolder>
   SearchAdapter(SearchFragment fragment)
   {
     mSearchFragment = fragment;
-    mClosedMarkerBackground = fragment.getResources().getDrawable(ThemeUtils.isNightTheme() ? R.drawable.search_closed_marker_night
-                                                                                            : R.drawable.search_closed_marker);
+    mClosedMarkerBackground = fragment.getResources().getDrawable(R.drawable.search_closed_marker);
   }
 
   @Override

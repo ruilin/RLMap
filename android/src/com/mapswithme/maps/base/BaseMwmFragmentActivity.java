@@ -44,7 +44,7 @@ public class BaseMwmFragmentActivity extends AppCompatActivity
         return R.style.MwmTheme;
 
     if (ThemeUtils.isNightTheme(theme))
-      return R.style.MwmTheme_Night;
+      return R.style.MwmTheme;
 
     throw new IllegalArgumentException("Attempt to apply unsupported theme: " + theme);
   }

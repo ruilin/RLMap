@@ -100,7 +100,7 @@ public class FullScreenGalleryActivity extends BaseMwmFragmentActivity
       return R.style.MwmTheme_FullScreenGalleryActivity;
 
     if (ThemeUtils.isNightTheme(theme))
-      return R.style.MwmTheme_Night_FullScreenGalleryActivity;
+      return R.style.MwmTheme_FullScreenGalleryActivity;
 
     throw new IllegalArgumentException("Attempt to apply unsupported theme: " + theme);
   }

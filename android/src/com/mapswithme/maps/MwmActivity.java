@@ -473,7 +473,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
       return R.style.MwmTheme_MainActivity;
 
     if (ThemeUtils.isNightTheme(theme))
-      return R.style.MwmTheme_Night_MainActivity;
+      return R.style.MwmTheme_MainActivity;
 
     return super.getThemeResourceId(theme);
   }
