@@ -390,11 +390,15 @@ task ndkBuildClean(type: Exec, description: 'Clean native jni libraries') {
   commandLine project.ext.NDK_BUILD, 'clean'
 }
 
+// 判断当obj存在时不build NDK，如果底层有更新，可以手动删除obj目录再编译
 tasks.withType(JavaCompile) { compileTask ->
-  if (compileTask.name.contains('Release') || compileTask.name.contains('Beta')) {
-    compileTask.dependsOn ndkBuildRelease
-  } else {
-    compileTask.dependsOn ndkBuildDebug
+  def objDir = new File("obj")
+  if (!objDir.exists()) {
+    if (compileTask.name.contains('Release') || compileTask.name.contains('Beta')) {
+      compileTask.dependsOn ndkBuildRelease
+    } else {
+      compileTask.dependsOn ndkBuildDebug
+    }
   }
 }
 
