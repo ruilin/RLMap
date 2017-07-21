@@ -78,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/routing_selector_wheel_margin"
             android:layout_marginEnd="@dimen/routing_selector_wheel_margin"
+            android:visibility="gone"
             tools:button="@drawable/ic_taxi"
             tools:buttonTint="?iconTintLight" />
         </RadioGroup>

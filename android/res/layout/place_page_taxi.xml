@@ -40,5 +40,6 @@
     android:paddingLeft="@dimen/margin_half"
     android:paddingRight="@dimen/margin_half"
     android:paddingTop="@dimen/placepage_taxi_button_padding_vert"
-    android:paddingBottom="@dimen/placepage_taxi_button_padding_vert"/>
+    android:paddingBottom="@dimen/placepage_taxi_button_padding_vert"
+    android:visibility="gone"/>
 </RelativeLayout>

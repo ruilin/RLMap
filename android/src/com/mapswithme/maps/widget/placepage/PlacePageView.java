@@ -1346,7 +1346,8 @@ public class PlacePageView extends RelativeLayout
     refreshMetadataOrHide(mapObject.getMetadata(Metadata.MetadataType.FMD_FLATS), mEntrance, mTvEntrance);
     refreshOpeningHours(mapObject);
 
-    showTaxiOffer(mapObject);
+    // 去掉的士选项 by ruilin
+//    showTaxiOffer(mapObject);
 
     boolean inRouting = RoutingController.get().isNavigating() ||
                         RoutingController.get().isPlanning();

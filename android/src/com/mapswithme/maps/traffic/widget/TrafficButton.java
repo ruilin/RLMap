@@ -18,82 +18,82 @@ import com.mapswithme.util.UiUtils;
 
 public class TrafficButton
 {
-  @NonNull
-  private final AnimationDrawable mLoadingAnim;
-  @NonNull
-  private final ImageButton mButton;
+//  @NonNull
+//  private final AnimationDrawable mLoadingAnim;
+//  @NonNull
+//  private final ImageButton mButton;
 
   public TrafficButton(@NonNull Context context, @NonNull ImageButton button)
   {
-    mButton = button;
-    Resources rs = context.getResources();
-    @DrawableRes
-    final int loadingAnimRes = ThemeUtils.getResource(context, R.attr.trafficLoadingAnimation);
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-      mLoadingAnim = (AnimationDrawable) rs.getDrawable(loadingAnimRes, context.getTheme());
-    else
-      mLoadingAnim = (AnimationDrawable) rs.getDrawable(loadingAnimRes);
-
-    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) button.getLayoutParams();
-    params.setMargins(0, UiUtils.getStatusBarHeight(context), 0, 0);
-    button.setVisibility(View.VISIBLE);
+//    mButton = button;
+//    Resources rs = context.getResources();
+//    @DrawableRes
+//    final int loadingAnimRes = ThemeUtils.getResource(context, R.attr.trafficLoadingAnimation);
+//    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+//      mLoadingAnim = (AnimationDrawable) rs.getDrawable(loadingAnimRes, context.getTheme());
+//    else
+//      mLoadingAnim = (AnimationDrawable) rs.getDrawable(loadingAnimRes);
+//
+//    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) button.getLayoutParams();
+//    params.setMargins(0, UiUtils.getStatusBarHeight(context), 0, 0);
+    button.setVisibility(View.GONE);
   }
 
   void setClickListener(@NonNull View.OnClickListener clickListener)
   {
-    mButton.setOnClickListener(clickListener);
+//    mButton.setOnClickListener(clickListener);
   }
 
   void turnOff()
   {
-    stopWaitingAnimation();
-    mButton.setImageResource(R.drawable.ic_traffic_off);
+//    stopWaitingAnimation();
+//    mButton.setImageResource(R.drawable.ic_traffic_off);
   }
 
   void turnOn()
   {
-    stopWaitingAnimation();
-    mButton.setImageResource(R.drawable.ic_traffic_on);
+//    stopWaitingAnimation();
+//    mButton.setImageResource(R.drawable.ic_traffic_on);
   }
 
   void markAsOutdated()
   {
-    stopWaitingAnimation();
-    mButton.setImageResource(R.drawable.ic_traffic_outdated);
+//    stopWaitingAnimation();
+//    mButton.setImageResource(R.drawable.ic_traffic_outdated);
   }
 
   void startWaitingAnimation()
   {
-    mButton.setImageDrawable(mLoadingAnim);
-    AnimationDrawable animationDrawable = (AnimationDrawable) mButton.getDrawable();
-    animationDrawable.start();
+//    mButton.setImageDrawable(mLoadingAnim);
+//    AnimationDrawable animationDrawable = (AnimationDrawable) mButton.getDrawable();
+//    animationDrawable.start();
   }
 
   private void stopWaitingAnimation()
   {
-    Drawable drawable = mButton.getDrawable();
-    if (drawable instanceof AnimationDrawable)
-    {
-      AnimationDrawable animation = (AnimationDrawable) drawable;
-      animation.stop();
-      mButton.setImageDrawable(null);
-    }
+//    Drawable drawable = mButton.getDrawable();
+//    if (drawable instanceof AnimationDrawable)
+//    {
+//      AnimationDrawable animation = (AnimationDrawable) drawable;
+//      animation.stop();
+//      mButton.setImageDrawable(null);
+//    }
   }
 
   public void setOffset(int offsetX, int offsetY)
   {
-    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mButton.getLayoutParams();
-    params.setMargins(offsetX, offsetY, 0, 0);
-    mButton.requestLayout();
+//    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) mButton.getLayoutParams();
+//    params.setMargins(offsetX, offsetY, 0, 0);
+//    mButton.requestLayout();
   }
 
   public void show()
   {
-    Animations.appearSliding(mButton, Animations.LEFT, null);
+//    Animations.appearSliding(mButton, Animations.LEFT, null);
   }
 
   public void hide()
   {
-    Animations.disappearSliding(mButton, Animations.LEFT, null);
+//    Animations.disappearSliding(mButton, Animations.LEFT, null);
   }
 }
