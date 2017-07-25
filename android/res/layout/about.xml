@@ -45,29 +45,34 @@
       <TextView android:id="@+id/web"
                 style="@style/MwmWidget.TextView.Item"
                 android:text="@string/website"
+                android:visibility="gone"
                 android:drawableLeft="@drawable/ic_website"
                 android:drawableStart="@drawable/ic_website"/>
 
       <TextView android:id="@+id/blog"
                 style="@style/MwmWidget.TextView.Item"
                 android:text="@string/blog"
+                android:visibility="gone"
                 android:drawableLeft="@drawable/ic_blog"
                 android:drawableStart="@drawable/ic_blog"/>
 
       <TextView android:id="@+id/facebook"
                 style="@style/MwmWidget.TextView.Item"
                 android:text="@string/facebook"
+                android:visibility="gone"
                 android:drawableLeft="@drawable/ic_facebook"
                 android:drawableStart="@drawable/ic_facebook"/>
 
       <TextView android:id="@+id/twitter"
                 style="@style/MwmWidget.TextView.Item"
                 android:text="@string/twitter"
+                android:visibility="gone"
                 android:drawableLeft="@drawable/ic_twitter"
                 android:drawableStart="@drawable/ic_twitter"/>
 
       <TextView android:id="@+id/subscribe"
                 style="@style/MwmWidget.TextView.Item"
+                android:visibility="gone"
                 android:text="@string/subscribe_to_news"
                 android:drawableLeft="@drawable/ic_subscribe"
                 android:drawableStart="@drawable/ic_subscribe"/>
@@ -80,12 +85,14 @@
 
       <TextView android:id="@+id/rate"
                 style="@style/MwmWidget.TextView.Item"
+                android:visibility="gone"
                 android:text="@string/rate_gp"
                 android:drawableLeft="@drawable/ic_rate"
                 android:drawableStart="@drawable/ic_rate"/>
 
       <TextView android:id="@+id/share"
                 style="@style/MwmWidget.TextView.Item"
+                android:visibility="gone"
                 android:text="@string/tell_friends"
                 android:drawableLeft="@drawable/ic_share"
                 android:drawableStart="@drawable/ic_share"/>
@@ -97,6 +104,7 @@
             android:background="?dividerHorizontal"/>
 
       <TextView android:id="@+id/copyright"
+                android:visibility="gone"
                 style="@style/MwmWidget.TextView.Item"
                 android:text="@string/copyright"/>
     </LinearLayout>
