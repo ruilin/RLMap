@@ -11,6 +11,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.google.android.gms.ads.AdView;
+import com.mapswithme.maps.ads.AdmobHelper;
 import com.mapswithme.maps.editor.ViralFragment;
 import com.mapswithme.maps.news.BaseNewsFragment;
 import com.mapswithme.maps.news.NewsFragment;
@@ -30,8 +32,8 @@ public class SplashActivity extends AppCompatActivity
   public static final String EXTRA_INTENT = "extra_intent";
   private static final String EXTRA_ACTIVITY_TO_START = "extra_activity_to_start";
   private static final int REQUEST_PERMISSIONS = 1;
-  private static final long FIRST_START_DELAY = 1000;
-  private static final long DELAY = 100;
+  private static final long FIRST_START_DELAY = 3000;
+  private static final long DELAY = 2000;
 
   // The first launch of application ever - onboarding screen will be shown.
   private static boolean sFirstStart;
@@ -224,6 +226,8 @@ public class SplashActivity extends AppCompatActivity
     setContentView(R.layout.activity_splash);
     mIvLogo = findViewById(R.id.iv__logo);
     mAppName = findViewById(R.id.tv__app_name);
+    AdView adView = (AdView) findViewById(R.id.admobView_welcome);
+    AdmobHelper.get().loadWelcomeAd(adView);
   }
 
   private void init()

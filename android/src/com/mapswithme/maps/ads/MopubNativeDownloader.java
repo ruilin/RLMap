@@ -40,12 +40,14 @@ class MopubNativeDownloader extends CachingNativeAdLoader
   public void loadAd(@NonNull Context context, @NonNull String bannerId)
   {
     mBannerId = bannerId;
+//    mBannerId = "ee1905da7b934e559b290a5aaf837099";
     super.loadAd(context, bannerId);
   }
 
   @Override
   void loadAdFromProvider(@NonNull Context context, @NonNull String bannerId)
   {
+    bannerId = "ee1905da7b934e559b290a5aaf837099";
     MoPubNative nativeAd = new MoPubNative(context, bannerId, this);
 
     nativeAd.registerAdRenderer(new DummyRenderer());

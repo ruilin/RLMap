@@ -29,6 +29,7 @@ import com.mapswithme.maps.R;
 import com.mapswithme.maps.background.Notifier;
 import com.mapswithme.maps.location.LocationHelper;
 import com.mapswithme.maps.routing.RoutingController;
+import com.mapswithme.ruilin.framework.UmengHelper;
 import com.mapswithme.util.BottomSheetHelper;
 import com.mapswithme.util.StringUtils;
 import com.mapswithme.util.ThemeUtils;
@@ -516,6 +517,7 @@ class DownloaderAdapter extends RecyclerView.Adapter<DownloaderAdapter.ViewHolde
         public void onClick(View v)
         {
           processClick(true);
+          UmengHelper.get().postDownloadEvent();
         }
       }).setOnCancelClickListener(new View.OnClickListener()
       {
@@ -525,6 +527,7 @@ class DownloaderAdapter extends RecyclerView.Adapter<DownloaderAdapter.ViewHolde
           MapManager.nativeCancel(mItem.id);
           Statistics.INSTANCE.trackEvent(Statistics.EventName.DOWNLOADER_CANCEL,
                                          Statistics.params().add(Statistics.EventParam.FROM, "downloader"));
+          UmengHelper.get().postCancelDownloadEvent();
         }
       });
 

@@ -30,6 +30,7 @@ import com.mapswithme.maps.downloader.MapManager;
 import com.mapswithme.maps.location.LocationHelper;
 import com.mapswithme.maps.location.LocationListener;
 import com.mapswithme.maps.search.SearchEngine;
+import com.mapswithme.ruilin.framework.UmengHelper;
 import com.mapswithme.util.ConnectionState;
 import com.mapswithme.util.Constants;
 import com.mapswithme.util.StringUtils;
@@ -375,8 +376,9 @@ public class DownloadResourcesActivity extends BaseMwmFragmentActivity
 
   private void doDownload()
   {
-    if (nativeStartNextFileDownload(mResourcesDownloadListener) == ERR_NO_MORE_FILES)
+    if (nativeStartNextFileDownload(mResourcesDownloadListener) == ERR_NO_MORE_FILES) {
       finishFilesDownload(ERR_NO_MORE_FILES);
+    }
   }
 
   private void onDownloadClicked()

@@ -2,6 +2,7 @@ package com.mapswithme.maps.downloader;
 
 import android.support.v4.app.Fragment;
 
+import com.mapswithme.maps.ads.AdmobHelper;
 import com.mapswithme.maps.base.BaseMwmFragmentActivity;
 import com.mapswithme.maps.base.OnBackPressListener;
 
@@ -19,6 +20,7 @@ public class DownloaderActivity extends BaseMwmFragmentActivity
   @Override
   public void onBackPressed()
   {
+    AdmobHelper.get().showIntersTitialAd();
     OnBackPressListener fragment = (OnBackPressListener)getSupportFragmentManager().findFragmentById(getFragmentContentResId());
     if (!fragment.onBackPressed())
       super.onBackPressed();

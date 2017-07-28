@@ -20,6 +20,7 @@ import java.util.List;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.ndk.CrashlyticsNdk;
+import com.mapswithme.maps.ads.AdmobHelper;
 import com.mapswithme.maps.background.AppBackgroundTracker;
 import com.mapswithme.maps.background.Notifier;
 import com.mapswithme.maps.bookmarks.data.BookmarkManager;
@@ -171,6 +172,8 @@ public class MwmApplication extends Application
 
     MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
 
+    /** Admob */
+    AdmobHelper.get().init(this);
   }
 
   public void initNativePlatform()

@@ -41,10 +41,11 @@ dependencies {
   compile 'com.android.support:preference-v7:23.4.0'
   compile 'com.android.support:preference-v14:23.4.0'
   // google play services
-  compile 'com.google.android.gms:play-services-location:10.0.1'
-  compile 'com.google.android.gms:play-services-analytics:10.0.1'
-  compile 'com.google.android.gms:play-services-plus:10.0.1'
-  compile 'com.google.android.gms:play-services-gcm:10.0.1'
+  compile 'com.google.android.gms:play-services-location:11.0.0'
+  compile 'com.google.android.gms:play-services-analytics:11.0.0'
+  compile 'com.google.android.gms:play-services-plus:11.0.0'
+  compile 'com.google.android.gms:play-services-gcm:11.0.0'
+  compile 'com.google.android.gms:play-services-ads:11.0.0'
   // statistics
   compile 'com.flurry.android:analytics:6.7.0'
   // crash reporting
@@ -310,7 +311,7 @@ android {
     beta {
       debuggable true
       jniDebuggable true           // Enable jni debug build
-      applicationIdSuffix '.beta'
+//      applicationIdSuffix '.beta'
       versionNameSuffix '-beta'
       signingConfig signingConfigs.mapswithme
       android.sourceSets.beta.setRoot('flavors/beta')
@@ -386,8 +387,12 @@ def createNdkBuildTask(buildType, arch, suffix, flags) {
   }
 }
 
-task ndkBuildClean(type: Exec, description: 'Clean native jni libraries') {
-  commandLine project.ext.NDK_BUILD, 'clean'
+//task ndkBuildClean(type: Exec, description: 'Clean native jni libraries') {
+//  commandLine project.ext.NDK_BUILD, 'clean'
+//}
+
+task ndkBuildClean(type: Delete) {
+  delete 'obj', 'libs/armeabi-v7a'
 }
 
 // 判断当obj存在时不build NDK，如果底层有更新，可以手动删除obj目录再编译

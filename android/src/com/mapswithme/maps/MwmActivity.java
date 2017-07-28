@@ -29,8 +29,10 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
 import com.mapswithme.maps.Framework.MapObjectListener;
 import com.mapswithme.maps.activity.CustomNavigateUpListener;
+import com.mapswithme.maps.ads.AdmobHelper;
 import com.mapswithme.maps.ads.LikesManager;
 import com.mapswithme.maps.api.ParsedMwmRequest;
 import com.mapswithme.maps.api.ParsedRoutingData;
@@ -484,6 +486,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
   protected void safeOnCreate(@Nullable Bundle savedInstanceState)
   {
     super.safeOnCreate(savedInstanceState);
+
     if (savedInstanceState != null)
       mLocationErrorDialogAnnoying = savedInstanceState.getBoolean(EXTRA_LOCATION_DIALOG_IS_ANNOYING);
     mIsFragmentContainer = getResources().getBoolean(R.bool.tabletLayout);
@@ -1166,6 +1169,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
       mTrafficButtonController.destroy();
     mPlacePage.onActivityStopped();
   }
+
 
   @Override
   public void onBackPressed()

@@ -335,6 +335,7 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
   {
     if (preference.getKey() != null && preference.getKey().equals(getString(R.string.pref_help)))
     {
+      // 帮助按钮事件
       Statistics.INSTANCE.trackEvent(Statistics.EventName.Settings.HELP);
       AlohaHelper.logClick(AlohaHelper.Settings.HELP);
     }

@@ -10,23 +10,59 @@
     android:layout_height="1dp"
     android:layout_centerInParent="true"/>
 
-  <ImageView
-    android:id="@+id/iv__logo"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:src="@drawable/img_logo"
-    android:layout_above="@id/anchor_center"
-    android:layout_centerHorizontal="true"/>
+  <com.google.android.gms.ads.AdView
+      xmlns:ads="http://schemas.android.com/apk/res-auto"
+      android:id="@+id/admobView_welcome"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:layout_marginTop="100dp"
+      android:visibility="visible"
+      android:layout_centerHorizontal="true"
+      ads:adSize="MEDIUM_RECTANGLE"
+      ads:adUnitId="ca-app-pub-7146181069155443/6672796129">
+  </com.google.android.gms.ads.AdView>
 
-  <TextView
-    android:id="@+id/tv__app_name"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_centerHorizontal="true"
-    android:layout_marginBottom="@dimen/margin_double_plus"
-    android:textAppearance="@style/MwmTextAppearance.Title"
-    android:textAllCaps="true"
-    android:textColor="?android:textColorSecondary"
-    android:text="@string/app_name"/>
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:layout_centerHorizontal="true"
+      android:gravity="center_vertical"
+      android:layout_marginBottom="@dimen/margin_double_plus"
+      android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/iv__logo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/img_logo"
+        android:layout_above="@id/anchor_center"
+        android:layout_centerHorizontal="true"/>
+
+  <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:gravity="center_vertical"
+      android:orientation="vertical">
+    <TextView
+        android:id="@+id/tv__app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        android:textColor="?android:textColorSecondary"
+        android:text="@string/app_name"/>
+    <TextView
+        android:id="@+id/tv__app_subname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:textSize="14dp"
+        android:textAllCaps="true"
+        android:textColor="?android:textColorSecondary"
+        android:text="离线环游世界"/>
+    </LinearLayout>
+  </LinearLayout>
+
 </RelativeLayout>

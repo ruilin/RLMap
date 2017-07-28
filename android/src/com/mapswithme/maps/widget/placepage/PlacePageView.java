@@ -38,11 +38,13 @@ import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdView;
 import com.mapswithme.maps.FeatureId;
 import com.mapswithme.maps.Framework;
 import com.mapswithme.maps.MwmActivity;
 import com.mapswithme.maps.MwmApplication;
 import com.mapswithme.maps.R;
+import com.mapswithme.maps.ads.AdmobHelper;
 import com.mapswithme.maps.ads.CompoundNativeAdLoader;
 import com.mapswithme.maps.ads.DefaultAdTracker;
 import com.mapswithme.maps.ads.Factory;
@@ -198,6 +200,7 @@ public class PlacePageView extends RelativeLayout
   private View mUgcView;
   private View mUgcRating;
   private View mUgcMoreReviews;
+  private AdView mAdmobView;
 
   @Nullable
   UgcAverageRatingController mUgcController;
@@ -456,6 +459,8 @@ public class PlacePageView extends RelativeLayout
       CompoundNativeAdLoader loader = Factory.createCompoundLoader(tracker, tracker);
       mBannerController = new BannerController(bannerView, this, loader, tracker);
     }
+
+    mAdmobView = (AdView) findViewById(R.id.admobView);
 
     mButtons = new PlacePageButtons(this, ppButtons, new PlacePageButtons.ItemListener()
     {
@@ -1197,7 +1202,7 @@ public class PlacePageView extends RelativeLayout
       LOGGER.e(TAG, "A place page views cannot be refreshed, mMapObject is null", new Throwable());
       return;
     }
-
+    AdmobHelper.get().loadBannerAd(mAdmobView);
     refreshPreview(mMapObject, policy);
     refreshViewsInternal(mMapObject);
   }
