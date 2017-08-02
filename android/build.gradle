@@ -312,7 +312,7 @@ android {
       signingConfig signingConfigs.mapswithme
       minifyEnabled true
       shrinkResources true
-      resValue "string", "app_name", "远行地图"
+      resValue "string", "app_name", "行者地图"
       proguardFile('proguard-mwm.txt')
     }
 
