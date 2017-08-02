@@ -91,6 +91,9 @@ def getDate() {
   return ""
 }
 
+def gitCommitCount = Integer.parseInt('git rev-list HEAD --count'.execute([], project.rootDir).text.trim())
+
+
 project.ext.versionCodes = ['armeabi-v7a': 1, 'x86': 2]
 project.ext.appId = 'com.ruilin.rlmap'
 
@@ -107,12 +110,14 @@ android {
 
   defaultConfig {
     // Default package name is taken from the manifest and should be com.mapswithme.maps
-    versionCode propVersionCode.toInteger()
+//    versionCode propVersionCode.toInteger()
+    versionCode gitCommitCount
     versionName propVersionName
     minSdkVersion propMinSdkVersion.toInteger()
     targetSdkVersion propTargetSdkVersion.toInteger()
     applicationId project.ext.appId
-    buildConfigField 'String', 'SUPPORT_MAIL', '"android@maps.me"'
+    //    buildConfigField 'String', 'SUPPORT_MAIL', '"android@maps.me"'
+    buildConfigField 'String', 'SUPPORT_MAIL', '"zruilin@126.com"'
     buildConfigField 'String', 'REVIEW_URL', '"market://details?id=com.mapswithme.maps.pro"'
     buildConfigField 'int', 'RATING_THRESHOLD', '5'
 
@@ -261,16 +266,17 @@ android {
         commandLine android.getAdbExe(), 'shell', 'am', 'start', '-n', "${applicationId}/com.mapswithme.maps.SplashActivity"
       }
 
-      variant.outputs.each { output ->
-        if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
-          def file = output.outputFile
-          // version at the end of each built apk
-          output.outputFile = new File(file.parent, file.name.replace(".apk", "-" + android.defaultConfig.versionName + "-" + getDate() + ".apk"))
-          // set different versionCodes for different ABIs
-          int abiVersionCode = project.ext.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI)) ?: 0
-          output.versionCodeOverride = (abiVersionCode * 1000) + android.defaultConfig.versionCode
-        }
-      }
+//      variant.outputs.each { output ->
+//        if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
+//          def file = output.outputFile
+//          // version at the end of each built apk
+////          output.outputFile = new File(file.parent, file.name.replace(".apk", "-" + android.defaultConfig.versionName + "-" + getDate() + ".apk"))
+////          output.outputFile = new File(file.parent, file.name.replace(".apk", "-universal" + ".apk"))
+//          // set different versionCodes for different ABIs
+//          int abiVersionCode = project.ext.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI)) ?: 0
+//          output.versionCodeOverride = (abiVersionCode * 1000) + android.defaultConfig.versionCode
+//        }
+//      }
     }
   }
 
@@ -298,6 +304,7 @@ android {
       jniDebuggable true           // Enable jni debug build
       zipAlignEnabled true
       signingConfig signingConfigs.mapswithmeDebug
+      resValue "string", "app_name", "maps.me"
       android.sourceSets.debug.setRoot('flavors/debug')
     }
 
@@ -305,6 +312,7 @@ android {
       signingConfig signingConfigs.mapswithme
       minifyEnabled true
       shrinkResources true
+      resValue "string", "app_name", "远行地图"
       proguardFile('proguard-mwm.txt')
     }
 
@@ -314,6 +322,7 @@ android {
 //      applicationIdSuffix '.beta'
       versionNameSuffix '-beta'
       signingConfig signingConfigs.mapswithme
+      resValue "string", "app_name", "maps.me"
       android.sourceSets.beta.setRoot('flavors/beta')
     }
   }

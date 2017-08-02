@@ -217,9 +217,10 @@ public class MapFragment extends BaseMwmFragment
     if (!mContextCreated)
       return;
 
-    if (getActivity() == null || !getActivity().isChangingConfigurations())
-      destroyContext();
-    else
+    // 屏蔽 destroyContext() 否则会引发ANR
+//    if (getActivity() == null || !getActivity().isChangingConfigurations())
+//      destroyContext();
+//    else
       nativeDetachSurface(false);
   }
 
