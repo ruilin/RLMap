@@ -81,8 +81,8 @@
         android:name="PW_LOG_LEVEL"
         android:value="ERROR" /-->
     <!-- 友盟 -->
-    <meta-data android:value="YOUR_APP_KEY" android:name="596878eec62dca6dbd000299"/>
-    <meta-data android:value="Channel ID" android:name="UMENG_CHANNEL"/>
+    <meta-data android:value="596878eec62dca6dbd000299" android:name="UMENG_APPKEY"/>
+    <meta-data android:value="KU_AN" android:name="UMENG_CHANNEL"/>
 
     <activity
       android:name="com.mapswithme.maps.SplashActivity"

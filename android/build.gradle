@@ -110,8 +110,8 @@ android {
 
   defaultConfig {
     // Default package name is taken from the manifest and should be com.mapswithme.maps
-//    versionCode propVersionCode.toInteger()
-    versionCode gitCommitCount
+    versionCode propVersionCode.toInteger()
+//    versionCode gitCommitCount
     versionName propVersionName
     minSdkVersion propMinSdkVersion.toInteger()
     targetSdkVersion propTargetSdkVersion.toInteger()
