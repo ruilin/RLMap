@@ -224,9 +224,9 @@ android {
     }
 
     appChina {
-      versionName = android.defaultConfig.versionName + '-AppChina'
+//      versionName = android.defaultConfig.versionName + '-AppChina'
       android.sourceSets.appChina.assets.srcDirs = ['flavors/mwm-ttf-assets']
-      buildConfigField 'String', 'REVIEW_URL', '"http://www.appchina.com/app/com.mapswithme.maps.pro"'
+      buildConfigField 'String', 'REVIEW_URL', '"https://www.coolapk.com/apk/153047"'
     }
 
     moboMarket {
