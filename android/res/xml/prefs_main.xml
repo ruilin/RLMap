@@ -36,11 +36,11 @@
       android:title="@string/big_font"
       android:defaultValue="false"
       android:order="5"/>
-    <SwitchPreferenceCompat
-      android:key="@string/pref_transliteration"
-      android:title="@string/whatsnew_transliteration_title"
-      android:defaultValue="false"
-      android:order="6"/>
+    <!--<SwitchPreferenceCompat-->
+      <!--android:key="@string/pref_transliteration"-->
+      <!--android:title="@string/whatsnew_transliteration_title"-->
+      <!--android:defaultValue="false"-->
+      <!--android:order="6"/>-->
     <android.support.v7.preference.PreferenceScreen
       android:key="@string/pref_track_screen"
       android:title="@string/pref_track_record_title"
@@ -73,12 +73,12 @@
       android:title="@string/allow_statistics"
       android:summary="@string/allow_statistics_hint"
       android:order="9"/>
-    <SwitchPreferenceCompat
-      android:key="@string/pref_play_services"
-      android:title="Google Play Services"
-      android:summary="@string/pref_use_google_play"
-      android:defaultValue="true"
-      android:order="10"/>
+    <!--<SwitchPreferenceCompat-->
+      <!--android:key="@string/pref_play_services"-->
+      <!--android:title="Google Play Services"-->
+      <!--android:summary="@string/pref_use_google_play"-->
+      <!--android:defaultValue="true"-->
+      <!--android:order="10"/>-->
     <SwitchPreferenceCompat
       android:key="@string/pref_showcase_switched_on"
       android:title="@string/showcase_settings_title"

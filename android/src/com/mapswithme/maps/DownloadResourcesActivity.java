@@ -30,7 +30,6 @@ import com.mapswithme.maps.downloader.MapManager;
 import com.mapswithme.maps.location.LocationHelper;
 import com.mapswithme.maps.location.LocationListener;
 import com.mapswithme.maps.search.SearchEngine;
-import com.mapswithme.ruilin.framework.UmengHelper;
 import com.mapswithme.util.ConnectionState;
 import com.mapswithme.util.Constants;
 import com.mapswithme.util.StringUtils;

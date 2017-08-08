@@ -449,6 +449,11 @@
     <service
         android:name="com.pushwoosh.location.GeoLocationService"/>
 
+    <!-- 高德定位 -->
+    <service android:name="com.amap.api.location.APSService"></service>
+    <meta-data android:name="com.amap.api.v2.apikey" android:value="e1459066cc42bb6b094ba46957bc9e90">
+    </meta-data>
+
     <!-- Catches app upgraded intent -->
     <receiver android:name=".background.UpgradeReceiver">
       <intent-filter>

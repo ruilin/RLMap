@@ -1,6 +1,4 @@
-package com.mapswithme.ruilin.framework;
-
-import android.content.Context;
+package com.ruilin.framework;
 
 import com.mapswithme.maps.MwmApplication;
 import com.umeng.analytics.MobclickAgent;

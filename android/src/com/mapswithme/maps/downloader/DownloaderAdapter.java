@@ -29,7 +29,7 @@ import com.mapswithme.maps.R;
 import com.mapswithme.maps.background.Notifier;
 import com.mapswithme.maps.location.LocationHelper;
 import com.mapswithme.maps.routing.RoutingController;
-import com.mapswithme.ruilin.framework.UmengHelper;
+import com.ruilin.framework.UmengHelper;
 import com.mapswithme.util.BottomSheetHelper;
 import com.mapswithme.util.StringUtils;
 import com.mapswithme.util.ThemeUtils;

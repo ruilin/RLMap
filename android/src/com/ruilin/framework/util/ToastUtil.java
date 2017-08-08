@@ -1,4 +1,4 @@
-package com.mapswithme.ruilin.framework;
+package com.ruilin.framework.util;
 
 import android.widget.Toast;
 

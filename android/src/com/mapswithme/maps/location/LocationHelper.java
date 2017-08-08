@@ -172,23 +172,24 @@ public enum LocationHelper
   {
     mLogger.d(TAG, "initProvider", new Throwable());
     final MwmApplication application = MwmApplication.get();
-    final boolean containsGoogleServices = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application) == ConnectionResult.SUCCESS;
-    final boolean googleServicesTurnedInSettings = Config.useGoogleServices();
-    if (containsGoogleServices && googleServicesTurnedInSettings)
-    {
-      mLogger.d(TAG, "Use fused provider.");
-      mLocationProvider = new GoogleFusedLocationProvider(new FusedLocationFixChecker());
-    }
-    else
-    {
+//    final boolean containsGoogleServices = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(application) == ConnectionResult.SUCCESS;
+//    final boolean googleServicesTurnedInSettings = Config.useGoogleServices();
+//    if (containsGoogleServices && googleServicesTurnedInSettings)
+//    {
+//      mLogger.d(TAG, "Use fused provider.");
+//      mLocationProvider = new GoogleFusedLocationProvider(new FusedLocationFixChecker());
+//    }
+//    else
+//    {
       initNativeProvider();
-    }
+//    }
   }
 
   void initNativeProvider()
   {
     mLogger.d(TAG, "Use native provider");
-    mLocationProvider = new AndroidNativeProvider(new DefaultLocationFixChecker());
+//    mLocationProvider = new AndroidNativeProvider(new DefaultLocationFixChecker());
+      mLocationProvider = new AMapLocationProvider(new DefaultLocationFixChecker());
   }
 
   public void onLocationUpdated(@NonNull Location location)
@@ -246,14 +247,14 @@ public enum LocationHelper
     return mLocationProvider != null && mLocationProvider.isActive();
   }
 
-  void notifyCompassUpdated(long time, double magneticNorth, double trueNorth, double accuracy)
+  synchronized void notifyCompassUpdated(long time, double magneticNorth, double trueNorth, double accuracy)
   {
     for (LocationListener listener : mListeners)
       listener.onCompassUpdated(time, magneticNorth, trueNorth, accuracy);
     mListeners.finishIterate();
   }
 
-  void notifyLocationUpdated()
+  synchronized void notifyLocationUpdated()
   {
     if (mSavedLocation == null)
     {
@@ -277,7 +278,7 @@ public enum LocationHelper
     }
   }
 
-  private void notifyLocationUpdated(LocationListener listener)
+  private synchronized void notifyLocationUpdated(LocationListener listener)
   {
     mLogger.d(TAG, "notifyLocationUpdated(), listener: " + listener);
 
@@ -290,7 +291,7 @@ public enum LocationHelper
     listener.onLocationUpdated(mSavedLocation);
   }
 
-  private void notifyLocationError(int errCode)
+  private synchronized void notifyLocationError(int errCode)
   {
     mLogger.d(TAG, "notifyLocationError(): " + errCode);
 
@@ -299,7 +300,7 @@ public enum LocationHelper
     mListeners.finishIterate();
   }
 
-  private void notifyMyPositionModeChanged(int newMode)
+  private synchronized void notifyMyPositionModeChanged(int newMode)
   {
     mLogger.d(TAG, "notifyMyPositionModeChanged(): " + LocationState.nameOf(newMode) , new Throwable());
 
@@ -307,7 +308,7 @@ public enum LocationHelper
       mUiCallback.onMyPositionModeChanged(newMode);
   }
 
-  private void notifyLocationNotFound()
+  private synchronized void notifyLocationNotFound()
   {
     mLogger.d(TAG, "notifyLocationNotFound()");
     if (mUiCallback != null)
@@ -486,6 +487,7 @@ public enum LocationHelper
       return;
     }
     checkProviderInitialization();
+    mSensorHelper.start();
     //noinspection ConstantConditions
     mLocationProvider.start();
     mLogger.d(TAG, mLocationProvider.isActive() ? "SUCCESS" : "FAILURE");

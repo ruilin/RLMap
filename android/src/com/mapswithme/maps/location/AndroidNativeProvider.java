@@ -58,7 +58,7 @@ class AndroidNativeProvider extends BaseLocationProvider
       mListeners.add(listener);
     }
 
-    LocationHelper.INSTANCE.startSensors();
+//    LocationHelper.INSTANCE.startSensors();
 
     Location location = findBestNotExpiredLocation(mLocationManager, providers,
                                                    LocationUtils.LOCATION_EXPIRATION_TIME_MILLIS_SHORT);

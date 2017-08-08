@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity
   private static final String EXTRA_ACTIVITY_TO_START = "extra_activity_to_start";
   private static final int REQUEST_PERMISSIONS = 1;
   private static final long FIRST_START_DELAY = 3000;
-  private static final long DELAY = 3500;
+  private static final long DELAY = 4000;
 
   // The first launch of application ever - onboarding screen will be shown.
   private static boolean sFirstStart;
