@@ -86,14 +86,6 @@ public class AMapLocationProvider extends BaseLocationProvider {
 
     private void checkErrorCode(final int errCode) {
         LogUtil.e("Location ErrorCode == " + errCode);
-        if (BuildConfig.DEBUG) {
-            UiThread.run(new Runnable() {
-                @Override
-                public void run() {
-                    ToastUtil.show("Location ErrorCode == " + errCode);
-                }
-            });
-        }
         switch (errCode) {
             case 1:
                 break;

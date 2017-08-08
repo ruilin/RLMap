@@ -101,6 +101,7 @@ import com.mapswithme.util.sharing.ShareOption;
 import com.mapswithme.util.sharing.SharingHelper;
 import com.mapswithme.util.statistics.AlohaHelper;
 import com.mapswithme.util.statistics.Statistics;
+import com.ruilin.framework.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
@@ -193,6 +194,8 @@ public class MwmActivity extends BaseMwmFragmentActivity
   private boolean mRestoreRoutingPlanFragmentNeeded;
   @Nullable
   private Bundle mSavedForTabletState;
+
+  private long pressTime; // 按下返回键的时间
 
   @NonNull
   private final OnClickListener mOnMyPositionClickListener = new OnClickListener()
@@ -1170,10 +1173,15 @@ public class MwmActivity extends BaseMwmFragmentActivity
     mPlacePage.onActivityStopped();
   }
 
-
   @Override
   public void onBackPressed()
   {
+    long currentTime = System.currentTimeMillis();
+    if (currentTime - pressTime > 2000) {
+      pressTime = currentTime;
+      ToastUtil.show("再按一次离开");
+      return;
+    }
     if (mFilterController != null && mFilterController.onBackPressed())
       return;
 
