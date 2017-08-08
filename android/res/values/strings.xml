@@ -1151,4 +1151,5 @@
 	<string name="routing_add_finish_point">Add finish to plan a route.</string>
 	<string name="use">Use</string>
 	<string name="viator_title">Attractions and tours</string>
+	<string name="main_exit_tips">Press again to exit</string>
 </resources>

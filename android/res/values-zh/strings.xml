@@ -1097,4 +1097,5 @@
 	<string name="prefs_languages_information_off_link">如需了解更多信息，请查阅此指南。</string>
 	<string name="whatsnew_transliteration_title">直译成拉丁文</string>
 	<string name="whatsnew_transliteration_message">如果某条街道或者某个对象在您的语言中没有对应的名称，它将使用拉丁字母拼写。</string>
+	<string name="main_exit_tips">再按一次离开</string>
 </resources>

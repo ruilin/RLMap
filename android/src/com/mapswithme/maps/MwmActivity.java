@@ -1176,12 +1176,6 @@ public class MwmActivity extends BaseMwmFragmentActivity
   @Override
   public void onBackPressed()
   {
-    long currentTime = System.currentTimeMillis();
-    if (currentTime - pressTime > 2000) {
-      pressTime = currentTime;
-      ToastUtil.show("再按一次离开");
-      return;
-    }
     if (mFilterController != null && mFilterController.onBackPressed())
       return;
 
@@ -1200,11 +1194,15 @@ public class MwmActivity extends BaseMwmFragmentActivity
     if (!closePlacePage() && !closeSidePanel() && !RoutingController.get().cancel()
         && !closePositionChooser())
     {
-      try
-      {
+      long currentTime = System.currentTimeMillis();
+      if (currentTime - pressTime > 2000) {
+        pressTime = currentTime;
+        ToastUtil.show(R.string.main_exit_tips);
+        return;
+      }
+      try {
         super.onBackPressed();
-      } catch (IllegalStateException e)
-      {
+      } catch (IllegalStateException e) {
         // Sometimes this can be called after onSaveState() for unknown reason.
       }
     }
