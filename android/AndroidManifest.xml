@@ -401,6 +401,16 @@
       </intent-filter>
     </receiver>
 
+    <!-- 监听网络变化 -->
+    <receiver
+        android:name="com.ruilin.framework.NetworkChangeReceiver"
+        android:enabled="true"
+        android:exported="true">
+      <intent-filter>
+        <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+      </intent-filter>
+    </receiver>
+
     <!-- myTracker
          IMPORTANT : we DON'T declare myTracker's broadcast receiver for INSTALL_REFERRER intent, cause we catch it in our custom
          MultipleTrackerReferrerReceiver and then pass it manually to myTracker's one. -->

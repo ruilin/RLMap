@@ -391,6 +391,8 @@
 	<!-- Text in menu -->
 	<string name="settings_and_more">Settings &amp; More</string>
 	<!-- Text in menu -->
+	<string name="contact">Email to us</string>
+	<!-- Text in menu -->
 	<string name="website">Website</string>
 	<!-- Text in menu -->
 	<string name="maps_me_community">RLMap Community</string>
@@ -820,9 +822,9 @@
 	<string name="onboarding_detail_permissions_location_title">Location</string>
 	<string name="onboarding_detail_permissions_location_message">To see places and traffic near you and use navigation.</string>
 	<string name="onboarding_detail_permissions_storage_path_message">You can also change a destination to save downloaded maps.</string>
-	<string name="onboarding_welcome_title">Welcome to RLMap</string>
-	<string name="onboarding_welcome_first_subtitle">Free, fast, detailed and entirely offline maps with turn-by-turn navigation.</string>
-	<string name="onboarding_welcome_second_subtitle">By launching the application, you agree to &lt;a href=\"http://legal.my.com/us/maps/tou/\">Terms&lt;/a> of Use and &lt;a href=\"https://legal.my.com/us/maps/privacy/\">Privacy Policy&lt;/a>.</string>
+	<!--<string name="onboarding_welcome_title">Welcome to RLMap</string>-->
+	<!--<string name="onboarding_welcome_first_subtitle">Free, fast, detailed and entirely offline maps with turn-by-turn navigation.</string>-->
+	<!--<string name="onboarding_welcome_second_subtitle">By launching the application, you agree to &lt;a href=\"http://legal.my.com/us/maps/tou/\">Terms&lt;/a> of Use and &lt;a href=\"https://legal.my.com/us/maps/privacy/\">Privacy Policy&lt;/a>.</string>-->
 	<string name="dialog_incorrect_feature_position">Change location</string>
 	<string name="message_invalid_feature_position">No object can be located here</string>
 	<string name="login_to_make_edits_visible">Log in so other users can see the changes that you have made</string>

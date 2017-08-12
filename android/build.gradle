@@ -119,7 +119,7 @@ android {
     targetSdkVersion propTargetSdkVersion.toInteger()
     applicationId project.ext.appId
     //    buildConfigField 'String', 'SUPPORT_MAIL', '"android@maps.me"'
-    buildConfigField 'String', 'SUPPORT_MAIL', '"zruilin@126.com"'
+    buildConfigField 'String', 'SUPPORT_MAIL', '"muyu-studio@outlook.com"'
     buildConfigField 'String', 'REVIEW_URL', '"market://details?id=com.mapswithme.maps.pro"'
     buildConfigField 'int', 'RATING_THRESHOLD', '5'
 

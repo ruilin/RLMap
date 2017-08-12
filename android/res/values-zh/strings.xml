@@ -940,6 +940,8 @@
 	<!-- About short text (below logo) -->
 	<string name="about_description">行者地图 是一款基本的离线旅行应用。行者地图 基于 OpenStreetMap 数据并且允许对其进行编辑。</string>
 	<!-- Text in menu -->
+	<string name="contact">吐槽</string>
+	<!-- Text in menu -->
 	<string name="blog">博客</string>
 	<!-- Hint near allow statictics checkbox -->
 	<string name="allow_statistics_hint">收集使用统计数据有助于我们改进应用。</string>
@@ -1098,4 +1100,14 @@
 	<string name="whatsnew_transliteration_title">直译成拉丁文</string>
 	<string name="whatsnew_transliteration_message">如果某条街道或者某个对象在您的语言中没有对应的名称，它将使用拉丁字母拼写。</string>
 	<string name="main_exit_tips">再按一次离开</string>
+
+
+    <string name="onboarding_welcome_title">欢迎使用 行者地图</string>
+    <string name="onboarding_welcome_first_subtitle">一个永久免费、简洁、的离线地图应。为您的出行提供最便捷的服务！</string>
+    <string name="onboarding_welcome_second_subtitle">&lt;a href=\"http://rlmap.sxl.cn/\">了解更多&lt;/a></string>
+    <string name="accept_and_continue">下一步</string>
+
+	<string name="onboarding_permissions_title">请允许我们使用存储数据和定位的权限</string>
+	<string name="onboarding_permissions_message">这样你才能下载地图数据和使用导航功能。</string>
+	<string name="learn_more">了解更多</string>
 </resources>

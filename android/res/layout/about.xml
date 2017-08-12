@@ -39,15 +39,23 @@
                 android:layout_marginBottom="@dimen/margin_base_plus"
                 android:layout_marginLeft="@dimen/margin_base"
                 android:layout_marginRight="@dimen/margin_base"
+                android:linksClickable="true"
                 android:textAppearance="@style/MwmTextAppearance.Body2"
                 android:text="@string/about_description"/>
 
       <TextView android:id="@+id/web"
                 style="@style/MwmWidget.TextView.Item"
                 android:text="@string/website"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:drawableLeft="@drawable/ic_website"
                 android:drawableStart="@drawable/ic_website"/>
+
+      <TextView android:id="@+id/tv_about_contact"
+                style="@style/MwmWidget.TextView.Item"
+                android:text="@string/contact"
+                android:visibility="visible"
+                android:drawableLeft="@drawable/ic_email"
+                android:drawableStart="@drawable/ic_email"/>
 
       <TextView android:id="@+id/blog"
                 style="@style/MwmWidget.TextView.Item"

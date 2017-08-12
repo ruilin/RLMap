@@ -61,7 +61,7 @@
         android:textSize="14dp"
         android:textAllCaps="true"
         android:textColor="?android:textColorSecondary"
-        android:text="离线环游世界"/>
+        android:text="离线行走世界"/>
     </LinearLayout>
   </LinearLayout>
 

@@ -54,6 +54,7 @@ public class AboutFragment extends BaseSettingsFragment
         .setText(getString(R.string.data_version, Framework.nativeGetDataVersion()));
 
     setupItem(R.id.web, true);
+    setupItem(R.id.tv_about_contact, true);
     setupItem(R.id.blog, true);
     setupItem(R.id.facebook, false);
     setupItem(R.id.twitter, false);
@@ -76,6 +77,14 @@ public class AboutFragment extends BaseSettingsFragment
         Statistics.INSTANCE.trackEvent(Statistics.EventName.Settings.WEB_SITE);
         AlohaHelper.logClick(AlohaHelper.Settings.WEB_SITE);
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.Url.WEB_SITE)));
+        break;
+
+      case R.id.tv_about_contact:
+        Intent data=new Intent(Intent.ACTION_SENDTO);
+        data.setData(Uri.parse("mailto:" + Constants.Url.WEB_EMAIL));
+        data.putExtra(Intent.EXTRA_SUBJECT, "吐槽");
+        data.putExtra(Intent.EXTRA_TEXT, "");
+        startActivity(data);
         break;
 
       case R.id.blog:

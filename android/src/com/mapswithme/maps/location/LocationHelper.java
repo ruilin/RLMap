@@ -14,6 +14,7 @@ import com.mapswithme.maps.ads.Banner;
 import com.mapswithme.maps.bookmarks.data.MapObject;
 import com.mapswithme.maps.routing.RoutingController;
 import com.mapswithme.util.Config;
+import com.mapswithme.util.ConnectionState;
 import com.mapswithme.util.Listeners;
 import com.mapswithme.util.LocationUtils;
 import com.mapswithme.util.PermissionsUtils;
@@ -21,6 +22,7 @@ import com.mapswithme.util.Utils;
 import com.mapswithme.util.log.Logger;
 import com.mapswithme.util.log.LoggerFactory;
 import com.mapswithme.util.permissions.PermissionsResult;
+import com.ruilin.framework.NetworkChangeReceiver;
 
 public enum LocationHelper
 {
@@ -163,6 +165,7 @@ public enum LocationHelper
   @UiThread
   public void initialize()
   {
+      NetworkChangeReceiver.init(ConnectionState.isConnected());
     initProvider();
     LocationState.nativeSetListener(mMyPositionModeListener);
     MwmApplication.backgroundTracker().addListener(mOnTransition);
