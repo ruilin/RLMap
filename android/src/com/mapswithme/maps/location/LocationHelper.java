@@ -480,6 +480,7 @@ public enum LocationHelper
    */
   private void startInternal()
   {
+    boolean isNavgation = RoutingController.get().isNavigating();
     mLogger.d(TAG, "startInternal(), current provider is '" + mLocationProvider
                    + "' , my position mode = " + LocationState.nameOf(getMyPositionMode())
                    + ", mInFirstRun = " + mInFirstRun);
@@ -492,7 +493,9 @@ public enum LocationHelper
     checkProviderInitialization();
     mSensorHelper.start();
     //noinspection ConstantConditions
-    mLocationProvider.start();
+    int interval = isNavgation ? 1000 : 3000;
+    // int interval = (int) LocationHelper.INSTANCE.getInterval();
+    mLocationProvider.start(interval);
     mLogger.d(TAG, mLocationProvider.isActive() ? "SUCCESS" : "FAILURE");
 
     if (mLocationProvider.isActive())

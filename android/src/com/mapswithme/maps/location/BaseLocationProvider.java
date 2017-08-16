@@ -23,7 +23,7 @@ abstract class BaseLocationProvider
     mLocationFixChecker = locationFixChecker;
   }
 
-  protected abstract void start();
+  protected abstract void start(int interval);
   protected abstract void stop();
 
   /**

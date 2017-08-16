@@ -536,6 +536,7 @@ public class RoutingController implements TaxiManager.TaxiListener
     setState(State.NONE);
 
     Framework.nativeCloseRouting();
+    LocationHelper.INSTANCE.restart();
   }
 
   public boolean cancel()

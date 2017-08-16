@@ -39,7 +39,7 @@ class GoogleFusedLocationProvider extends BaseLocationProvider
   }
 
   @Override
-  protected void start()
+  protected void start(int interval)
   {
     LOGGER.d(TAG, "Google fused provider is started");
     if (mGoogleApiClient.isConnected() || mGoogleApiClient.isConnecting())
@@ -50,7 +50,6 @@ class GoogleFusedLocationProvider extends BaseLocationProvider
 
     mLocationRequest = LocationRequest.create();
     mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    long interval = LocationHelper.INSTANCE.getInterval();
     mLocationRequest.setInterval(interval);
     LOGGER.d(TAG, "Request Google fused provider to provide locations at this interval = "
                   + interval + " ms");

@@ -34,7 +34,7 @@ class AndroidNativeProvider extends BaseLocationProvider
   @SuppressWarnings("MissingPermission")
   // A permission is checked externally
   @Override
-  protected void start()
+  protected void start(int interval)
   {
     LOGGER.d(TAG, "Android native provider is started");
     if (isActive())
@@ -51,7 +51,6 @@ class AndroidNativeProvider extends BaseLocationProvider
     for (String provider : providers)
     {
       LocationListener listener = new BaseLocationListener(getLocationFixChecker());
-      long interval = LocationHelper.INSTANCE.getInterval();
       LOGGER.d(TAG, "Request Android native provider '" + provider
                     + "' to get locations at this interval = " + interval + " ms");
       mLocationManager.requestLocationUpdates(provider, interval, 0, listener);
