@@ -108,7 +108,8 @@ public class Framework
 
   public static String getHttpGe0Url(double lat, double lon, double zoomLevel, String name)
   {
-    return nativeGetGe0Url(lat, lon, zoomLevel, name).replaceFirst(Constants.Url.GE0_PREFIX, Constants.Url.HTTP_GE0_PREFIX);
+    return Constants.Url.HTTP_GE0_PREFIX + "map=" + zoomLevel + "/" + lat + "/" + lon;
+//    return nativeGetGe0Url(lat, lon, zoomLevel, name).replaceFirst(Constants.Url.GE0_PREFIX, Constants.Url.HTTP_GE0_PREFIX);
   }
 
   /**

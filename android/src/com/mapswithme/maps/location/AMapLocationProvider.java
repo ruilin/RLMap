@@ -41,7 +41,9 @@ public class AMapLocationProvider extends BaseLocationProvider {
                     checkErrorCode(aMapLocation.getErrorCode());
                     return;
                 }
-                if (Double.compare(aMapLocation.getLatitude(), 0) == 0 && Double.compare(aMapLocation.getLongitude(), 0) == 0) {
+                if (aMapLocation == null
+                        || (Double.compare(aMapLocation.getLatitude(), 0) == 0
+                            && Double.compare(aMapLocation.getLongitude(), 0) == 0)) {
                     return;
                 }
                 Location location = new Location("AMap");

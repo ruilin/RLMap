@@ -247,9 +247,9 @@
 	<!-- No, thanks -->
 	<string name="no_thanks">不,谢谢</string>
 	<!-- Share one specific bookmark using SMS, %1$@ contains ge0:// and %2$@ http://ge0.me link. @NOTE non-ascii symbols in the link will make 70 bytes sms instead of 140 -->
-	<string name="bookmark_share_sms">嘿,在 行者地图 上查看我标注的图钉吧! %1$s 或%2$s 未安装离线地图?在此下 载: https://www.pgyer.com/rlmap</string>
+	<string name="bookmark_share_sms">嘿,在 行者地图 上查看我标注的图钉吧! %1$s 或%2$s 未安装离线地图?在此下 载: http://rlmap.sxl.cn/</string>
 	<!-- Share my position using SMS, %1$@ contains ge0:// and %2$@ http://ge0.me link WITHOUT NAME. @NOTE non-ascii symbols in the link will make 70 bytes sms instead of 140 -->
-	<string name="my_position_share_sms">嘿,在 行者地图 上查看我目前的位置 吧!%1$s 或%2$s 未安装离线地图?在此 下载: https://www.pgyer.com/rlmap</string>
+	<string name="my_position_share_sms">嘿,在 行者地图 上查看我目前的位置吧! %1$s 或%2$s 未安装离线地图?在此 下载: http://rlmap.sxl.cn/</string>
 	<!-- Subject for emailed bookmark -->
 	<string name="bookmark_share_email_subject">嘿,在 行者地图 上查看我标注的图钉吧!</string>
 	<!-- Share one specific bookmark using EMail, %1$@ is bookmark's name, %2$@ is ge0:// link and %3$@ http://ge0.me -->
