@@ -91,7 +91,7 @@ import com.mapswithme.util.BottomSheetHelper;
 import com.mapswithme.util.Counters;
 import com.mapswithme.util.InputUtils;
 import com.mapswithme.util.PermissionsUtils;
-import com.mapswithme.util.ThemeSwitcher;
+//import com.mapswithme.util.ThemeSwitcher;
 import com.mapswithme.util.ThemeUtils;
 import com.mapswithme.util.UiUtils;
 import com.mapswithme.util.Utils;
@@ -101,6 +101,7 @@ import com.mapswithme.util.sharing.ShareOption;
 import com.mapswithme.util.sharing.SharingHelper;
 import com.mapswithme.util.statistics.AlohaHelper;
 import com.mapswithme.util.statistics.Statistics;
+import com.ruilin.framework.util.ChinaUtil;
 import com.ruilin.framework.util.ToastUtil;
 import com.umeng.analytics.MobclickAgent;
 
@@ -1269,6 +1270,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
   @Override
   public void onMapObjectActivated(final MapObject object)
   {
+    ChinaUtil.check(object);
     if (MapObject.isOfType(MapObject.API_POINT, object))
     {
       final ParsedMwmRequest request = ParsedMwmRequest.getCurrentRequest();
@@ -1950,13 +1952,13 @@ public class MwmActivity extends BaseMwmFragmentActivity
     if (mNavigationController != null)
       mNavigationController.stop(this);
     updateSearchBar();
-    ThemeSwitcher.restart(isMapRendererActive());
+//    ThemeSwitcher.restart(isMapRendererActive());
   }
 
   @Override
   public void onNavigationStarted()
   {
-    ThemeSwitcher.restart(isMapRendererActive());
+//    ThemeSwitcher.restart(isMapRendererActive());
   }
 
   @Override

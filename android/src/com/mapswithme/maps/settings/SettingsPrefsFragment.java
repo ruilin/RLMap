@@ -35,7 +35,7 @@ import com.mapswithme.maps.sound.LanguageData;
 import com.mapswithme.maps.sound.TtsPlayer;
 import com.mapswithme.util.Config;
 import com.mapswithme.util.NetworkPolicy;
-import com.mapswithme.util.ThemeSwitcher;
+//import com.mapswithme.util.ThemeSwitcher;
 import com.mapswithme.util.UiUtils;
 import com.mapswithme.util.concurrency.UiThread;
 import com.mapswithme.util.log.LoggerFactory;
@@ -740,7 +740,7 @@ public class SettingsPrefsFragment extends BaseXmlSettingsFragment
         if (!Config.setUiThemeSettings(themeName))
           return true;
 
-        ThemeSwitcher.restart(false);
+//        ThemeSwitcher.restart(false);
         Statistics.INSTANCE.trackEvent(Statistics.EventName.Settings.MAP_STYLE,
                                        Statistics.params().add(Statistics.EventParam.NAME, themeName));
 

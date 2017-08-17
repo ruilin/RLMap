@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.mapswithme.maps.R;
 import com.mapswithme.util.UiUtils;
+import com.ruilin.framework.util.ChinaUtil;
 
 public class StackedButtonsDialog extends AppCompatDialog implements View.OnClickListener
 {
@@ -42,7 +43,7 @@ public class StackedButtonsDialog extends AppCompatDialog implements View.OnClic
                                boolean cancelable, @Nullable OnCancelListener cancelListener)
   {
     super(context);
-    mTitle = title;
+    mTitle = ChinaUtil.translate(title);
     mMessage = message;
     mPositive = positive;
     mPositiveListener = positiveListener;

@@ -251,6 +251,20 @@ Java_com_mapswithme_maps_downloader_MapManager_nativeGetUpdateInfo(JNIEnv * env,
   return env->NewObject(infoClass, ctor, info.m_numberOfMwmFilesToUpdate, info.m_totalUpdateSizeInBytes);
 }
 
+static string ChinaCheck(string targetName)
+{
+    if (strcmp(targetName.c_str(), "中华人民共和国") == 0) {
+        return "中国大陆";
+    } else if (strcmp(targetName.c_str(), "中华民国") == 0) {
+        return "中国台湾";
+    } else if (strcmp(targetName.c_str(), "广东省") == 0) {
+        return "广东省、香港、澳门";
+    } else if (strcmp(targetName.c_str(), "阿鲁纳恰尔邦") == 0) {
+        return "中国山南地区";
+    }
+    return targetName;
+}
+
 static void UpdateItemShort(JNIEnv * env, jobject item, NodeStatus const status, NodeErrorCode const error)
 {
   static jfieldID const countryItemFieldStatus = env->GetFieldID(g_countryItemClass, "status", "I");
@@ -276,8 +290,28 @@ static void UpdateItem(JNIEnv * env, jobject item, NodeAttrs const & attrs)
   static jfieldID const countryItemFieldPresent = env->GetFieldID(g_countryItemClass, "present", "Z");
   static jfieldID const countryItemFieldProgress = env->GetFieldID(g_countryItemClass, "progress", "I");
 
+    bool isTaiWan = false;
+    bool isZangNan = false;
+    string targetName = attrs.m_nodeLocalName;
+    string chinaDescription = attrs.m_nodeLocalDescription;
+
+    if (strcmp(targetName.c_str(), "中华人民共和国") == 0) {
+        targetName = "中国大陆";
+    } else if (strcmp(targetName.c_str(), "中华民国") == 0) {
+        targetName = "中国台湾";
+        chinaDescription = "中国台湾";
+        isTaiWan = true;
+    } else if (strcmp(targetName.c_str(), "广东省") == 0) {
+        targetName = "广东省、香港、澳门";
+    } else if (strcmp(targetName.c_str(), "阿鲁纳恰尔邦") == 0) {
+        targetName = "藏南地区";
+        chinaDescription = "中国藏南地区";
+        isZangNan = true;
+    }
+
+  // attrs.m_nodeLocalName = ChinaCheck(attrs.m_nodeLocalName);
   // Localized name
-  jni::TScopedLocalRef const name(env, jni::ToJavaString(env, attrs.m_nodeLocalName));
+  jni::TScopedLocalRef const name(env, jni::ToJavaString(env, targetName));
   env->SetObjectField(item, countryItemFieldName, name.get());
 
   // Direct parent[s]. Do not specify if there are multiple or none.
@@ -285,10 +319,22 @@ static void UpdateItem(JNIEnv * env, jobject item, NodeAttrs const & attrs)
   {
     CountryIdAndName const & info = attrs.m_parentInfo[0];
 
-    jni::TScopedLocalRef const parentId(env, jni::ToJavaString(env, info.m_id));
+    // ruilin
+    string directParentName = info.m_localName;
+    string directParentId = info.m_id;
+
+    if (strcmp(directParentId.c_str(), "Taiwan") == 0) {
+         isTaiWan = true;
+    }
+    if (isTaiWan || isZangNan || strcmp(directParentId.c_str(), "People's Republic of China") == 0) {
+        directParentName = "中国";
+        directParentId = "China";
+    }
+
+    jni::TScopedLocalRef const parentId(env, jni::ToJavaString(env, directParentId));
     env->SetObjectField(item, countryItemFieldDirectParentId, parentId.get());
 
-    jni::TScopedLocalRef const parentName(env, jni::ToJavaString(env, info.m_localName));
+    jni::TScopedLocalRef const parentName(env, jni::ToJavaString(env, directParentName));
     env->SetObjectField(item, countryItemFieldDirectParentName, parentName.get());
   }
   else
@@ -302,10 +348,21 @@ static void UpdateItem(JNIEnv * env, jobject item, NodeAttrs const & attrs)
   {
     CountryIdAndName const & info = attrs.m_topmostParentInfo[0];
 
-    jni::TScopedLocalRef const parentId(env, jni::ToJavaString(env, info.m_id));
+    string topmostParentName = info.m_localName;
+    string topmostParentId = info.m_id;
+
+    if (strcmp(topmostParentId.c_str(), "Taiwan") == 0) {
+         isTaiWan = true;
+    }
+    if (isTaiWan || isZangNan || strcmp(topmostParentId.c_str(), "People's Republic of China") == 0) {
+        topmostParentName = "中国";
+        topmostParentId = "China";
+    }
+
+    jni::TScopedLocalRef const parentId(env, jni::ToJavaString(env, topmostParentId));
     env->SetObjectField(item, countryItemFieldTopmostParentId, parentId.get());
 
-    jni::TScopedLocalRef const parentName(env, jni::ToJavaString(env, info.m_localName));
+    jni::TScopedLocalRef const parentName(env, jni::ToJavaString(env, topmostParentName));
     env->SetObjectField(item, countryItemFieldTopmostParentName, parentName.get());
   }
   else
@@ -315,7 +372,7 @@ static void UpdateItem(JNIEnv * env, jobject item, NodeAttrs const & attrs)
   }
 
   // Description
-  env->SetObjectField(item, countryItemFieldDescription, jni::TScopedLocalRef(env, jni::ToJavaString(env, attrs.m_nodeLocalDescription)));
+  env->SetObjectField(item, countryItemFieldDescription, jni::TScopedLocalRef(env, jni::ToJavaString(env, chinaDescription)));
 
   // Sizes
   env->SetLongField(item, countryItemFieldSize, attrs.m_localMwmSize);

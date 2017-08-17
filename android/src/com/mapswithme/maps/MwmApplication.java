@@ -36,7 +36,7 @@ import com.mapswithme.maps.traffic.TrafficManager;
 import com.mapswithme.util.Config;
 import com.mapswithme.util.Constants;
 import com.mapswithme.util.Counters;
-import com.mapswithme.util.ThemeSwitcher;
+//import com.mapswithme.util.ThemeSwitcher;
 import com.mapswithme.util.UiUtils;
 import com.mapswithme.util.Utils;
 import com.mapswithme.util.log.Logger;
@@ -220,7 +220,7 @@ public class MwmApplication extends Application
     initNativeStrings();
     BookmarkManager.nativeLoadBookmarks();
     TtsPlayer.INSTANCE.init(this);
-    ThemeSwitcher.restart(false);
+//    ThemeSwitcher.restart(false);
     LocationHelper.INSTANCE.initialize();
     RoutingController.get().initialize();
     TrafficManager.INSTANCE.initialize();
