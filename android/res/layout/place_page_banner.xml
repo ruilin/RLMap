@@ -46,7 +46,7 @@
       android:layout_marginEnd="@dimen/margin_half"
       android:scaleType="centerCrop"
       android:visibility="gone"
-      tools:src="@drawable/about_logo"
+      tools:src="@drawable/img_logo"
       tools:visibility="visible"/>
 
     <LinearLayout

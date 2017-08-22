@@ -8,10 +8,16 @@
   <color name="text_light_subtitle">@color/white_secondary</color>
   <color name="text_light_hint">@color/white_lightest</color>
 
-  <color name="base_accent">#FF1E96F0</color>
+  <!--<color name="base_accent">#FF1E96F0</color>-->
   <color name="base_accent_night">#FF4BB9E6</color>
-  <color name="base_accent_pressed">#FF1C85D6</color>
+  <!--<color name="base_accent_pressed">#FF1C85D6</color>-->
   <color name="base_accent_pressed_night">#FF3C9BBE</color>
+
+  <color name="base_accent">#FF1E96F0</color>
+  <color name="base_accent_pressed">#FF1C85D6</color>
+  <color name="bg_primary">#344D90</color>
+
+
 
   <color name="base_red">#FFF54137</color>
   <color name="base_yellow">#FFFFC30A</color>
@@ -53,7 +59,7 @@
   <!-- Backgrounds -->
   <color name="bg_window">#FFEEEEEE</color>
   <color name="bg_window_night">#FF32363A</color>
-  <color name="bg_primary">#1F9952</color>
+
   <color name="bg_primary_night">#1E2226</color>
   <color name="bg_cards">@android:color/white</color>
   <color name="bg_cards_night">#FF3C4044</color>
@@ -70,7 +76,7 @@
   <color name="bg_menu_open">#FFFFFFFF</color>
   <color name="bg_menu_open_night">#FF2D3237</color>
 
-  <color name="bg_statusbar">#197841</color>
+  <color name="bg_statusbar">#344d90</color>
   <color name="bg_statusbar_night">#14181C</color>
 
   <color name="bg_azimut_arrow">#1D414651</color>
