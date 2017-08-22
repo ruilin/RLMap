@@ -6,8 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
+import com.google.android.gms.ads.AdView;
 import com.mapswithme.maps.R;
+import com.mapswithme.maps.ads.AdmobHelper;
 import com.mapswithme.util.UiUtils;
 
 public abstract class BaseToolbarActivity extends BaseMwmFragmentActivity
@@ -57,4 +60,9 @@ public abstract class BaseToolbarActivity extends BaseMwmFragmentActivity
     return R.id.fragment_container;
   }
 
+  public void showAdmobView() {
+    AdView adView = (AdView) findViewById(R.id.admobView);
+    adView.setVisibility(View.VISIBLE);
+    AdmobHelper.get().loadBannerAd(adView);
+  }
 }

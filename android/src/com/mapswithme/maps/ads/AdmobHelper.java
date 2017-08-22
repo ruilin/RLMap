@@ -2,6 +2,7 @@ package com.mapswithme.maps.ads;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -34,6 +35,7 @@ public class AdmobHelper {
     }
 
     public void loadBannerAd(final AdView view) {
+        view.setVisibility(View.VISIBLE);
         AdRequest adRequest = new AdRequest.Builder().build();
         view.setAdListener(new AdListener() {
             @Override
