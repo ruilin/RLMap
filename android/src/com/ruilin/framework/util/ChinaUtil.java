@@ -15,6 +15,8 @@ public class ChinaUtil {
         else if (targetName.equals("阿鲁纳恰尔邦")) {
             return "山南地区";
         }
+        else if (targetName.equals("州"))
+            return "州/省";
         else
             return targetName;
     }

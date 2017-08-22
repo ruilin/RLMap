@@ -11,6 +11,7 @@ import com.mapswithme.maps.ads.Banner;
 import com.mapswithme.maps.ads.LocalAdInfo;
 import com.mapswithme.maps.routing.RoutePointInfo;
 import com.mapswithme.maps.taxi.TaxiManager;
+import com.ruilin.framework.util.ChinaUtil;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -84,7 +85,7 @@ public class MapObject implements Parcelable
     mMapObjectType = mapObjectType;
     mTitle = title;
     mSecondaryTitle = secondaryTitle;
-    mSubtitle = subtitle;
+    mSubtitle = ChinaUtil.translate(subtitle);
     mAddress = address;
     mLat = lat;
     mLon = lon;

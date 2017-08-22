@@ -251,20 +251,6 @@ Java_com_mapswithme_maps_downloader_MapManager_nativeGetUpdateInfo(JNIEnv * env,
   return env->NewObject(infoClass, ctor, info.m_numberOfMwmFilesToUpdate, info.m_totalUpdateSizeInBytes);
 }
 
-static string ChinaCheck(string targetName)
-{
-    if (strcmp(targetName.c_str(), "中华人民共和国") == 0) {
-        return "中国大陆";
-    } else if (strcmp(targetName.c_str(), "中华民国") == 0) {
-        return "中国台湾";
-    } else if (strcmp(targetName.c_str(), "广东省") == 0) {
-        return "广东省、香港、澳门";
-    } else if (strcmp(targetName.c_str(), "阿鲁纳恰尔邦") == 0) {
-        return "中国山南地区";
-    }
-    return targetName;
-}
-
 static void UpdateItemShort(JNIEnv * env, jobject item, NodeStatus const status, NodeErrorCode const error)
 {
   static jfieldID const countryItemFieldStatus = env->GetFieldID(g_countryItemClass, "status", "I");
@@ -303,6 +289,8 @@ static void UpdateItem(JNIEnv * env, jobject item, NodeAttrs const & attrs)
         isTaiWan = true;
     } else if (strcmp(targetName.c_str(), "广东省") == 0) {
         targetName = "广东省、香港、澳门";
+    } else if (strcmp(targetName.c_str(), "河北省") == 0) {
+        targetName = "北京、天津、河北省";
     } else if (strcmp(targetName.c_str(), "阿鲁纳恰尔邦") == 0) {
         targetName = "藏南地区";
         chinaDescription = "中国藏南地区";
