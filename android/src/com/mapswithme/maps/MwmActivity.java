@@ -103,6 +103,7 @@ import com.mapswithme.util.statistics.AlohaHelper;
 import com.mapswithme.util.statistics.Statistics;
 import com.ruilin.framework.util.ChinaUtil;
 import com.ruilin.framework.util.ToastUtil;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;

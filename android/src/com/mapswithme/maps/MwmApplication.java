@@ -46,6 +46,7 @@ import com.mapswithme.util.statistics.Statistics;
 import com.my.tracker.MyTracker;
 import com.my.tracker.MyTrackerParams;
 import com.pushwoosh.PushManager;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.umeng.analytics.MobclickAgent;
 
 import io.fabric.sdk.android.Fabric;
@@ -174,6 +175,9 @@ public class MwmApplication extends Application
 
     /** Admob */
     AdmobHelper.get().init(this);
+
+    /** Bugly */
+    CrashReport.initCrashReport(getApplicationContext(), "6cbaafb053", BuildConfig.DEBUG);
   }
 
   public void initNativePlatform()
