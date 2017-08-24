@@ -297,6 +297,38 @@ static void UpdateItem(JNIEnv * env, jobject item, NodeAttrs const & attrs)
         isZangNan = true;
     }
 
+    if (strcmp(targetName.c_str(), "中華人民共和國") == 0) {
+        targetName = "中國大陸";
+    } else if (strcmp(targetName.c_str(), "中華民國") == 0) {
+        targetName = "中國台灣";
+        chinaDescription = "中國台灣";
+        isTaiWan = true;
+    } else if (strcmp(targetName.c_str(), "廣東省") == 0) {
+        targetName = "廣東省、香港、澳門";
+    } else if (strcmp(targetName.c_str(), "河北省") == 0) {
+        targetName = "北京、天津、河北省";
+    } else if (strcmp(targetName.c_str(), "阿魯納恰爾邦") == 0) {
+        targetName = "藏南地區";
+        chinaDescription = "中國藏南地區";
+        isZangNan = true;
+    }
+
+    if (strcmp(targetName.c_str(), "People's Republic of China") == 0) {
+        targetName = "China";
+    } else if (strcmp(targetName.c_str(), "Taiwan") == 0) {
+        targetName = "Taiwan";
+        chinaDescription = "Taiwan China";
+        isTaiWan = true;
+    } else if (strcmp(targetName.c_str(), "Guangdong") == 0) {
+        targetName = "Guangdong、HongKong、Macau";
+    } else if (strcmp(targetName.c_str(), "Hebei") == 0) {
+        targetName = "Beijing、Tianjin、Hebei";
+    } else if (strcmp(targetName.c_str(), "Arunachal Pradesh") == 0) {
+        targetName = "ZangNan";
+        chinaDescription = "ZangNan China";
+        isZangNan = true;
+    }
+
   // attrs.m_nodeLocalName = ChinaCheck(attrs.m_nodeLocalName);
   // Localized name
   jni::TScopedLocalRef const name(env, jni::ToJavaString(env, targetName));

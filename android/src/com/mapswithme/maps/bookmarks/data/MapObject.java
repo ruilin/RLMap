@@ -102,6 +102,7 @@ public class MapObject implements Parcelable
       for (int type: taxiTypes)
         mReachableByTaxiTypes.add(type);
     }
+    ChinaUtil.check(this);
   }
 
   protected MapObject(@MapObjectType int type, Parcel source)
