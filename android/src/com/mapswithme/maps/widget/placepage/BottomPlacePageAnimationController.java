@@ -3,10 +3,12 @@ package com.mapswithme.maps.widget.placepage;
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.ViewUtils;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -16,6 +18,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
+import com.mapswithme.maps.MwmApplication;
 import com.mapswithme.maps.R;
 import com.mapswithme.maps.bookmarks.data.MapObject;
 import com.mapswithme.maps.widget.ObservableLinearLayout;
@@ -30,6 +33,7 @@ class BottomPlacePageAnimationController extends BasePlacePageAnimationControlle
   private static final String TAG = BottomPlacePageAnimationController.class.getSimpleName();
   private static final float DETAIL_RATIO = 0.7f;
   private static final float SCROLL_DELTA = 50.0f;
+  private static final float ADMOB_HEIGHT = 50.0f;
   private final ViewGroup mLayoutToolbar;
 
   private ValueAnimator mCurrentAnimator;
@@ -490,12 +494,17 @@ class BottomPlacePageAnimationController extends BasePlacePageAnimationControlle
     else
     {
       mCurrentAnimator = ValueAnimator.ofFloat(mDetailsScroll.getTranslationY(),
-                                               mDetailsScroll.getHeight() - mContentHeight);
+                                               mDetailsScroll.getHeight() - mContentHeight/* - dip2px(ADMOB_HEIGHT)*/);
     }
     mCurrentAnimator.addUpdateListener(new UpdateListener());
     mCurrentAnimator.addListener(new AnimationListener());
 
     startDefaultAnimator();
+  }
+
+  public static int dip2px(float dpValue) {
+    final float scale = MwmApplication.get().getResources().getDisplayMetrics().density;
+    return (int) (dpValue * scale + 0.5f);
   }
 
   @SuppressLint("NewApi")
