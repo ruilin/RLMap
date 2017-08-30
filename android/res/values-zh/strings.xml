@@ -1110,4 +1110,7 @@
 	<string name="onboarding_permissions_title">请允许我们使用存储数据和定位的权限</string>
 	<string name="onboarding_permissions_message">这样你才能下载地图数据和使用导航功能。</string>
 	<string name="learn_more">了解更多</string>
+
+	<string name="routing_add_start_point">选择路线规划起点</string>
+	<string name="routing_add_finish_point">选择路线规划终点</string>
 </resources>

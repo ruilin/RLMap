@@ -1362,8 +1362,9 @@ public class MwmActivity extends BaseMwmFragmentActivity
           }
         }
       });
-      if (mNavAnimationController != null)
-        mNavAnimationController.disappearZoomButtons();
+      /** 不隐藏控制菜单 */
+//      if (mNavAnimationController != null)
+//        mNavAnimationController.disappearZoomButtons();
       if (mNavMyPosition != null)
         mNavMyPosition.hide();
       mTraffic.hide();
