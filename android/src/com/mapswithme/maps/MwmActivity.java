@@ -101,6 +101,7 @@ import com.mapswithme.util.sharing.ShareOption;
 import com.mapswithme.util.sharing.SharingHelper;
 import com.mapswithme.util.statistics.AlohaHelper;
 import com.mapswithme.util.statistics.Statistics;
+import com.ruilin.framework.navigation.TTSPlayer;
 import com.ruilin.framework.util.ChinaUtil;
 import com.ruilin.framework.util.ToastUtil;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -1447,9 +1448,10 @@ public class MwmActivity extends BaseMwmFragmentActivity
     switch (v.getId())
     {
     case R.id.nav_zoom_in:
-      Statistics.INSTANCE.trackEvent(Statistics.EventName.ZOOM_IN);
-      AlohaHelper.logClick(AlohaHelper.ZOOM_IN);
-      MapFragment.nativeScalePlus();
+//      Statistics.INSTANCE.trackEvent(Statistics.EventName.ZOOM_IN);
+//      AlohaHelper.logClick(AlohaHelper.ZOOM_IN);
+//      MapFragment.nativeScalePlus();
+      TTSPlayer.get().play("导航开始");
       break;
     case R.id.nav_zoom_out:
       Statistics.INSTANCE.trackEvent(Statistics.EventName.ZOOM_OUT);
