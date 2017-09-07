@@ -27,7 +27,7 @@ public final class Constants
     public static final String FB_MAPSME_COMMUNITY_NATIVE = "fb://profile/111923085594432";
     public static final String TWITTER_MAPSME_HTTP = "https://twitter.com/MAPS_ME";
 
-    public static final String WEB_SITE = "http://rlmap.sxl.cn/";
+    public static final String WEB_SITE = "http://seekermap.sxl.cn/";
     public static final String WEB_EMAIL = "muyu-studio@outlook.com";
     public static final String WEB_BLOG = "http://blog.maps.me";
 

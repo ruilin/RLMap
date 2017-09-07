@@ -100,7 +100,7 @@ def gitCommitCount = Integer.parseInt('git rev-list HEAD --count'.execute([], pr
 
 
 project.ext.versionCodes = ['armeabi-v7a': 1, 'x86': 2]
-project.ext.appId = 'com.muyu.seekermap'
+project.ext.appId = 'com.muyu.seeker.map'
 
 crashlytics {
   enableNdk true
@@ -321,7 +321,7 @@ android {
       signingConfig signingConfigs.mapswithme
       minifyEnabled true
       shrinkResources true
-      resValue "string", "app_name", "行者地图"
+      //resValue "string", "app_name", "行者地图"
       proguardFile('proguard-mwm.txt')
     }
 

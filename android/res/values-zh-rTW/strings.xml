@@ -223,7 +223,7 @@
 	<!-- Email Subject when sharing bookmarks category -->
 	<string name="share_bookmarks_email_subject">已分享 行者地圖 書籤</string>
 	<!-- Email text when sharing bookmarks category -->
-	<string name="share_bookmarks_email_body">哈囉！\n\n這是我的 行者地圖 離線地圖中所夾帶的「%s.kmz」書籤檔案。若您已安裝 行者地圖 的話請開啟它，否則請先從 http://rlmap.sxl.cn/ 這個連結下載 Android 平台的應用程式。\n\n祝您使用行者地圖愉快!</string>
+	<string name="share_bookmarks_email_body">哈囉！\n\n這是我的 行者地圖 離線地圖中所夾帶的「%s.kmz」書籤檔案。若您已安裝 行者地圖 的話請開啟它，否則請先從 http://seekermap.sxl.cn/ 這個連結下載 Android 平台的應用程式。\n\n祝您使用行者地圖愉快!</string>
 	<!-- message title of loading file -->
 	<string name="load_kmz_title">正在載入書籤…</string>
 	<!-- Kmz file successful loading -->
@@ -247,9 +247,9 @@
 	<!-- No, thanks -->
 	<string name="no_thanks">不，謝了</string>
 	<!-- Share one specific bookmark using SMS, %1$@ contains ge0:// and %2$@ http://ge0.me link. @NOTE non-ascii symbols in the link will make 70 bytes sms instead of 140 -->
-	<string name="bookmark_share_sms">嘿，看看我在 行者地圖 標記的圖釘吧！ %1$s 或%2$s 沒安裝離線地圖？在此下載: http://rlmap.sxl.cn/</string>
+	<string name="bookmark_share_sms">嘿，看看我在 行者地圖 標記的圖釘吧！ %1$s 或%2$s 沒安裝離線地圖？在此下載: http://seekermap.sxl.cn/</string>
 	<!-- Share my position using SMS, %1$@ contains ge0:// and %2$@ http://ge0.me link WITHOUT NAME. @NOTE non-ascii symbols in the link will make 70 bytes sms instead of 140 -->
-	<string name="my_position_share_sms">嘿，在 行者地圖 查看我的目前位置吧！ %1$s 或%2$s 沒安裝離線地圖？在此下載: http://rlmap.sxl.cn/</string>
+	<string name="my_position_share_sms">嘿，在 行者地圖 查看我的目前位置吧！ %1$s 或%2$s 沒安裝離線地圖？在此下載: http://seekermap.sxl.cn/</string>
 	<!-- Subject for emailed bookmark -->
 	<string name="bookmark_share_email_subject">嘿，看看我在 行者地圖 地圖上的圖釘！</string>
 	<!-- Share one specific bookmark using EMail, %1$@ is bookmark's name, %2$@ is ge0:// link and %3$@ http://ge0.me -->
