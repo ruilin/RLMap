@@ -9,7 +9,7 @@ import com.mapswithme.maps.BuildConfig;
  */
 
 public class LogUtil {
-    private static String TAG = "RLMap";
+    private static String TAG = "Seeker Map";
 
     public static void e(String msg) {
         if (BuildConfig.DEBUG)

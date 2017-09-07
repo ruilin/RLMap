@@ -82,6 +82,8 @@ public class AMapLocationProvider extends BaseLocationProvider {
         mLocationOption.setHttpTimeOut(20000);
         //开启缓存机制
         mLocationOption.setLocationCacheEnable(true);
+        //Gps优先
+        mLocationOption.setGpsFirst(true);
 
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
