@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
+import com.mapswithme.maps.MwmApplication;
 import com.mapswithme.maps.location.LocationHelper;
 
 /**
@@ -21,6 +22,8 @@ public class NetworkChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         /** 监听网络变化，改变定位 */
+        if (!MwmApplication.get().isFrameworkInitialized())
+            return;
         ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         //NetworkInfo mobileInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         //NetworkInfo wifiInfo = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);

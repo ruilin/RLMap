@@ -420,7 +420,11 @@ public enum LocationHelper
   public void restart()
   {
     mLogger.d(TAG, "restart()");
-    checkProviderInitialization();
+    try {
+      checkProviderInitialization();
+    } catch (Exception e) {
+      return;
+    }
     stopInternal();
     initProvider();
     start();

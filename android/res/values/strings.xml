@@ -822,8 +822,9 @@
 	<string name="onboarding_detail_permissions_location_title">Location</string>
 	<string name="onboarding_detail_permissions_location_message">To see places and traffic near you and use navigation.</string>
 	<string name="onboarding_detail_permissions_storage_path_message">You can also change a destination to save downloaded maps.</string>
-	<!--<string name="onboarding_welcome_title">Welcome to Seeker Map</string>-->
-	<!--<string name="onboarding_welcome_first_subtitle">Free, fast, detailed and entirely offline maps with turn-by-turn navigation.</string>-->
+	<string name="onboarding_welcome_title">Welcome to Seeker Map</string>
+	<string name="onboarding_welcome_first_subtitle">Free, fast, detailed and entirely offline maps with turn-by-turn navigation.</string>
+	<string name="onboarding_welcome_second_subtitle">&lt;a href=\"http://seekermap.sxl.cn/\">Learn more&lt;/a></string>
 	<!--<string name="onboarding_welcome_second_subtitle">By launching the application, you agree to &lt;a href=\"http://legal.my.com/us/maps/tou/\">Terms&lt;/a> of Use and &lt;a href=\"https://legal.my.com/us/maps/privacy/\">Privacy Policy&lt;/a>.</string>-->
 	<string name="dialog_incorrect_feature_position">Change location</string>
 	<string name="message_invalid_feature_position">No object can be located here</string>

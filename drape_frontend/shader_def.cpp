@@ -7,101 +7,6 @@
 
 namespace gpu
 {
-static char const SMAA_EDGES_VSH[] = " \
-  #ifdef GL_ES \n\
-    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
-      #define MAXPREC " HIGH_P " \n\
-    #else \n\
-      #define MAXPREC " MEDIUM_P " \n\
-    #endif \n\
-    precision MAXPREC float; \n\
-  #endif \n\
-  attribute vec2 a_pos; \n\
-  attribute vec2 a_tcoord; \n\
-  uniform vec4 u_framebufferMetrics; \n\
-  varying vec2 v_colorTexCoords; \n\
-  varying vec4 v_offset0; \n\
-  varying vec4 v_offset1; \n\
-  varying vec4 v_offset2; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
-  { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
-  } \n\
-  void main() \n\
-  { \n\
-    v_colorTexCoords = a_tcoord; \n\
-    v_offset0 = u_framebufferMetrics.xyxy * vec4(-1.0, 0.0, 0.0, -1.0) + a_tcoord.xyxy; \n\
-    v_offset1 = u_framebufferMetrics.xyxy * vec4( 1.0, 0.0, 0.0,  1.0) + a_tcoord.xyxy; \n\
-    v_offset2 = u_framebufferMetrics.xyxy * vec4(-2.0, 0.0, 0.0, -2.0) + a_tcoord.xyxy; \n\
-    gl_Position = vec4(a_pos, 0.0, 1.0); \n\
-  } \n\
-";
-
-static char const GLES3_SMAA_EDGES_VSH[] = " \
-  " SHADER_VERSION " \n\
-  #ifdef GL_ES \n\
-    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
-      #define MAXPREC " HIGH_P " \n\
-    #else \n\
-      #define MAXPREC " MEDIUM_P " \n\
-    #endif \n\
-    precision MAXPREC float; \n\
-  #endif \n\
-  in vec2 a_pos; \n\
-  in vec2 a_tcoord; \n\
-  uniform vec4 u_framebufferMetrics; \n\
-  out vec2 v_colorTexCoords; \n\
-  out vec4 v_offset0; \n\
-  out vec4 v_offset1; \n\
-  out vec4 v_offset2; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
-  { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
-  } \n\
-  void main() \n\
-  { \n\
-    v_colorTexCoords = a_tcoord; \n\
-    v_offset0 = u_framebufferMetrics.xyxy * vec4(-1.0, 0.0, 0.0, -1.0) + a_tcoord.xyxy; \n\
-    v_offset1 = u_framebufferMetrics.xyxy * vec4( 1.0, 0.0, 0.0,  1.0) + a_tcoord.xyxy; \n\
-    v_offset2 = u_framebufferMetrics.xyxy * vec4(-2.0, 0.0, 0.0, -2.0) + a_tcoord.xyxy; \n\
-    gl_Position = vec4(a_pos, 0.0, 1.0); \n\
-  } \n\
-";
-
 static char const TEXT_OUTLINED_VSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -675,7 +580,7 @@ static char const GLES3_MY_POSITION_VSH[] = " \
   } \n\
 ";
 
-static char const CIRCLE_VSH[] = " \
+static char const ARROW3D_OUTLINE_FSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
       #define MAXPREC " HIGH_P " \n\
@@ -684,55 +589,120 @@ static char const CIRCLE_VSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  attribute vec3 a_position; \n\
-  attribute vec3 a_normal; \n\
-  attribute vec2 a_colorTexCoords; \n\
-  uniform mat4 modelView; \n\
-  uniform mat4 projection; \n\
-  uniform mat4 pivotTransform; \n\
-  varying vec3 v_radius; \n\
-  #ifdef ENABLE_VTF \n\
+  varying float v_intensity; \n\
+  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
   uniform sampler2D u_colorTex; \n\
-  varying " LOW_P " vec4 v_color; \n\
+  #endif \n\
+  uniform vec4 u_color; \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
+  { \n\
+  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+    const float kFakeColorScalar = 0.0; \n\
+    return color + texture2D(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
   #else \n\
+    return color; \n\
+  #endif \n\
+  } \n\
+  void main() \n\
+  { \n\
+    vec4 resColor = vec4(u_color.rgb, u_color.a * smoothstep(0.7, 1.0, v_intensity)); \n\
+    gl_FragColor = samsungGoogleNexusWorkaround(resColor); \n\
+  } \n\
+";
+
+static char const GLES3_ARROW3D_OUTLINE_FSH[] = " \
+  " SHADER_VERSION " \n\
+  #ifdef GL_ES \n\
+    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
+      #define MAXPREC " HIGH_P " \n\
+    #else \n\
+      #define MAXPREC " MEDIUM_P " \n\
+    #endif \n\
+    precision MAXPREC float; \n\
+  #endif \n\
+  in float v_intensity; \n\
+  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+  uniform sampler2D u_colorTex; \n\
+  #endif \n\
+  uniform vec4 u_color; \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
+  { \n\
+  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+    const float kFakeColorScalar = 0.0; \n\
+    return color + texture(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
+  #else \n\
+    return color; \n\
+  #endif \n\
+  } \n\
+  out vec4 v_FragColor; \n\
+  void main() \n\
+  { \n\
+    vec4 resColor = vec4(u_color.rgb, u_color.a * smoothstep(0.7, 1.0, v_intensity)); \n\
+    v_FragColor = samsungGoogleNexusWorkaround(resColor); \n\
+  } \n\
+";
+
+static char const SMAA_FINAL_FSH[] = " \
+  #ifdef GL_ES \n\
+    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
+      #define MAXPREC " HIGH_P " \n\
+    #else \n\
+      #define MAXPREC " MEDIUM_P " \n\
+    #endif \n\
+    precision MAXPREC float; \n\
+  #endif \n\
+  uniform sampler2D u_colorTex; \n\
+  uniform sampler2D u_blendingWeightTex; \n\
+  uniform vec4 u_framebufferMetrics; \n\
   varying vec2 v_colorTexCoords; \n\
+  varying vec4 v_offset; \n\
+  #ifdef GLES3 \n\
+    #define SMAASampleLevelZero(tex, coord) textureLod(tex, coord, 0.0) \n\
+  #else \n\
+    #define SMAASampleLevelZero(tex, coord) texture2D(tex, coord) \n\
   #endif \n\
   const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
   { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+    const float kFakeColorScalar = 0.0; \n\
+    return color + texture2D(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
+  #else \n\
+    return color; \n\
+  #endif \n\
   } \n\
   void main() \n\
   { \n\
-    vec4 p = vec4(a_position, 1) * modelView; \n\
-    vec4 pos = vec4(a_normal.xy, 0, 0) + p; \n\
-    gl_Position = applyPivotTransform(pos * projection, pivotTransform, 0.0); \n\
-  #ifdef ENABLE_VTF \n\
-    v_color = texture2D(u_colorTex, a_colorTexCoords); \n\
-  #else \n\
-    v_colorTexCoords = a_colorTexCoords; \n\
-  #endif \n\
-    v_radius = a_normal; \n\
+    vec4 a; \n\
+    a.x = texture2D(u_blendingWeightTex, v_offset.xy).a; // Right \n\
+    a.y = texture2D(u_blendingWeightTex, v_offset.zw).g; // Top \n\
+    a.wz = texture2D(u_blendingWeightTex, v_colorTexCoords).xz; // Bottom / Left \n\
+    if (dot(a, vec4(1.0, 1.0, 1.0, 1.0)) < 1e-5) \n\
+    { \n\
+      gl_FragColor = texture2D(u_colorTex, v_colorTexCoords); \n\
+    } \n\
+    else \n\
+    { \n\
+      vec4 blendingOffset = vec4(0.0, a.y, 0.0, a.w); \n\
+      vec2 blendingWeight = a.yw; \n\
+      if (max(a.x, a.z) > max(a.y, a.w)) \n\
+      { \n\
+        blendingOffset = vec4(a.x, 0.0, a.z, 0.0); \n\
+        blendingWeight = a.xz; \n\
+      } \n\
+      blendingWeight /= dot(blendingWeight, vec2(1.0, 1.0)); \n\
+      vec4 bc = blendingOffset * vec4(u_framebufferMetrics.xy, -u_framebufferMetrics.xy); \n\
+      bc += v_colorTexCoords.xyxy; \n\
+      vec4 color = blendingWeight.x * SMAASampleLevelZero(u_colorTex, bc.xy); \n\
+      color += blendingWeight.y * SMAASampleLevelZero(u_colorTex, bc.zw); \n\
+      gl_FragColor = color; \n\
+    } \n\
   } \n\
 ";
 
-static char const GLES3_CIRCLE_VSH[] = " \
+static char const GLES3_SMAA_FINAL_FSH[] = " \
   " SHADER_VERSION " \n\
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -742,170 +712,53 @@ static char const GLES3_CIRCLE_VSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  in vec3 a_position; \n\
-  in vec3 a_normal; \n\
-  in vec2 a_colorTexCoords; \n\
-  uniform mat4 modelView; \n\
-  uniform mat4 projection; \n\
-  uniform mat4 pivotTransform; \n\
-  out vec3 v_radius; \n\
-  #ifdef ENABLE_VTF \n\
   uniform sampler2D u_colorTex; \n\
-  out " LOW_P " vec4 v_color; \n\
+  uniform sampler2D u_blendingWeightTex; \n\
+  uniform vec4 u_framebufferMetrics; \n\
+  in vec2 v_colorTexCoords; \n\
+  in vec4 v_offset; \n\
+  #ifdef GLES3 \n\
+    #define SMAASampleLevelZero(tex, coord) textureLod(tex, coord, 0.0) \n\
   #else \n\
-  out vec2 v_colorTexCoords; \n\
+    #define SMAASampleLevelZero(tex, coord) texture(tex, coord) \n\
   #endif \n\
   const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
   { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
-  } \n\
-  void main() \n\
-  { \n\
-    vec4 p = vec4(a_position, 1) * modelView; \n\
-    vec4 pos = vec4(a_normal.xy, 0, 0) + p; \n\
-    gl_Position = applyPivotTransform(pos * projection, pivotTransform, 0.0); \n\
-  #ifdef ENABLE_VTF \n\
-    v_color = texture(u_colorTex, a_colorTexCoords); \n\
+  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+    const float kFakeColorScalar = 0.0; \n\
+    return color + texture(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
   #else \n\
-    v_colorTexCoords = a_colorTexCoords; \n\
+    return color; \n\
   #endif \n\
-    v_radius = a_normal; \n\
   } \n\
-";
-
-static char const DASHED_LINE_VSH[] = " \
-  #ifdef GL_ES \n\
-    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
-      #define MAXPREC " HIGH_P " \n\
-    #else \n\
-      #define MAXPREC " MEDIUM_P " \n\
-    #endif \n\
-    precision MAXPREC float; \n\
-  #endif \n\
-  attribute vec3 a_position; \n\
-  attribute vec3 a_normal; \n\
-  attribute vec2 a_colorTexCoord; \n\
-  attribute vec4 a_maskTexCoord; \n\
-  uniform mat4 modelView; \n\
-  uniform mat4 projection; \n\
-  uniform mat4 pivotTransform; \n\
-  varying vec2 v_colorTexCoord; \n\
-  varying vec2 v_maskTexCoord; \n\
-  varying vec2 v_halfLength; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
-  { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
-  } \n\
+  out vec4 v_FragColor; \n\
   void main() \n\
   { \n\
-    vec2 normal = a_normal.xy; \n\
-    float halfWidth = length(normal); \n\
-    vec2 transformedAxisPos = (vec4(a_position.xy, 0.0, 1.0) * modelView).xy; \n\
-    if (halfWidth != 0.0) \n\
+    vec4 a; \n\
+    a.x = texture(u_blendingWeightTex, v_offset.xy).a; // Right \n\
+    a.y = texture(u_blendingWeightTex, v_offset.zw).g; // Top \n\
+    a.wz = texture(u_blendingWeightTex, v_colorTexCoords).xz; // Bottom / Left \n\
+    if (dot(a, vec4(1.0, 1.0, 1.0, 1.0)) < 1e-5) \n\
     { \n\
-      transformedAxisPos = calcLineTransformedAxisPos(transformedAxisPos, a_position.xy + normal, \n\
-                                                      modelView, halfWidth); \n\
+      v_FragColor = texture(u_colorTex, v_colorTexCoords); \n\
     } \n\
-    float uOffset = min(length(vec4(kShapeCoordScalar, 0, 0, 0) * modelView) * a_maskTexCoord.x, 1.0); \n\
-    v_colorTexCoord = a_colorTexCoord; \n\
-    v_maskTexCoord = vec2(a_maskTexCoord.y + uOffset * a_maskTexCoord.z, a_maskTexCoord.w); \n\
-    v_halfLength = vec2(sign(a_normal.z) * halfWidth, abs(a_normal.z)); \n\
-    vec4 pos = vec4(transformedAxisPos, a_position.z, 1.0) * projection; \n\
-    gl_Position = applyPivotTransform(pos, pivotTransform, 0.0); \n\
-  } \n\
-";
-
-static char const GLES3_DASHED_LINE_VSH[] = " \
-  " SHADER_VERSION " \n\
-  #ifdef GL_ES \n\
-    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
-      #define MAXPREC " HIGH_P " \n\
-    #else \n\
-      #define MAXPREC " MEDIUM_P " \n\
-    #endif \n\
-    precision MAXPREC float; \n\
-  #endif \n\
-  in vec3 a_position; \n\
-  in vec3 a_normal; \n\
-  in vec2 a_colorTexCoord; \n\
-  in vec4 a_maskTexCoord; \n\
-  uniform mat4 modelView; \n\
-  uniform mat4 projection; \n\
-  uniform mat4 pivotTransform; \n\
-  out vec2 v_colorTexCoord; \n\
-  out vec2 v_maskTexCoord; \n\
-  out vec2 v_halfLength; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
-  { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
-  } \n\
-  void main() \n\
-  { \n\
-    vec2 normal = a_normal.xy; \n\
-    float halfWidth = length(normal); \n\
-    vec2 transformedAxisPos = (vec4(a_position.xy, 0.0, 1.0) * modelView).xy; \n\
-    if (halfWidth != 0.0) \n\
+    else \n\
     { \n\
-      transformedAxisPos = calcLineTransformedAxisPos(transformedAxisPos, a_position.xy + normal, \n\
-                                                      modelView, halfWidth); \n\
+      vec4 blendingOffset = vec4(0.0, a.y, 0.0, a.w); \n\
+      vec2 blendingWeight = a.yw; \n\
+      if (max(a.x, a.z) > max(a.y, a.w)) \n\
+      { \n\
+        blendingOffset = vec4(a.x, 0.0, a.z, 0.0); \n\
+        blendingWeight = a.xz; \n\
+      } \n\
+      blendingWeight /= dot(blendingWeight, vec2(1.0, 1.0)); \n\
+      vec4 bc = blendingOffset * vec4(u_framebufferMetrics.xy, -u_framebufferMetrics.xy); \n\
+      bc += v_colorTexCoords.xyxy; \n\
+      vec4 color = blendingWeight.x * SMAASampleLevelZero(u_colorTex, bc.xy); \n\
+      color += blendingWeight.y * SMAASampleLevelZero(u_colorTex, bc.zw); \n\
+      v_FragColor = color; \n\
     } \n\
-    float uOffset = min(length(vec4(kShapeCoordScalar, 0, 0, 0) * modelView) * a_maskTexCoord.x, 1.0); \n\
-    v_colorTexCoord = a_colorTexCoord; \n\
-    v_maskTexCoord = vec2(a_maskTexCoord.y + uOffset * a_maskTexCoord.z, a_maskTexCoord.w); \n\
-    v_halfLength = vec2(sign(a_normal.z) * halfWidth, abs(a_normal.z)); \n\
-    vec4 pos = vec4(transformedAxisPos, a_position.z, 1.0) * projection; \n\
-    gl_Position = applyPivotTransform(pos, pivotTransform, 0.0); \n\
   } \n\
 ";
 
@@ -1214,7 +1067,7 @@ static char const GLES3_TRAFFIC_LINE_VSH[] = " \
   } \n\
 ";
 
-static char const HATCHING_AREA_VSH[] = " \
+static char const TEXT_FSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
       #define MAXPREC " HIGH_P " \n\
@@ -1223,54 +1076,45 @@ static char const HATCHING_AREA_VSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  attribute vec3 a_position; \n\
-  attribute vec2 a_colorTexCoords; \n\
-  attribute vec2 a_maskTexCoords; \n\
-  uniform mat4 modelView; \n\
-  uniform mat4 projection; \n\
-  uniform mat4 pivotTransform; \n\
+  varying vec2 v_maskTexCoord; \n\
   #ifdef ENABLE_VTF \n\
-  uniform sampler2D u_colorTex; \n\
   varying " LOW_P " vec4 v_color; \n\
   #else \n\
-  varying vec2 v_colorTexCoords; \n\
+  varying vec2 v_colorTexCoord; \n\
+  uniform sampler2D u_colorTex; \n\
   #endif \n\
-  varying vec2 v_maskTexCoords; \n\
+  uniform sampler2D u_maskTex; \n\
+  uniform float u_opacity; \n\
+  uniform vec2 u_contrastGamma; \n\
   const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
   { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+    const float kFakeColorScalar = 0.0; \n\
+    return color + texture2D(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
+  #else \n\
+    return color; \n\
+  #endif \n\
   } \n\
   void main() \n\
   { \n\
-    vec4 pos = vec4(a_position, 1) * modelView * projection; \n\
-    gl_Position = applyPivotTransform(pos, pivotTransform, 0.0); \n\
   #ifdef ENABLE_VTF \n\
-    v_color = texture2D(u_colorTex, a_colorTexCoords); \n\
+    " LOW_P " vec4 glyphColor = v_color; \n\
   #else \n\
-    v_colorTexCoords = a_colorTexCoords; \n\
+    " LOW_P " vec4 glyphColor = texture2D(u_colorTex, v_colorTexCoord); \n\
   #endif \n\
-    v_maskTexCoords = a_maskTexCoords; \n\
+  #ifdef GLES3 \n\
+    float dist = texture2D(u_maskTex, v_maskTexCoord).r; \n\
+  #else \n\
+    float dist = texture2D(u_maskTex, v_maskTexCoord).a; \n\
+  #endif \n\
+    float alpha = smoothstep(u_contrastGamma.x - u_contrastGamma.y, u_contrastGamma.x + u_contrastGamma.y, dist) * u_opacity; \n\
+    glyphColor.a *= alpha; \n\
+    gl_FragColor = glyphColor; \n\
   } \n\
 ";
 
-static char const GLES3_HATCHING_AREA_VSH[] = " \
+static char const GLES3_TEXT_FSH[] = " \
   " SHADER_VERSION " \n\
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -1280,19 +1124,61 @@ static char const GLES3_HATCHING_AREA_VSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  in vec3 a_position; \n\
-  in vec2 a_colorTexCoords; \n\
-  in vec2 a_maskTexCoords; \n\
-  uniform mat4 modelView; \n\
-  uniform mat4 projection; \n\
-  uniform mat4 pivotTransform; \n\
+  in vec2 v_maskTexCoord; \n\
   #ifdef ENABLE_VTF \n\
-  uniform sampler2D u_colorTex; \n\
-  out " LOW_P " vec4 v_color; \n\
+  in " LOW_P " vec4 v_color; \n\
   #else \n\
-  out vec2 v_colorTexCoords; \n\
+  in vec2 v_colorTexCoord; \n\
+  uniform sampler2D u_colorTex; \n\
   #endif \n\
-  out vec2 v_maskTexCoords; \n\
+  uniform sampler2D u_maskTex; \n\
+  uniform float u_opacity; \n\
+  uniform vec2 u_contrastGamma; \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
+  { \n\
+  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+    const float kFakeColorScalar = 0.0; \n\
+    return color + texture(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
+  #else \n\
+    return color; \n\
+  #endif \n\
+  } \n\
+  out vec4 v_FragColor; \n\
+  void main() \n\
+  { \n\
+  #ifdef ENABLE_VTF \n\
+    " LOW_P " vec4 glyphColor = v_color; \n\
+  #else \n\
+    " LOW_P " vec4 glyphColor = texture(u_colorTex, v_colorTexCoord); \n\
+  #endif \n\
+  #ifdef GLES3 \n\
+    float dist = texture(u_maskTex, v_maskTexCoord).r; \n\
+  #else \n\
+    float dist = texture(u_maskTex, v_maskTexCoord).a; \n\
+  #endif \n\
+    float alpha = smoothstep(u_contrastGamma.x - u_contrastGamma.y, u_contrastGamma.x + u_contrastGamma.y, dist) * u_opacity; \n\
+    glyphColor.a *= alpha; \n\
+    v_FragColor = glyphColor; \n\
+  } \n\
+";
+
+static char const SMAA_EDGES_VSH[] = " \
+  #ifdef GL_ES \n\
+    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
+      #define MAXPREC " HIGH_P " \n\
+    #else \n\
+      #define MAXPREC " MEDIUM_P " \n\
+    #endif \n\
+    precision MAXPREC float; \n\
+  #endif \n\
+  attribute vec2 a_pos; \n\
+  attribute vec2 a_tcoord; \n\
+  uniform vec4 u_framebufferMetrics; \n\
+  varying vec2 v_colorTexCoords; \n\
+  varying vec4 v_offset0; \n\
+  varying vec4 v_offset1; \n\
+  varying vec4 v_offset2; \n\
   const float kShapeCoordScalar = 1000.0; \n\
   vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
   { \n\
@@ -1316,14 +1202,59 @@ static char const GLES3_HATCHING_AREA_VSH[] = " \
   } \n\
   void main() \n\
   { \n\
-    vec4 pos = vec4(a_position, 1) * modelView * projection; \n\
-    gl_Position = applyPivotTransform(pos, pivotTransform, 0.0); \n\
-  #ifdef ENABLE_VTF \n\
-    v_color = texture(u_colorTex, a_colorTexCoords); \n\
-  #else \n\
-    v_colorTexCoords = a_colorTexCoords; \n\
+    v_colorTexCoords = a_tcoord; \n\
+    v_offset0 = u_framebufferMetrics.xyxy * vec4(-1.0, 0.0, 0.0, -1.0) + a_tcoord.xyxy; \n\
+    v_offset1 = u_framebufferMetrics.xyxy * vec4( 1.0, 0.0, 0.0,  1.0) + a_tcoord.xyxy; \n\
+    v_offset2 = u_framebufferMetrics.xyxy * vec4(-2.0, 0.0, 0.0, -2.0) + a_tcoord.xyxy; \n\
+    gl_Position = vec4(a_pos, 0.0, 1.0); \n\
+  } \n\
+";
+
+static char const GLES3_SMAA_EDGES_VSH[] = " \
+  " SHADER_VERSION " \n\
+  #ifdef GL_ES \n\
+    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
+      #define MAXPREC " HIGH_P " \n\
+    #else \n\
+      #define MAXPREC " MEDIUM_P " \n\
+    #endif \n\
+    precision MAXPREC float; \n\
   #endif \n\
-    v_maskTexCoords = a_maskTexCoords; \n\
+  in vec2 a_pos; \n\
+  in vec2 a_tcoord; \n\
+  uniform vec4 u_framebufferMetrics; \n\
+  out vec2 v_colorTexCoords; \n\
+  out vec4 v_offset0; \n\
+  out vec4 v_offset1; \n\
+  out vec4 v_offset2; \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  { \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
+  } \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  } \n\
+  void main() \n\
+  { \n\
+    v_colorTexCoords = a_tcoord; \n\
+    v_offset0 = u_framebufferMetrics.xyxy * vec4(-1.0, 0.0, 0.0, -1.0) + a_tcoord.xyxy; \n\
+    v_offset1 = u_framebufferMetrics.xyxy * vec4( 1.0, 0.0, 0.0,  1.0) + a_tcoord.xyxy; \n\
+    v_offset2 = u_framebufferMetrics.xyxy * vec4(-2.0, 0.0, 0.0, -2.0) + a_tcoord.xyxy; \n\
+    gl_Position = vec4(a_pos, 0.0, 1.0); \n\
   } \n\
 ";
 
@@ -1531,7 +1462,7 @@ static char const GLES3_ARROW3D_SHADOW_VSH[] = " \
   } \n\
 ";
 
-static char const SMAA_EDGES_FSH[] = " \
+static char const DISCARDED_TEXTURING_FSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
       #define MAXPREC " HIGH_P " \n\
@@ -1541,14 +1472,8 @@ static char const SMAA_EDGES_FSH[] = " \
     precision MAXPREC float; \n\
   #endif \n\
   uniform sampler2D u_colorTex; \n\
+  uniform float u_opacity; \n\
   varying vec2 v_colorTexCoords; \n\
-  varying vec4 v_offset0; \n\
-  varying vec4 v_offset1; \n\
-  varying vec4 v_offset2; \n\
-  #define SMAA_THRESHOLD 0.05 \n\
-  const vec2 kThreshold = vec2(SMAA_THRESHOLD, SMAA_THRESHOLD); \n\
-  #define SMAA_LOCAL_CONTRAST_ADAPTATION_FACTOR 2.0 \n\
-  const vec3 kWeights = vec3(0.2126, 0.7152, 0.0722); \n\
   const float kShapeCoordScalar = 1000.0; \n\
   vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
   { \n\
@@ -1561,29 +1486,15 @@ static char const SMAA_EDGES_FSH[] = " \
   } \n\
   void main() \n\
   { \n\
-    float L = dot(texture2D(u_colorTex, v_colorTexCoords).rgb, kWeights); \n\
-    float Lleft = dot(texture2D(u_colorTex, v_offset0.xy).rgb, kWeights); \n\
-    float Ltop = dot(texture2D(u_colorTex, v_offset0.zw).rgb, kWeights); \n\
-    vec4 delta; \n\
-    delta.xy = abs(L - vec2(Lleft, Ltop)); \n\
-    vec2 edges = step(kThreshold, delta.xy); \n\
-    if (dot(edges, vec2(1.0, 1.0)) == 0.0) \n\
-        discard; \n\
-    float Lright = dot(texture2D(u_colorTex, v_offset1.xy).rgb, kWeights); \n\
-    float Lbottom  = dot(texture2D(u_colorTex, v_offset1.zw).rgb, kWeights); \n\
-    delta.zw = abs(L - vec2(Lright, Lbottom)); \n\
-    vec2 maxDelta = max(delta.xy, delta.zw); \n\
-    float Lleftleft = dot(texture2D(u_colorTex, v_offset2.xy).rgb, kWeights); \n\
-    float Ltoptop = dot(texture2D(u_colorTex, v_offset2.zw).rgb, kWeights); \n\
-    delta.zw = abs(vec2(Lleft, Ltop) - vec2(Lleftleft, Ltoptop)); \n\
-    maxDelta = max(maxDelta.xy, delta.zw); \n\
-    float finalDelta = max(maxDelta.x, maxDelta.y); \n\
-    edges *= step(finalDelta, SMAA_LOCAL_CONTRAST_ADAPTATION_FACTOR * delta.xy); \n\
-    gl_FragColor = vec4(edges, 0.0, 1.0); \n\
+    vec4 finalColor = texture2D(u_colorTex, v_colorTexCoords); \n\
+    finalColor.a *= u_opacity; \n\
+    if (finalColor.a < 0.01) \n\
+      discard; \n\
+    gl_FragColor = finalColor; \n\
   } \n\
 ";
 
-static char const GLES3_SMAA_EDGES_FSH[] = " \
+static char const GLES3_DISCARDED_TEXTURING_FSH[] = " \
   " SHADER_VERSION " \n\
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -1594,14 +1505,8 @@ static char const GLES3_SMAA_EDGES_FSH[] = " \
     precision MAXPREC float; \n\
   #endif \n\
   uniform sampler2D u_colorTex; \n\
+  uniform float u_opacity; \n\
   in vec2 v_colorTexCoords; \n\
-  in vec4 v_offset0; \n\
-  in vec4 v_offset1; \n\
-  in vec4 v_offset2; \n\
-  #define SMAA_THRESHOLD 0.05 \n\
-  const vec2 kThreshold = vec2(SMAA_THRESHOLD, SMAA_THRESHOLD); \n\
-  #define SMAA_LOCAL_CONTRAST_ADAPTATION_FACTOR 2.0 \n\
-  const vec3 kWeights = vec3(0.2126, 0.7152, 0.0722); \n\
   const float kShapeCoordScalar = 1000.0; \n\
   vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
   { \n\
@@ -1615,25 +1520,11 @@ static char const GLES3_SMAA_EDGES_FSH[] = " \
   out vec4 v_FragColor; \n\
   void main() \n\
   { \n\
-    float L = dot(texture(u_colorTex, v_colorTexCoords).rgb, kWeights); \n\
-    float Lleft = dot(texture(u_colorTex, v_offset0.xy).rgb, kWeights); \n\
-    float Ltop = dot(texture(u_colorTex, v_offset0.zw).rgb, kWeights); \n\
-    vec4 delta; \n\
-    delta.xy = abs(L - vec2(Lleft, Ltop)); \n\
-    vec2 edges = step(kThreshold, delta.xy); \n\
-    if (dot(edges, vec2(1.0, 1.0)) == 0.0) \n\
-        discard; \n\
-    float Lright = dot(texture(u_colorTex, v_offset1.xy).rgb, kWeights); \n\
-    float Lbottom  = dot(texture(u_colorTex, v_offset1.zw).rgb, kWeights); \n\
-    delta.zw = abs(L - vec2(Lright, Lbottom)); \n\
-    vec2 maxDelta = max(delta.xy, delta.zw); \n\
-    float Lleftleft = dot(texture(u_colorTex, v_offset2.xy).rgb, kWeights); \n\
-    float Ltoptop = dot(texture(u_colorTex, v_offset2.zw).rgb, kWeights); \n\
-    delta.zw = abs(vec2(Lleft, Ltop) - vec2(Lleftleft, Ltoptop)); \n\
-    maxDelta = max(maxDelta.xy, delta.zw); \n\
-    float finalDelta = max(maxDelta.x, maxDelta.y); \n\
-    edges *= step(finalDelta, SMAA_LOCAL_CONTRAST_ADAPTATION_FACTOR * delta.xy); \n\
-    v_FragColor = vec4(edges, 0.0, 1.0); \n\
+    vec4 finalColor = texture(u_colorTex, v_colorTexCoords); \n\
+    finalColor.a *= u_opacity; \n\
+    if (finalColor.a < 0.01) \n\
+      discard; \n\
+    v_FragColor = finalColor; \n\
   } \n\
 ";
 
@@ -1805,6 +1696,121 @@ static char const GLES3_TEXTURING_VSH[] = " \
   } \n\
 ";
 
+static char const COLORED_SYMBOL_BILLBOARD_VSH[] = " \
+  #ifdef GL_ES \n\
+    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
+      #define MAXPREC " HIGH_P " \n\
+    #else \n\
+      #define MAXPREC " MEDIUM_P " \n\
+    #endif \n\
+    precision MAXPREC float; \n\
+  #endif \n\
+  attribute vec3 a_position; \n\
+  attribute vec4 a_normal; \n\
+  attribute vec4 a_colorTexCoords; \n\
+  uniform mat4 modelView; \n\
+  uniform mat4 projection; \n\
+  uniform mat4 pivotTransform; \n\
+  varying vec4 v_normal; \n\
+  #ifdef ENABLE_VTF \n\
+  uniform sampler2D u_colorTex; \n\
+  varying " LOW_P " vec4 v_color; \n\
+  #else \n\
+  varying vec2 v_colorTexCoords; \n\
+  #endif \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  { \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
+  } \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  } \n\
+  void main() \n\
+  { \n\
+    vec4 pivot = vec4(a_position.xyz, 1.0) * modelView; \n\
+    vec4 offset = vec4(a_normal.xy + a_colorTexCoords.zw, 0.0, 0.0) * projection; \n\
+    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, 0.0, offset.xy); \n\
+  #ifdef ENABLE_VTF \n\
+    v_color = texture2D(u_colorTex, a_colorTexCoords.xy); \n\
+  #else \n\
+    v_colorTexCoords = a_colorTexCoords.xy; \n\
+  #endif \n\
+    v_normal = a_normal; \n\
+  } \n\
+";
+
+static char const GLES3_COLORED_SYMBOL_BILLBOARD_VSH[] = " \
+  " SHADER_VERSION " \n\
+  #ifdef GL_ES \n\
+    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
+      #define MAXPREC " HIGH_P " \n\
+    #else \n\
+      #define MAXPREC " MEDIUM_P " \n\
+    #endif \n\
+    precision MAXPREC float; \n\
+  #endif \n\
+  in vec3 a_position; \n\
+  in vec4 a_normal; \n\
+  in vec4 a_colorTexCoords; \n\
+  uniform mat4 modelView; \n\
+  uniform mat4 projection; \n\
+  uniform mat4 pivotTransform; \n\
+  out vec4 v_normal; \n\
+  #ifdef ENABLE_VTF \n\
+  uniform sampler2D u_colorTex; \n\
+  out " LOW_P " vec4 v_color; \n\
+  #else \n\
+  out vec2 v_colorTexCoords; \n\
+  #endif \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  { \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
+  } \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  } \n\
+  void main() \n\
+  { \n\
+    vec4 pivot = vec4(a_position.xyz, 1.0) * modelView; \n\
+    vec4 offset = vec4(a_normal.xy + a_colorTexCoords.zw, 0.0, 0.0) * projection; \n\
+    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, 0.0, offset.xy); \n\
+  #ifdef ENABLE_VTF \n\
+    v_color = texture(u_colorTex, a_colorTexCoords.xy); \n\
+  #else \n\
+    v_colorTexCoords = a_colorTexCoords.xy; \n\
+  #endif \n\
+    v_normal = a_normal; \n\
+  } \n\
+";
+
 static char const COLORED_SYMBOL_VSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -1920,94 +1926,7 @@ static char const GLES3_COLORED_SYMBOL_VSH[] = " \
   } \n\
 ";
 
-static char const SMAA_FINAL_VSH[] = " \
-  #ifdef GL_ES \n\
-    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
-      #define MAXPREC " HIGH_P " \n\
-    #else \n\
-      #define MAXPREC " MEDIUM_P " \n\
-    #endif \n\
-    precision MAXPREC float; \n\
-  #endif \n\
-  attribute vec2 a_pos; \n\
-  attribute vec2 a_tcoord; \n\
-  uniform vec4 u_framebufferMetrics; \n\
-  varying vec2 v_colorTexCoords; \n\
-  varying vec4 v_offset; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
-  { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
-  } \n\
-  void main() \n\
-  { \n\
-    v_colorTexCoords = a_tcoord; \n\
-    v_offset = u_framebufferMetrics.xyxy * vec4(1.0, 0.0, 0.0, 1.0) + a_tcoord.xyxy; \n\
-    gl_Position = vec4(a_pos, 0.0, 1.0); \n\
-  } \n\
-";
-
-static char const GLES3_SMAA_FINAL_VSH[] = " \
-  " SHADER_VERSION " \n\
-  #ifdef GL_ES \n\
-    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
-      #define MAXPREC " HIGH_P " \n\
-    #else \n\
-      #define MAXPREC " MEDIUM_P " \n\
-    #endif \n\
-    precision MAXPREC float; \n\
-  #endif \n\
-  in vec2 a_pos; \n\
-  in vec2 a_tcoord; \n\
-  uniform vec4 u_framebufferMetrics; \n\
-  out vec2 v_colorTexCoords; \n\
-  out vec4 v_offset; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
-  { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
-  } \n\
-  void main() \n\
-  { \n\
-    v_colorTexCoords = a_tcoord; \n\
-    v_offset = u_framebufferMetrics.xyxy * vec4(1.0, 0.0, 0.0, 1.0) + a_tcoord.xyxy; \n\
-    gl_Position = vec4(a_pos, 0.0, 1.0); \n\
-  } \n\
-";
-
-static char const DISCARDED_TEXTURING_FSH[] = " \
+static char const SMAA_EDGES_FSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
       #define MAXPREC " HIGH_P " \n\
@@ -2017,8 +1936,14 @@ static char const DISCARDED_TEXTURING_FSH[] = " \
     precision MAXPREC float; \n\
   #endif \n\
   uniform sampler2D u_colorTex; \n\
-  uniform float u_opacity; \n\
   varying vec2 v_colorTexCoords; \n\
+  varying vec4 v_offset0; \n\
+  varying vec4 v_offset1; \n\
+  varying vec4 v_offset2; \n\
+  #define SMAA_THRESHOLD 0.05 \n\
+  const vec2 kThreshold = vec2(SMAA_THRESHOLD, SMAA_THRESHOLD); \n\
+  #define SMAA_LOCAL_CONTRAST_ADAPTATION_FACTOR 2.0 \n\
+  const vec3 kWeights = vec3(0.2126, 0.7152, 0.0722); \n\
   const float kShapeCoordScalar = 1000.0; \n\
   vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
   { \n\
@@ -2031,15 +1956,29 @@ static char const DISCARDED_TEXTURING_FSH[] = " \
   } \n\
   void main() \n\
   { \n\
-    vec4 finalColor = texture2D(u_colorTex, v_colorTexCoords); \n\
-    finalColor.a *= u_opacity; \n\
-    if (finalColor.a < 0.01) \n\
-      discard; \n\
-    gl_FragColor = finalColor; \n\
+    float L = dot(texture2D(u_colorTex, v_colorTexCoords).rgb, kWeights); \n\
+    float Lleft = dot(texture2D(u_colorTex, v_offset0.xy).rgb, kWeights); \n\
+    float Ltop = dot(texture2D(u_colorTex, v_offset0.zw).rgb, kWeights); \n\
+    vec4 delta; \n\
+    delta.xy = abs(L - vec2(Lleft, Ltop)); \n\
+    vec2 edges = step(kThreshold, delta.xy); \n\
+    if (dot(edges, vec2(1.0, 1.0)) == 0.0) \n\
+        discard; \n\
+    float Lright = dot(texture2D(u_colorTex, v_offset1.xy).rgb, kWeights); \n\
+    float Lbottom  = dot(texture2D(u_colorTex, v_offset1.zw).rgb, kWeights); \n\
+    delta.zw = abs(L - vec2(Lright, Lbottom)); \n\
+    vec2 maxDelta = max(delta.xy, delta.zw); \n\
+    float Lleftleft = dot(texture2D(u_colorTex, v_offset2.xy).rgb, kWeights); \n\
+    float Ltoptop = dot(texture2D(u_colorTex, v_offset2.zw).rgb, kWeights); \n\
+    delta.zw = abs(vec2(Lleft, Ltop) - vec2(Lleftleft, Ltoptop)); \n\
+    maxDelta = max(maxDelta.xy, delta.zw); \n\
+    float finalDelta = max(maxDelta.x, maxDelta.y); \n\
+    edges *= step(finalDelta, SMAA_LOCAL_CONTRAST_ADAPTATION_FACTOR * delta.xy); \n\
+    gl_FragColor = vec4(edges, 0.0, 1.0); \n\
   } \n\
 ";
 
-static char const GLES3_DISCARDED_TEXTURING_FSH[] = " \
+static char const GLES3_SMAA_EDGES_FSH[] = " \
   " SHADER_VERSION " \n\
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -2050,8 +1989,14 @@ static char const GLES3_DISCARDED_TEXTURING_FSH[] = " \
     precision MAXPREC float; \n\
   #endif \n\
   uniform sampler2D u_colorTex; \n\
-  uniform float u_opacity; \n\
   in vec2 v_colorTexCoords; \n\
+  in vec4 v_offset0; \n\
+  in vec4 v_offset1; \n\
+  in vec4 v_offset2; \n\
+  #define SMAA_THRESHOLD 0.05 \n\
+  const vec2 kThreshold = vec2(SMAA_THRESHOLD, SMAA_THRESHOLD); \n\
+  #define SMAA_LOCAL_CONTRAST_ADAPTATION_FACTOR 2.0 \n\
+  const vec3 kWeights = vec3(0.2126, 0.7152, 0.0722); \n\
   const float kShapeCoordScalar = 1000.0; \n\
   vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
   { \n\
@@ -2065,11 +2010,25 @@ static char const GLES3_DISCARDED_TEXTURING_FSH[] = " \
   out vec4 v_FragColor; \n\
   void main() \n\
   { \n\
-    vec4 finalColor = texture(u_colorTex, v_colorTexCoords); \n\
-    finalColor.a *= u_opacity; \n\
-    if (finalColor.a < 0.01) \n\
-      discard; \n\
-    v_FragColor = finalColor; \n\
+    float L = dot(texture(u_colorTex, v_colorTexCoords).rgb, kWeights); \n\
+    float Lleft = dot(texture(u_colorTex, v_offset0.xy).rgb, kWeights); \n\
+    float Ltop = dot(texture(u_colorTex, v_offset0.zw).rgb, kWeights); \n\
+    vec4 delta; \n\
+    delta.xy = abs(L - vec2(Lleft, Ltop)); \n\
+    vec2 edges = step(kThreshold, delta.xy); \n\
+    if (dot(edges, vec2(1.0, 1.0)) == 0.0) \n\
+        discard; \n\
+    float Lright = dot(texture(u_colorTex, v_offset1.xy).rgb, kWeights); \n\
+    float Lbottom  = dot(texture(u_colorTex, v_offset1.zw).rgb, kWeights); \n\
+    delta.zw = abs(L - vec2(Lright, Lbottom)); \n\
+    vec2 maxDelta = max(delta.xy, delta.zw); \n\
+    float Lleftleft = dot(texture(u_colorTex, v_offset2.xy).rgb, kWeights); \n\
+    float Ltoptop = dot(texture(u_colorTex, v_offset2.zw).rgb, kWeights); \n\
+    delta.zw = abs(vec2(Lleft, Ltop) - vec2(Lleftleft, Ltoptop)); \n\
+    maxDelta = max(maxDelta.xy, delta.zw); \n\
+    float finalDelta = max(maxDelta.x, maxDelta.y); \n\
+    edges *= step(finalDelta, SMAA_LOCAL_CONTRAST_ADAPTATION_FACTOR * delta.xy); \n\
+    v_FragColor = vec4(edges, 0.0, 1.0); \n\
   } \n\
 ";
 
@@ -2331,7 +2290,7 @@ static char const GLES3_POSITION_ACCURACY3D_VSH[] = " \
   } \n\
 ";
 
-static char const MASKED_TEXTURING_BILLBOARD_VSH[] = " \
+static char const TRAFFIC_FSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
       #define MAXPREC " HIGH_P " \n\
@@ -2340,48 +2299,47 @@ static char const MASKED_TEXTURING_BILLBOARD_VSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  attribute vec4 a_position; \n\
-  attribute vec2 a_normal; \n\
-  attribute vec2 a_colorTexCoords; \n\
-  attribute vec2 a_maskTexCoords; \n\
-  uniform mat4 modelView; \n\
-  uniform mat4 projection; \n\
-  uniform mat4 pivotTransform; \n\
-  uniform float zScale; \n\
-  varying vec2 v_colorTexCoords; \n\
-  varying vec2 v_maskTexCoords; \n\
+  varying vec2 v_colorTexCoord; \n\
+  varying vec2 v_maskTexCoord; \n\
+  varying float v_halfLength; \n\
+  uniform sampler2D u_colorTex; \n\
+  uniform sampler2D u_maskTex; \n\
+  uniform float u_opacity; \n\
+  uniform float u_outline; \n\
+  uniform vec3 u_lightArrowColor; \n\
+  uniform vec3 u_darkArrowColor; \n\
+  uniform vec3 u_outlineColor; \n\
+  const float kAntialiasingThreshold = 0.92; \n\
+  const float kOutlineThreshold1 = 0.8; \n\
+  const float kOutlineThreshold2 = 0.5; \n\
+  const float kMaskOpacity = 0.7; \n\
   const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
   { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+    const float kFakeColorScalar = 0.0; \n\
+    return color + texture2D(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
+  #else \n\
+    return color; \n\
+  #endif \n\
   } \n\
   void main() \n\
   { \n\
-    vec4 pivot = vec4(a_position.xyz, 1.0) * modelView; \n\
-    vec4 offset = vec4(a_normal, 0.0, 0.0) * projection; \n\
-    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, a_position.w * zScale, offset.xy); \n\
-    v_colorTexCoords = a_colorTexCoords; \n\
-    v_maskTexCoords = a_maskTexCoords; \n\
+    vec4 color = texture2D(u_colorTex, v_colorTexCoord); \n\
+    float alphaCode = color.a; \n\
+    vec4 mask = texture2D(u_maskTex, v_maskTexCoord); \n\
+    color.a = u_opacity * (1.0 - smoothstep(kAntialiasingThreshold, 1.0, abs(v_halfLength))); \n\
+    color.rgb = mix(color.rgb, mask.rgb * mix(u_lightArrowColor, u_darkArrowColor, step(alphaCode, 0.6)), mask.a * kMaskOpacity); \n\
+    if (u_outline > 0.0) \n\
+    { \n\
+      color.rgb = mix(color.rgb, u_outlineColor, step(kOutlineThreshold1, abs(v_halfLength))); \n\
+      color.rgb = mix(color.rgb, u_outlineColor, smoothstep(kOutlineThreshold2, kOutlineThreshold1, abs(v_halfLength))); \n\
+    } \n\
+    gl_FragColor = color; \n\
   } \n\
 ";
 
-static char const GLES3_MASKED_TEXTURING_BILLBOARD_VSH[] = " \
+static char const GLES3_TRAFFIC_FSH[] = " \
   " SHADER_VERSION " \n\
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -2391,44 +2349,44 @@ static char const GLES3_MASKED_TEXTURING_BILLBOARD_VSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  in vec4 a_position; \n\
-  in vec2 a_normal; \n\
-  in vec2 a_colorTexCoords; \n\
-  in vec2 a_maskTexCoords; \n\
-  uniform mat4 modelView; \n\
-  uniform mat4 projection; \n\
-  uniform mat4 pivotTransform; \n\
-  uniform float zScale; \n\
-  out vec2 v_colorTexCoords; \n\
-  out vec2 v_maskTexCoords; \n\
+  in vec2 v_colorTexCoord; \n\
+  in vec2 v_maskTexCoord; \n\
+  in float v_halfLength; \n\
+  uniform sampler2D u_colorTex; \n\
+  uniform sampler2D u_maskTex; \n\
+  uniform float u_opacity; \n\
+  uniform float u_outline; \n\
+  uniform vec3 u_lightArrowColor; \n\
+  uniform vec3 u_darkArrowColor; \n\
+  uniform vec3 u_outlineColor; \n\
+  const float kAntialiasingThreshold = 0.92; \n\
+  const float kOutlineThreshold1 = 0.8; \n\
+  const float kOutlineThreshold2 = 0.5; \n\
+  const float kMaskOpacity = 0.7; \n\
   const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
   { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
+  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+    const float kFakeColorScalar = 0.0; \n\
+    return color + texture(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
+  #else \n\
+    return color; \n\
+  #endif \n\
   } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
-  } \n\
+  out vec4 v_FragColor; \n\
   void main() \n\
   { \n\
-    vec4 pivot = vec4(a_position.xyz, 1.0) * modelView; \n\
-    vec4 offset = vec4(a_normal, 0.0, 0.0) * projection; \n\
-    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, a_position.w * zScale, offset.xy); \n\
-    v_colorTexCoords = a_colorTexCoords; \n\
-    v_maskTexCoords = a_maskTexCoords; \n\
+    vec4 color = texture(u_colorTex, v_colorTexCoord); \n\
+    float alphaCode = color.a; \n\
+    vec4 mask = texture(u_maskTex, v_maskTexCoord); \n\
+    color.a = u_opacity * (1.0 - smoothstep(kAntialiasingThreshold, 1.0, abs(v_halfLength))); \n\
+    color.rgb = mix(color.rgb, mask.rgb * mix(u_lightArrowColor, u_darkArrowColor, step(alphaCode, 0.6)), mask.a * kMaskOpacity); \n\
+    if (u_outline > 0.0) \n\
+    { \n\
+      color.rgb = mix(color.rgb, u_outlineColor, step(kOutlineThreshold1, abs(v_halfLength))); \n\
+      color.rgb = mix(color.rgb, u_outlineColor, smoothstep(kOutlineThreshold2, kOutlineThreshold1, abs(v_halfLength))); \n\
+    } \n\
+    v_FragColor = color; \n\
   } \n\
 ";
 
@@ -2576,6 +2534,125 @@ static char const GLES3_SCREEN_QUAD_VSH[] = " \
   { \n\
     v_colorTexCoords = a_tcoord; \n\
     gl_Position = vec4(a_pos, 0.0, 1.0); \n\
+  } \n\
+";
+
+static char const DASHED_LINE_VSH[] = " \
+  #ifdef GL_ES \n\
+    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
+      #define MAXPREC " HIGH_P " \n\
+    #else \n\
+      #define MAXPREC " MEDIUM_P " \n\
+    #endif \n\
+    precision MAXPREC float; \n\
+  #endif \n\
+  attribute vec3 a_position; \n\
+  attribute vec3 a_normal; \n\
+  attribute vec2 a_colorTexCoord; \n\
+  attribute vec4 a_maskTexCoord; \n\
+  uniform mat4 modelView; \n\
+  uniform mat4 projection; \n\
+  uniform mat4 pivotTransform; \n\
+  varying vec2 v_colorTexCoord; \n\
+  varying vec2 v_maskTexCoord; \n\
+  varying vec2 v_halfLength; \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  { \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
+  } \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  } \n\
+  void main() \n\
+  { \n\
+    vec2 normal = a_normal.xy; \n\
+    float halfWidth = length(normal); \n\
+    vec2 transformedAxisPos = (vec4(a_position.xy, 0.0, 1.0) * modelView).xy; \n\
+    if (halfWidth != 0.0) \n\
+    { \n\
+      transformedAxisPos = calcLineTransformedAxisPos(transformedAxisPos, a_position.xy + normal, \n\
+                                                      modelView, halfWidth); \n\
+    } \n\
+    float uOffset = min(length(vec4(kShapeCoordScalar, 0, 0, 0) * modelView) * a_maskTexCoord.x, 1.0); \n\
+    v_colorTexCoord = a_colorTexCoord; \n\
+    v_maskTexCoord = vec2(a_maskTexCoord.y + uOffset * a_maskTexCoord.z, a_maskTexCoord.w); \n\
+    v_halfLength = vec2(sign(a_normal.z) * halfWidth, abs(a_normal.z)); \n\
+    vec4 pos = vec4(transformedAxisPos, a_position.z, 1.0) * projection; \n\
+    gl_Position = applyPivotTransform(pos, pivotTransform, 0.0); \n\
+  } \n\
+";
+
+static char const GLES3_DASHED_LINE_VSH[] = " \
+  " SHADER_VERSION " \n\
+  #ifdef GL_ES \n\
+    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
+      #define MAXPREC " HIGH_P " \n\
+    #else \n\
+      #define MAXPREC " MEDIUM_P " \n\
+    #endif \n\
+    precision MAXPREC float; \n\
+  #endif \n\
+  in vec3 a_position; \n\
+  in vec3 a_normal; \n\
+  in vec2 a_colorTexCoord; \n\
+  in vec4 a_maskTexCoord; \n\
+  uniform mat4 modelView; \n\
+  uniform mat4 projection; \n\
+  uniform mat4 pivotTransform; \n\
+  out vec2 v_colorTexCoord; \n\
+  out vec2 v_maskTexCoord; \n\
+  out vec2 v_halfLength; \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  { \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
+  } \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  } \n\
+  void main() \n\
+  { \n\
+    vec2 normal = a_normal.xy; \n\
+    float halfWidth = length(normal); \n\
+    vec2 transformedAxisPos = (vec4(a_position.xy, 0.0, 1.0) * modelView).xy; \n\
+    if (halfWidth != 0.0) \n\
+    { \n\
+      transformedAxisPos = calcLineTransformedAxisPos(transformedAxisPos, a_position.xy + normal, \n\
+                                                      modelView, halfWidth); \n\
+    } \n\
+    float uOffset = min(length(vec4(kShapeCoordScalar, 0, 0, 0) * modelView) * a_maskTexCoord.x, 1.0); \n\
+    v_colorTexCoord = a_colorTexCoord; \n\
+    v_maskTexCoord = vec2(a_maskTexCoord.y + uOffset * a_maskTexCoord.z, a_maskTexCoord.w); \n\
+    v_halfLength = vec2(sign(a_normal.z) * halfWidth, abs(a_normal.z)); \n\
+    vec4 pos = vec4(transformedAxisPos, a_position.z, 1.0) * projection; \n\
+    gl_Position = applyPivotTransform(pos, pivotTransform, 0.0); \n\
   } \n\
 ";
 
@@ -2901,7 +2978,7 @@ static char const GLES3_AREA3D_OUTLINE_VSH[] = " \
   } \n\
 ";
 
-static char const COLORED_SYMBOL_BILLBOARD_VSH[] = " \
+static char const HATCHING_AREA_VSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
       #define MAXPREC " HIGH_P " \n\
@@ -2911,18 +2988,18 @@ static char const COLORED_SYMBOL_BILLBOARD_VSH[] = " \
     precision MAXPREC float; \n\
   #endif \n\
   attribute vec3 a_position; \n\
-  attribute vec4 a_normal; \n\
-  attribute vec4 a_colorTexCoords; \n\
+  attribute vec2 a_colorTexCoords; \n\
+  attribute vec2 a_maskTexCoords; \n\
   uniform mat4 modelView; \n\
   uniform mat4 projection; \n\
   uniform mat4 pivotTransform; \n\
-  varying vec4 v_normal; \n\
   #ifdef ENABLE_VTF \n\
   uniform sampler2D u_colorTex; \n\
   varying " LOW_P " vec4 v_color; \n\
   #else \n\
   varying vec2 v_colorTexCoords; \n\
   #endif \n\
+  varying vec2 v_maskTexCoords; \n\
   const float kShapeCoordScalar = 1000.0; \n\
   vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
   { \n\
@@ -2946,19 +3023,18 @@ static char const COLORED_SYMBOL_BILLBOARD_VSH[] = " \
   } \n\
   void main() \n\
   { \n\
-    vec4 pivot = vec4(a_position.xyz, 1.0) * modelView; \n\
-    vec4 offset = vec4(a_normal.xy + a_colorTexCoords.zw, 0.0, 0.0) * projection; \n\
-    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, 0.0, offset.xy); \n\
+    vec4 pos = vec4(a_position, 1) * modelView * projection; \n\
+    gl_Position = applyPivotTransform(pos, pivotTransform, 0.0); \n\
   #ifdef ENABLE_VTF \n\
-    v_color = texture2D(u_colorTex, a_colorTexCoords.xy); \n\
+    v_color = texture2D(u_colorTex, a_colorTexCoords); \n\
   #else \n\
-    v_colorTexCoords = a_colorTexCoords.xy; \n\
+    v_colorTexCoords = a_colorTexCoords; \n\
   #endif \n\
-    v_normal = a_normal; \n\
+    v_maskTexCoords = a_maskTexCoords; \n\
   } \n\
 ";
 
-static char const GLES3_COLORED_SYMBOL_BILLBOARD_VSH[] = " \
+static char const GLES3_HATCHING_AREA_VSH[] = " \
   " SHADER_VERSION " \n\
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -2969,18 +3045,18 @@ static char const GLES3_COLORED_SYMBOL_BILLBOARD_VSH[] = " \
     precision MAXPREC float; \n\
   #endif \n\
   in vec3 a_position; \n\
-  in vec4 a_normal; \n\
-  in vec4 a_colorTexCoords; \n\
+  in vec2 a_colorTexCoords; \n\
+  in vec2 a_maskTexCoords; \n\
   uniform mat4 modelView; \n\
   uniform mat4 projection; \n\
   uniform mat4 pivotTransform; \n\
-  out vec4 v_normal; \n\
   #ifdef ENABLE_VTF \n\
   uniform sampler2D u_colorTex; \n\
   out " LOW_P " vec4 v_color; \n\
   #else \n\
   out vec2 v_colorTexCoords; \n\
   #endif \n\
+  out vec2 v_maskTexCoords; \n\
   const float kShapeCoordScalar = 1000.0; \n\
   vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
   { \n\
@@ -3004,15 +3080,14 @@ static char const GLES3_COLORED_SYMBOL_BILLBOARD_VSH[] = " \
   } \n\
   void main() \n\
   { \n\
-    vec4 pivot = vec4(a_position.xyz, 1.0) * modelView; \n\
-    vec4 offset = vec4(a_normal.xy + a_colorTexCoords.zw, 0.0, 0.0) * projection; \n\
-    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, 0.0, offset.xy); \n\
+    vec4 pos = vec4(a_position, 1) * modelView * projection; \n\
+    gl_Position = applyPivotTransform(pos, pivotTransform, 0.0); \n\
   #ifdef ENABLE_VTF \n\
-    v_color = texture(u_colorTex, a_colorTexCoords.xy); \n\
+    v_color = texture(u_colorTex, a_colorTexCoords); \n\
   #else \n\
-    v_colorTexCoords = a_colorTexCoords.xy; \n\
+    v_colorTexCoords = a_colorTexCoords; \n\
   #endif \n\
-    v_normal = a_normal; \n\
+    v_maskTexCoords = a_maskTexCoords; \n\
   } \n\
 ";
 
@@ -3680,7 +3755,7 @@ static char const GLES3_USER_MARK_BILLBOARD_VSH[] = " \
   } \n\
 ";
 
-static char const TRAFFIC_FSH[] = " \
+static char const MASKED_TEXTURING_BILLBOARD_VSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
       #define MAXPREC " HIGH_P " \n\
@@ -3689,47 +3764,48 @@ static char const TRAFFIC_FSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  varying vec2 v_colorTexCoord; \n\
-  varying vec2 v_maskTexCoord; \n\
-  varying float v_halfLength; \n\
-  uniform sampler2D u_colorTex; \n\
-  uniform sampler2D u_maskTex; \n\
-  uniform float u_opacity; \n\
-  uniform float u_outline; \n\
-  uniform vec3 u_lightArrowColor; \n\
-  uniform vec3 u_darkArrowColor; \n\
-  uniform vec3 u_outlineColor; \n\
-  const float kAntialiasingThreshold = 0.92; \n\
-  const float kOutlineThreshold1 = 0.8; \n\
-  const float kOutlineThreshold2 = 0.5; \n\
-  const float kMaskOpacity = 0.7; \n\
+  attribute vec4 a_position; \n\
+  attribute vec2 a_normal; \n\
+  attribute vec2 a_colorTexCoords; \n\
+  attribute vec2 a_maskTexCoords; \n\
+  uniform mat4 modelView; \n\
+  uniform mat4 projection; \n\
+  uniform mat4 pivotTransform; \n\
+  uniform float zScale; \n\
+  varying vec2 v_colorTexCoords; \n\
+  varying vec2 v_maskTexCoords; \n\
   const float kShapeCoordScalar = 1000.0; \n\
-  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
   { \n\
-  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
-    const float kFakeColorScalar = 0.0; \n\
-    return color + texture2D(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
-  #else \n\
-    return color; \n\
-  #endif \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
+  } \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
   } \n\
   void main() \n\
   { \n\
-    vec4 color = texture2D(u_colorTex, v_colorTexCoord); \n\
-    float alphaCode = color.a; \n\
-    vec4 mask = texture2D(u_maskTex, v_maskTexCoord); \n\
-    color.a = u_opacity * (1.0 - smoothstep(kAntialiasingThreshold, 1.0, abs(v_halfLength))); \n\
-    color.rgb = mix(color.rgb, mask.rgb * mix(u_lightArrowColor, u_darkArrowColor, step(alphaCode, 0.6)), mask.a * kMaskOpacity); \n\
-    if (u_outline > 0.0) \n\
-    { \n\
-      color.rgb = mix(color.rgb, u_outlineColor, step(kOutlineThreshold1, abs(v_halfLength))); \n\
-      color.rgb = mix(color.rgb, u_outlineColor, smoothstep(kOutlineThreshold2, kOutlineThreshold1, abs(v_halfLength))); \n\
-    } \n\
-    gl_FragColor = color; \n\
+    vec4 pivot = vec4(a_position.xyz, 1.0) * modelView; \n\
+    vec4 offset = vec4(a_normal, 0.0, 0.0) * projection; \n\
+    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, a_position.w * zScale, offset.xy); \n\
+    v_colorTexCoords = a_colorTexCoords; \n\
+    v_maskTexCoords = a_maskTexCoords; \n\
   } \n\
 ";
 
-static char const GLES3_TRAFFIC_FSH[] = " \
+static char const GLES3_MASKED_TEXTURING_BILLBOARD_VSH[] = " \
   " SHADER_VERSION " \n\
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -3739,44 +3815,44 @@ static char const GLES3_TRAFFIC_FSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  in vec2 v_colorTexCoord; \n\
-  in vec2 v_maskTexCoord; \n\
-  in float v_halfLength; \n\
-  uniform sampler2D u_colorTex; \n\
-  uniform sampler2D u_maskTex; \n\
-  uniform float u_opacity; \n\
-  uniform float u_outline; \n\
-  uniform vec3 u_lightArrowColor; \n\
-  uniform vec3 u_darkArrowColor; \n\
-  uniform vec3 u_outlineColor; \n\
-  const float kAntialiasingThreshold = 0.92; \n\
-  const float kOutlineThreshold1 = 0.8; \n\
-  const float kOutlineThreshold2 = 0.5; \n\
-  const float kMaskOpacity = 0.7; \n\
+  in vec4 a_position; \n\
+  in vec2 a_normal; \n\
+  in vec2 a_colorTexCoords; \n\
+  in vec2 a_maskTexCoords; \n\
+  uniform mat4 modelView; \n\
+  uniform mat4 projection; \n\
+  uniform mat4 pivotTransform; \n\
+  uniform float zScale; \n\
+  out vec2 v_colorTexCoords; \n\
+  out vec2 v_maskTexCoords; \n\
   const float kShapeCoordScalar = 1000.0; \n\
-  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
   { \n\
-  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
-    const float kFakeColorScalar = 0.0; \n\
-    return color + texture(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
-  #else \n\
-    return color; \n\
-  #endif \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
   } \n\
-  out vec4 v_FragColor; \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  } \n\
   void main() \n\
   { \n\
-    vec4 color = texture(u_colorTex, v_colorTexCoord); \n\
-    float alphaCode = color.a; \n\
-    vec4 mask = texture(u_maskTex, v_maskTexCoord); \n\
-    color.a = u_opacity * (1.0 - smoothstep(kAntialiasingThreshold, 1.0, abs(v_halfLength))); \n\
-    color.rgb = mix(color.rgb, mask.rgb * mix(u_lightArrowColor, u_darkArrowColor, step(alphaCode, 0.6)), mask.a * kMaskOpacity); \n\
-    if (u_outline > 0.0) \n\
-    { \n\
-      color.rgb = mix(color.rgb, u_outlineColor, step(kOutlineThreshold1, abs(v_halfLength))); \n\
-      color.rgb = mix(color.rgb, u_outlineColor, smoothstep(kOutlineThreshold2, kOutlineThreshold1, abs(v_halfLength))); \n\
-    } \n\
-    v_FragColor = color; \n\
+    vec4 pivot = vec4(a_position.xyz, 1.0) * modelView; \n\
+    vec4 offset = vec4(a_normal, 0.0, 0.0) * projection; \n\
+    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, a_position.w * zScale, offset.xy); \n\
+    v_colorTexCoords = a_colorTexCoords; \n\
+    v_maskTexCoords = a_maskTexCoords; \n\
   } \n\
 ";
 
@@ -3938,7 +4014,7 @@ static char const GLES3_ARROW3D_FSH[] = " \
   } \n\
 ";
 
-static char const ARROW3D_OUTLINE_FSH[] = " \
+static char const CIRCLE_VSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
       #define MAXPREC " HIGH_P " \n\
@@ -3947,29 +4023,55 @@ static char const ARROW3D_OUTLINE_FSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  varying float v_intensity; \n\
-  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+  attribute vec3 a_position; \n\
+  attribute vec3 a_normal; \n\
+  attribute vec2 a_colorTexCoords; \n\
+  uniform mat4 modelView; \n\
+  uniform mat4 projection; \n\
+  uniform mat4 pivotTransform; \n\
+  varying vec3 v_radius; \n\
+  #ifdef ENABLE_VTF \n\
   uniform sampler2D u_colorTex; \n\
-  #endif \n\
-  uniform vec4 u_color; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
-  { \n\
-  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
-    const float kFakeColorScalar = 0.0; \n\
-    return color + texture2D(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
+  varying " LOW_P " vec4 v_color; \n\
   #else \n\
-    return color; \n\
+  varying vec2 v_colorTexCoords; \n\
   #endif \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  { \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
+  } \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
   } \n\
   void main() \n\
   { \n\
-    vec4 resColor = vec4(u_color.rgb, u_color.a * smoothstep(0.7, 1.0, v_intensity)); \n\
-    gl_FragColor = samsungGoogleNexusWorkaround(resColor); \n\
+    vec4 p = vec4(a_position, 1) * modelView; \n\
+    vec4 pos = vec4(a_normal.xy, 0, 0) + p; \n\
+    gl_Position = applyPivotTransform(pos * projection, pivotTransform, 0.0); \n\
+  #ifdef ENABLE_VTF \n\
+    v_color = texture2D(u_colorTex, a_colorTexCoords); \n\
+  #else \n\
+    v_colorTexCoords = a_colorTexCoords; \n\
+  #endif \n\
+    v_radius = a_normal; \n\
   } \n\
 ";
 
-static char const GLES3_ARROW3D_OUTLINE_FSH[] = " \
+static char const GLES3_CIRCLE_VSH[] = " \
   " SHADER_VERSION " \n\
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -3979,26 +4081,51 @@ static char const GLES3_ARROW3D_OUTLINE_FSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  in float v_intensity; \n\
-  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
+  in vec3 a_position; \n\
+  in vec3 a_normal; \n\
+  in vec2 a_colorTexCoords; \n\
+  uniform mat4 modelView; \n\
+  uniform mat4 projection; \n\
+  uniform mat4 pivotTransform; \n\
+  out vec3 v_radius; \n\
+  #ifdef ENABLE_VTF \n\
   uniform sampler2D u_colorTex; \n\
-  #endif \n\
-  uniform vec4 u_color; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
-  { \n\
-  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
-    const float kFakeColorScalar = 0.0; \n\
-    return color + texture(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
+  out " LOW_P " vec4 v_color; \n\
   #else \n\
-    return color; \n\
+  out vec2 v_colorTexCoords; \n\
   #endif \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  { \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
   } \n\
-  out vec4 v_FragColor; \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  } \n\
   void main() \n\
   { \n\
-    vec4 resColor = vec4(u_color.rgb, u_color.a * smoothstep(0.7, 1.0, v_intensity)); \n\
-    v_FragColor = samsungGoogleNexusWorkaround(resColor); \n\
+    vec4 p = vec4(a_position, 1) * modelView; \n\
+    vec4 pos = vec4(a_normal.xy, 0, 0) + p; \n\
+    gl_Position = applyPivotTransform(pos * projection, pivotTransform, 0.0); \n\
+  #ifdef ENABLE_VTF \n\
+    v_color = texture(u_colorTex, a_colorTexCoords); \n\
+  #else \n\
+    v_colorTexCoords = a_colorTexCoords; \n\
+  #endif \n\
+    v_radius = a_normal; \n\
   } \n\
 ";
 
@@ -4155,124 +4282,6 @@ static char const GLES3_SOLID_COLOR_FSH[] = " \
   #endif \n\
     finalColor.a *= u_opacity; \n\
     v_FragColor = finalColor; \n\
-  } \n\
-";
-
-static char const SMAA_FINAL_FSH[] = " \
-  #ifdef GL_ES \n\
-    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
-      #define MAXPREC " HIGH_P " \n\
-    #else \n\
-      #define MAXPREC " MEDIUM_P " \n\
-    #endif \n\
-    precision MAXPREC float; \n\
-  #endif \n\
-  uniform sampler2D u_colorTex; \n\
-  uniform sampler2D u_blendingWeightTex; \n\
-  uniform vec4 u_framebufferMetrics; \n\
-  varying vec2 v_colorTexCoords; \n\
-  varying vec4 v_offset; \n\
-  #ifdef GLES3 \n\
-    #define SMAASampleLevelZero(tex, coord) textureLod(tex, coord, 0.0) \n\
-  #else \n\
-    #define SMAASampleLevelZero(tex, coord) texture2D(tex, coord) \n\
-  #endif \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
-  { \n\
-  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
-    const float kFakeColorScalar = 0.0; \n\
-    return color + texture2D(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
-  #else \n\
-    return color; \n\
-  #endif \n\
-  } \n\
-  void main() \n\
-  { \n\
-    vec4 a; \n\
-    a.x = texture2D(u_blendingWeightTex, v_offset.xy).a; // Right \n\
-    a.y = texture2D(u_blendingWeightTex, v_offset.zw).g; // Top \n\
-    a.wz = texture2D(u_blendingWeightTex, v_colorTexCoords).xz; // Bottom / Left \n\
-    if (dot(a, vec4(1.0, 1.0, 1.0, 1.0)) < 1e-5) \n\
-    { \n\
-      gl_FragColor = texture2D(u_colorTex, v_colorTexCoords); \n\
-    } \n\
-    else \n\
-    { \n\
-      vec4 blendingOffset = vec4(0.0, a.y, 0.0, a.w); \n\
-      vec2 blendingWeight = a.yw; \n\
-      if (max(a.x, a.z) > max(a.y, a.w)) \n\
-      { \n\
-        blendingOffset = vec4(a.x, 0.0, a.z, 0.0); \n\
-        blendingWeight = a.xz; \n\
-      } \n\
-      blendingWeight /= dot(blendingWeight, vec2(1.0, 1.0)); \n\
-      vec4 bc = blendingOffset * vec4(u_framebufferMetrics.xy, -u_framebufferMetrics.xy); \n\
-      bc += v_colorTexCoords.xyxy; \n\
-      vec4 color = blendingWeight.x * SMAASampleLevelZero(u_colorTex, bc.xy); \n\
-      color += blendingWeight.y * SMAASampleLevelZero(u_colorTex, bc.zw); \n\
-      gl_FragColor = color; \n\
-    } \n\
-  } \n\
-";
-
-static char const GLES3_SMAA_FINAL_FSH[] = " \
-  " SHADER_VERSION " \n\
-  #ifdef GL_ES \n\
-    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
-      #define MAXPREC " HIGH_P " \n\
-    #else \n\
-      #define MAXPREC " MEDIUM_P " \n\
-    #endif \n\
-    precision MAXPREC float; \n\
-  #endif \n\
-  uniform sampler2D u_colorTex; \n\
-  uniform sampler2D u_blendingWeightTex; \n\
-  uniform vec4 u_framebufferMetrics; \n\
-  in vec2 v_colorTexCoords; \n\
-  in vec4 v_offset; \n\
-  #ifdef GLES3 \n\
-    #define SMAASampleLevelZero(tex, coord) textureLod(tex, coord, 0.0) \n\
-  #else \n\
-    #define SMAASampleLevelZero(tex, coord) texture(tex, coord) \n\
-  #endif \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
-  { \n\
-  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
-    const float kFakeColorScalar = 0.0; \n\
-    return color + texture(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
-  #else \n\
-    return color; \n\
-  #endif \n\
-  } \n\
-  out vec4 v_FragColor; \n\
-  void main() \n\
-  { \n\
-    vec4 a; \n\
-    a.x = texture(u_blendingWeightTex, v_offset.xy).a; // Right \n\
-    a.y = texture(u_blendingWeightTex, v_offset.zw).g; // Top \n\
-    a.wz = texture(u_blendingWeightTex, v_colorTexCoords).xz; // Bottom / Left \n\
-    if (dot(a, vec4(1.0, 1.0, 1.0, 1.0)) < 1e-5) \n\
-    { \n\
-      v_FragColor = texture(u_colorTex, v_colorTexCoords); \n\
-    } \n\
-    else \n\
-    { \n\
-      vec4 blendingOffset = vec4(0.0, a.y, 0.0, a.w); \n\
-      vec2 blendingWeight = a.yw; \n\
-      if (max(a.x, a.z) > max(a.y, a.w)) \n\
-      { \n\
-        blendingOffset = vec4(a.x, 0.0, a.z, 0.0); \n\
-        blendingWeight = a.xz; \n\
-      } \n\
-      blendingWeight /= dot(blendingWeight, vec2(1.0, 1.0)); \n\
-      vec4 bc = blendingOffset * vec4(u_framebufferMetrics.xy, -u_framebufferMetrics.xy); \n\
-      bc += v_colorTexCoords.xyxy; \n\
-      vec4 color = blendingWeight.x * SMAASampleLevelZero(u_colorTex, bc.xy); \n\
-      color += blendingWeight.y * SMAASampleLevelZero(u_colorTex, bc.zw); \n\
-      v_FragColor = color; \n\
-    } \n\
   } \n\
 ";
 
@@ -4460,7 +4469,7 @@ static char const GLES3_CIRCLE_FSH[] = " \
   } \n\
 ";
 
-static char const RULER_VSH[] = " \
+static char const SMAA_FINAL_VSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
       #define MAXPREC " HIGH_P " \n\
@@ -4469,13 +4478,11 @@ static char const RULER_VSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  attribute vec2 a_position; \n\
-  attribute vec2 a_normal; \n\
-  attribute vec2 a_colorTexCoords; \n\
-  uniform vec2 u_position; \n\
-  uniform float u_length; \n\
-  uniform mat4 projection; \n\
+  attribute vec2 a_pos; \n\
+  attribute vec2 a_tcoord; \n\
+  uniform vec4 u_framebufferMetrics; \n\
   varying vec2 v_colorTexCoords; \n\
+  varying vec4 v_offset; \n\
   const float kShapeCoordScalar = 1000.0; \n\
   vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
   { \n\
@@ -4499,12 +4506,13 @@ static char const RULER_VSH[] = " \
   } \n\
   void main() \n\
   { \n\
-    gl_Position = vec4(u_position + a_position + u_length * a_normal, 0, 1) * projection; \n\
-    v_colorTexCoords = a_colorTexCoords; \n\
+    v_colorTexCoords = a_tcoord; \n\
+    v_offset = u_framebufferMetrics.xyxy * vec4(1.0, 0.0, 0.0, 1.0) + a_tcoord.xyxy; \n\
+    gl_Position = vec4(a_pos, 0.0, 1.0); \n\
   } \n\
 ";
 
-static char const GLES3_RULER_VSH[] = " \
+static char const GLES3_SMAA_FINAL_VSH[] = " \
   " SHADER_VERSION " \n\
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -4514,13 +4522,11 @@ static char const GLES3_RULER_VSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  in vec2 a_position; \n\
-  in vec2 a_normal; \n\
-  in vec2 a_colorTexCoords; \n\
-  uniform vec2 u_position; \n\
-  uniform float u_length; \n\
-  uniform mat4 projection; \n\
+  in vec2 a_pos; \n\
+  in vec2 a_tcoord; \n\
+  uniform vec4 u_framebufferMetrics; \n\
   out vec2 v_colorTexCoords; \n\
+  out vec4 v_offset; \n\
   const float kShapeCoordScalar = 1000.0; \n\
   vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
   { \n\
@@ -4544,8 +4550,9 @@ static char const GLES3_RULER_VSH[] = " \
   } \n\
   void main() \n\
   { \n\
-    gl_Position = vec4(u_position + a_position + u_length * a_normal, 0, 1) * projection; \n\
-    v_colorTexCoords = a_colorTexCoords; \n\
+    v_colorTexCoords = a_tcoord; \n\
+    v_offset = u_framebufferMetrics.xyxy * vec4(1.0, 0.0, 0.0, 1.0) + a_tcoord.xyxy; \n\
+    gl_Position = vec4(a_pos, 0.0, 1.0); \n\
   } \n\
 ";
 
@@ -4872,139 +4879,6 @@ static char const GLES3_AREA_VSH[] = " \
   } \n\
 ";
 
-static char const TEXT_OUTLINED_BILLBOARD_VSH[] = " \
-  #ifdef GL_ES \n\
-    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
-      #define MAXPREC " HIGH_P " \n\
-    #else \n\
-      #define MAXPREC " MEDIUM_P " \n\
-    #endif \n\
-    precision MAXPREC float; \n\
-  #endif \n\
-  attribute vec4 a_position; \n\
-  attribute vec2 a_normal; \n\
-  attribute vec2 a_colorTexCoord; \n\
-  attribute vec2 a_outlineColorTexCoord; \n\
-  attribute vec2 a_maskTexCoord; \n\
-  uniform mat4 modelView; \n\
-  uniform mat4 projection; \n\
-  uniform mat4 pivotTransform; \n\
-  uniform float u_isOutlinePass; \n\
-  uniform float zScale; \n\
-  #ifdef ENABLE_VTF \n\
-  uniform sampler2D u_colorTex; \n\
-  varying " LOW_P " vec4 v_color; \n\
-  #else \n\
-  varying vec2 v_colorTexCoord; \n\
-  #endif \n\
-  varying vec2 v_maskTexCoord; \n\
-  const float kBaseDepthShift = -10.0; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
-  { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
-  } \n\
-  void main() \n\
-  { \n\
-    float isOutline = step(0.5, u_isOutlinePass); \n\
-    float depthShift = kBaseDepthShift * isOutline; \n\
-   \n\
-    vec4 pivot = (vec4(a_position.xyz, 1.0) + vec4(0.0, 0.0, depthShift, 0.0)) * modelView; \n\
-    vec4 offset = vec4(a_normal, 0.0, 0.0) * projection; \n\
-    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, a_position.w * zScale, offset.xy); \n\
-    vec2 colorTexCoord = mix(a_colorTexCoord, a_outlineColorTexCoord, isOutline); \n\
-  #ifdef ENABLE_VTF \n\
-    v_color = texture2D(u_colorTex, colorTexCoord); \n\
-  #else \n\
-    v_colorTexCoord = colorTexCoord; \n\
-  #endif \n\
-    v_maskTexCoord = a_maskTexCoord; \n\
-  } \n\
-";
-
-static char const GLES3_TEXT_OUTLINED_BILLBOARD_VSH[] = " \
-  " SHADER_VERSION " \n\
-  #ifdef GL_ES \n\
-    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
-      #define MAXPREC " HIGH_P " \n\
-    #else \n\
-      #define MAXPREC " MEDIUM_P " \n\
-    #endif \n\
-    precision MAXPREC float; \n\
-  #endif \n\
-  in vec4 a_position; \n\
-  in vec2 a_normal; \n\
-  in vec2 a_colorTexCoord; \n\
-  in vec2 a_outlineColorTexCoord; \n\
-  in vec2 a_maskTexCoord; \n\
-  uniform mat4 modelView; \n\
-  uniform mat4 projection; \n\
-  uniform mat4 pivotTransform; \n\
-  uniform float u_isOutlinePass; \n\
-  uniform float zScale; \n\
-  #ifdef ENABLE_VTF \n\
-  uniform sampler2D u_colorTex; \n\
-  out " LOW_P " vec4 v_color; \n\
-  #else \n\
-  out vec2 v_colorTexCoord; \n\
-  #endif \n\
-  out vec2 v_maskTexCoord; \n\
-  const float kBaseDepthShift = -10.0; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
-  { \n\
-    vec4 transformedPivot = pivot; \n\
-    float w = transformedPivot.w; \n\
-    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
-    transformedPivot.z *= transformedPivot.w / w; \n\
-    return transformedPivot; \n\
-  } \n\
-  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
-  { \n\
-    float logicZ = pivot.z / pivot.w; \n\
-    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
-    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
-    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
-  } \n\
-  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
-  { \n\
-    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
-    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
-  } \n\
-  void main() \n\
-  { \n\
-    float isOutline = step(0.5, u_isOutlinePass); \n\
-    float depthShift = kBaseDepthShift * isOutline; \n\
-   \n\
-    vec4 pivot = (vec4(a_position.xyz, 1.0) + vec4(0.0, 0.0, depthShift, 0.0)) * modelView; \n\
-    vec4 offset = vec4(a_normal, 0.0, 0.0) * projection; \n\
-    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, a_position.w * zScale, offset.xy); \n\
-    vec2 colorTexCoord = mix(a_colorTexCoord, a_outlineColorTexCoord, isOutline); \n\
-  #ifdef ENABLE_VTF \n\
-    v_color = texture(u_colorTex, colorTexCoord); \n\
-  #else \n\
-    v_colorTexCoord = colorTexCoord; \n\
-  #endif \n\
-    v_maskTexCoord = a_maskTexCoord; \n\
-  } \n\
-";
-
 static char const TEXTURING_FSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -5064,6 +4938,95 @@ static char const GLES3_TEXTURING_FSH[] = " \
     vec4 finalColor = texture(u_colorTex, v_colorTexCoords); \n\
     finalColor.a *= u_opacity; \n\
     v_FragColor = finalColor; \n\
+  } \n\
+";
+
+static char const RULER_VSH[] = " \
+  #ifdef GL_ES \n\
+    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
+      #define MAXPREC " HIGH_P " \n\
+    #else \n\
+      #define MAXPREC " MEDIUM_P " \n\
+    #endif \n\
+    precision MAXPREC float; \n\
+  #endif \n\
+  attribute vec2 a_position; \n\
+  attribute vec2 a_normal; \n\
+  attribute vec2 a_colorTexCoords; \n\
+  uniform vec2 u_position; \n\
+  uniform float u_length; \n\
+  uniform mat4 projection; \n\
+  varying vec2 v_colorTexCoords; \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  { \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
+  } \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  } \n\
+  void main() \n\
+  { \n\
+    gl_Position = vec4(u_position + a_position + u_length * a_normal, 0, 1) * projection; \n\
+    v_colorTexCoords = a_colorTexCoords; \n\
+  } \n\
+";
+
+static char const GLES3_RULER_VSH[] = " \
+  " SHADER_VERSION " \n\
+  #ifdef GL_ES \n\
+    #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
+      #define MAXPREC " HIGH_P " \n\
+    #else \n\
+      #define MAXPREC " MEDIUM_P " \n\
+    #endif \n\
+    precision MAXPREC float; \n\
+  #endif \n\
+  in vec2 a_position; \n\
+  in vec2 a_normal; \n\
+  in vec2 a_colorTexCoords; \n\
+  uniform vec2 u_position; \n\
+  uniform float u_length; \n\
+  uniform mat4 projection; \n\
+  out vec2 v_colorTexCoords; \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  { \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
+  } \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  } \n\
+  void main() \n\
+  { \n\
+    gl_Position = vec4(u_position + a_position + u_length * a_normal, 0, 1) * projection; \n\
+    v_colorTexCoords = a_colorTexCoords; \n\
   } \n\
 ";
 
@@ -5691,7 +5654,7 @@ static char const GLES3_DEBUG_RECT_FSH[] = " \
   } \n\
 ";
 
-static char const TEXT_FSH[] = " \
+static char const TEXT_OUTLINED_BILLBOARD_VSH[] = " \
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
       #define MAXPREC " HIGH_P " \n\
@@ -5700,45 +5663,64 @@ static char const TEXT_FSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  varying vec2 v_maskTexCoord; \n\
+  attribute vec4 a_position; \n\
+  attribute vec2 a_normal; \n\
+  attribute vec2 a_colorTexCoord; \n\
+  attribute vec2 a_outlineColorTexCoord; \n\
+  attribute vec2 a_maskTexCoord; \n\
+  uniform mat4 modelView; \n\
+  uniform mat4 projection; \n\
+  uniform mat4 pivotTransform; \n\
+  uniform float u_isOutlinePass; \n\
+  uniform float zScale; \n\
   #ifdef ENABLE_VTF \n\
+  uniform sampler2D u_colorTex; \n\
   varying " LOW_P " vec4 v_color; \n\
   #else \n\
   varying vec2 v_colorTexCoord; \n\
-  uniform sampler2D u_colorTex; \n\
   #endif \n\
-  uniform sampler2D u_maskTex; \n\
-  uniform float u_opacity; \n\
-  uniform vec2 u_contrastGamma; \n\
+  varying vec2 v_maskTexCoord; \n\
+  const float kBaseDepthShift = -10.0; \n\
   const float kShapeCoordScalar = 1000.0; \n\
-  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
   { \n\
-  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
-    const float kFakeColorScalar = 0.0; \n\
-    return color + texture2D(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
-  #else \n\
-    return color; \n\
-  #endif \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
+  } \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
   } \n\
   void main() \n\
   { \n\
+    float isOutline = step(0.5, u_isOutlinePass); \n\
+    float depthShift = kBaseDepthShift * isOutline; \n\
+   \n\
+    vec4 pivot = (vec4(a_position.xyz, 1.0) + vec4(0.0, 0.0, depthShift, 0.0)) * modelView; \n\
+    vec4 offset = vec4(a_normal, 0.0, 0.0) * projection; \n\
+    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, a_position.w * zScale, offset.xy); \n\
+    vec2 colorTexCoord = mix(a_colorTexCoord, a_outlineColorTexCoord, isOutline); \n\
   #ifdef ENABLE_VTF \n\
-    " LOW_P " vec4 glyphColor = v_color; \n\
+    v_color = texture2D(u_colorTex, colorTexCoord); \n\
   #else \n\
-    " LOW_P " vec4 glyphColor = texture2D(u_colorTex, v_colorTexCoord); \n\
+    v_colorTexCoord = colorTexCoord; \n\
   #endif \n\
-  #ifdef GLES3 \n\
-    float dist = texture2D(u_maskTex, v_maskTexCoord).r; \n\
-  #else \n\
-    float dist = texture2D(u_maskTex, v_maskTexCoord).a; \n\
-  #endif \n\
-    float alpha = smoothstep(u_contrastGamma.x - u_contrastGamma.y, u_contrastGamma.x + u_contrastGamma.y, dist) * u_opacity; \n\
-    glyphColor.a *= alpha; \n\
-    gl_FragColor = glyphColor; \n\
+    v_maskTexCoord = a_maskTexCoord; \n\
   } \n\
 ";
 
-static char const GLES3_TEXT_FSH[] = " \
+static char const GLES3_TEXT_OUTLINED_BILLBOARD_VSH[] = " \
   " SHADER_VERSION " \n\
   #ifdef GL_ES \n\
     #ifdef GL_FRAGMENT_PRECISION_HIGH \n\
@@ -5748,42 +5730,60 @@ static char const GLES3_TEXT_FSH[] = " \
     #endif \n\
     precision MAXPREC float; \n\
   #endif \n\
-  in vec2 v_maskTexCoord; \n\
+  in vec4 a_position; \n\
+  in vec2 a_normal; \n\
+  in vec2 a_colorTexCoord; \n\
+  in vec2 a_outlineColorTexCoord; \n\
+  in vec2 a_maskTexCoord; \n\
+  uniform mat4 modelView; \n\
+  uniform mat4 projection; \n\
+  uniform mat4 pivotTransform; \n\
+  uniform float u_isOutlinePass; \n\
+  uniform float zScale; \n\
   #ifdef ENABLE_VTF \n\
-  in " LOW_P " vec4 v_color; \n\
-  #else \n\
-  in vec2 v_colorTexCoord; \n\
   uniform sampler2D u_colorTex; \n\
-  #endif \n\
-  uniform sampler2D u_maskTex; \n\
-  uniform float u_opacity; \n\
-  uniform vec2 u_contrastGamma; \n\
-  const float kShapeCoordScalar = 1000.0; \n\
-  vec4 samsungGoogleNexusWorkaround(vec4 color) \n\
-  { \n\
-  #ifdef SAMSUNG_GOOGLE_NEXUS \n\
-    const float kFakeColorScalar = 0.0; \n\
-    return color + texture(u_colorTex, vec2(0.0, 0.0)) * kFakeColorScalar; \n\
+  out " LOW_P " vec4 v_color; \n\
   #else \n\
-    return color; \n\
+  out vec2 v_colorTexCoord; \n\
   #endif \n\
+  out vec2 v_maskTexCoord; \n\
+  const float kBaseDepthShift = -10.0; \n\
+  const float kShapeCoordScalar = 1000.0; \n\
+  vec4 applyPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ) \n\
+  { \n\
+    vec4 transformedPivot = pivot; \n\
+    float w = transformedPivot.w; \n\
+    transformedPivot.xyw = (pivotTransform * vec4(transformedPivot.xy, pivotRealZ, w)).xyw; \n\
+    transformedPivot.z *= transformedPivot.w / w; \n\
+    return transformedPivot; \n\
   } \n\
-  out vec4 v_FragColor; \n\
+  vec4 applyBillboardPivotTransform(vec4 pivot, mat4 pivotTransform, float pivotRealZ, vec2 offset) \n\
+  { \n\
+    float logicZ = pivot.z / pivot.w; \n\
+    vec4 transformedPivot = pivotTransform * vec4(pivot.xy, pivotRealZ, pivot.w); \n\
+    vec4 scale = pivotTransform * vec4(1.0, -1.0, 0.0, 1.0); \n\
+    return vec4(transformedPivot.xy / transformedPivot.w, logicZ, 1.0) + vec4(offset / scale.w * scale.x, 0.0, 0.0); \n\
+  } \n\
+  vec2 calcLineTransformedAxisPos(vec2 originalAxisPos, vec2 shiftedPos, mat4 modelView, float halfWidth) \n\
+  { \n\
+    vec2 p = (vec4(shiftedPos, 0.0, 1.0) * modelView).xy; \n\
+    return originalAxisPos + normalize(p - originalAxisPos) * halfWidth; \n\
+  } \n\
   void main() \n\
   { \n\
+    float isOutline = step(0.5, u_isOutlinePass); \n\
+    float depthShift = kBaseDepthShift * isOutline; \n\
+   \n\
+    vec4 pivot = (vec4(a_position.xyz, 1.0) + vec4(0.0, 0.0, depthShift, 0.0)) * modelView; \n\
+    vec4 offset = vec4(a_normal, 0.0, 0.0) * projection; \n\
+    gl_Position = applyBillboardPivotTransform(pivot * projection, pivotTransform, a_position.w * zScale, offset.xy); \n\
+    vec2 colorTexCoord = mix(a_colorTexCoord, a_outlineColorTexCoord, isOutline); \n\
   #ifdef ENABLE_VTF \n\
-    " LOW_P " vec4 glyphColor = v_color; \n\
+    v_color = texture(u_colorTex, colorTexCoord); \n\
   #else \n\
-    " LOW_P " vec4 glyphColor = texture(u_colorTex, v_colorTexCoord); \n\
+    v_colorTexCoord = colorTexCoord; \n\
   #endif \n\
-  #ifdef GLES3 \n\
-    float dist = texture(u_maskTex, v_maskTexCoord).r; \n\
-  #else \n\
-    float dist = texture(u_maskTex, v_maskTexCoord).a; \n\
-  #endif \n\
-    float alpha = smoothstep(u_contrastGamma.x - u_contrastGamma.y, u_contrastGamma.x + u_contrastGamma.y, dist) * u_opacity; \n\
-    glyphColor.a *= alpha; \n\
-    v_FragColor = glyphColor; \n\
+    v_maskTexCoord = a_maskTexCoord; \n\
   } \n\
 ";
 
@@ -6098,67 +6098,67 @@ static char const GLES3_SMAA_BLENDING_WEIGHT_VSH[] = " \
   } \n\
 ";
 
-#define SMAA_EDGES_VSH_INDEX 39
-#define TEXT_OUTLINED_VSH_INDEX 47
-#define CIRCLE_POINT_VSH_INDEX 11
-#define TEXT_VSH_INDEX 44
-#define AREA3D_VSH_INDEX 1
-#define MY_POSITION_VSH_INDEX 27
-#define CIRCLE_VSH_INDEX 9
-#define DASHED_LINE_VSH_INDEX 16
-#define TEXT_OUTLINED_GUI_VSH_INDEX 49
-#define TEXTURING_GUI_VSH_INDEX 54
-#define TRAFFIC_LINE_VSH_INDEX 58
-#define HATCHING_AREA_VSH_INDEX 21
-#define ROUTE_VSH_INDEX 31
-#define ARROW3D_SHADOW_VSH_INDEX 7
-#define SMAA_EDGES_FSH_INDEX 38
-#define DEBUG_RECT_VSH_INDEX 18
-#define TEXTURING_VSH_INDEX 51
-#define COLORED_SYMBOL_VSH_INDEX 13
-#define SMAA_FINAL_VSH_INDEX 41
-#define DISCARDED_TEXTURING_FSH_INDEX 19
-#define TEXTURING_BILLBOARD_VSH_INDEX 53
-#define ARROW3D_SHADOW_FSH_INDEX 6
-#define POSITION_ACCURACY3D_VSH_INDEX 29
-#define MASKED_TEXTURING_BILLBOARD_VSH_INDEX 26
-#define MASKED_TEXTURING_FSH_INDEX 24
-#define SCREEN_QUAD_VSH_INDEX 35
-#define ROUTE_ARROW_VSH_INDEX 32
-#define ROUTE_DASH_FSH_INDEX 33
-#define AREA3D_OUTLINE_VSH_INDEX 2
-#define COLORED_SYMBOL_BILLBOARD_VSH_INDEX 14
-#define TRAFFIC_VSH_INDEX 56
-#define MASKED_TEXTURING_VSH_INDEX 25
-#define PATH_SYMBOL_VSH_INDEX 28
-#define USER_MARK_VSH_INDEX 59
-#define TEXT_BILLBOARD_VSH_INDEX 45
-#define USER_MARK_BILLBOARD_VSH_INDEX 60
-#define TRAFFIC_FSH_INDEX 55
-#define LINE_FSH_INDEX 22
-#define ARROW3D_FSH_INDEX 3
-#define ARROW3D_OUTLINE_FSH_INDEX 5
-#define CIRCLE_POINT_FSH_INDEX 10
-#define SOLID_COLOR_FSH_INDEX 42
-#define SMAA_FINAL_FSH_INDEX 40
-#define COLORED_SYMBOL_FSH_INDEX 12
-#define CIRCLE_FSH_INDEX 8
-#define RULER_VSH_INDEX 34
-#define LINE_VSH_INDEX 23
-#define ARROW3D_VSH_INDEX 4
-#define AREA_VSH_INDEX 0
-#define TEXT_OUTLINED_BILLBOARD_VSH_INDEX 48
-#define TEXTURING_FSH_INDEX 50
-#define SMAA_BLENDING_WEIGHT_FSH_INDEX 36
-#define HATCHING_AREA_FSH_INDEX 20
-#define ROUTE_FSH_INDEX 30
-#define TEXT_FIXED_FSH_INDEX 46
-#define DEBUG_RECT_FSH_INDEX 17
-#define TEXT_FSH_INDEX 43
-#define TRAFFIC_LINE_FSH_INDEX 57
-#define DASHED_LINE_FSH_INDEX 15
-#define TEXTURING3D_FSH_INDEX 52
-#define SMAA_BLENDING_WEIGHT_VSH_INDEX 37
+#define TEXT_OUTLINED_VSH_INDEX 13
+#define CIRCLE_POINT_VSH_INDEX 8
+#define TEXT_VSH_INDEX 38
+#define AREA3D_VSH_INDEX 18
+#define MY_POSITION_VSH_INDEX 39
+#define ARROW3D_OUTLINE_FSH_INDEX 2
+#define SMAA_FINAL_FSH_INDEX 11
+#define TEXT_OUTLINED_GUI_VSH_INDEX 14
+#define TEXTURING_GUI_VSH_INDEX 9
+#define TRAFFIC_LINE_VSH_INDEX 52
+#define TEXT_FSH_INDEX 57
+#define SMAA_EDGES_VSH_INDEX 1
+#define ROUTE_VSH_INDEX 60
+#define ARROW3D_SHADOW_VSH_INDEX 17
+#define DISCARDED_TEXTURING_FSH_INDEX 35
+#define DEBUG_RECT_VSH_INDEX 32
+#define TEXTURING_VSH_INDEX 45
+#define COLORED_SYMBOL_BILLBOARD_VSH_INDEX 29
+#define COLORED_SYMBOL_VSH_INDEX 26
+#define SMAA_EDGES_FSH_INDEX 25
+#define TEXTURING_BILLBOARD_VSH_INDEX 36
+#define ARROW3D_SHADOW_FSH_INDEX 10
+#define POSITION_ACCURACY3D_VSH_INDEX 59
+#define TRAFFIC_FSH_INDEX 19
+#define MASKED_TEXTURING_FSH_INDEX 40
+#define SCREEN_QUAD_VSH_INDEX 6
+#define DASHED_LINE_VSH_INDEX 47
+#define ROUTE_ARROW_VSH_INDEX 33
+#define ROUTE_DASH_FSH_INDEX 42
+#define AREA3D_OUTLINE_VSH_INDEX 4
+#define HATCHING_AREA_VSH_INDEX 16
+#define TRAFFIC_VSH_INDEX 12
+#define MASKED_TEXTURING_VSH_INDEX 58
+#define PATH_SYMBOL_VSH_INDEX 15
+#define USER_MARK_VSH_INDEX 27
+#define TEXT_BILLBOARD_VSH_INDEX 44
+#define USER_MARK_BILLBOARD_VSH_INDEX 22
+#define MASKED_TEXTURING_BILLBOARD_VSH_INDEX 5
+#define LINE_FSH_INDEX 31
+#define ARROW3D_FSH_INDEX 48
+#define CIRCLE_VSH_INDEX 24
+#define CIRCLE_POINT_FSH_INDEX 28
+#define SOLID_COLOR_FSH_INDEX 20
+#define COLORED_SYMBOL_FSH_INDEX 7
+#define CIRCLE_FSH_INDEX 0
+#define SMAA_FINAL_VSH_INDEX 21
+#define LINE_VSH_INDEX 54
+#define ARROW3D_VSH_INDEX 43
+#define AREA_VSH_INDEX 41
+#define TEXTURING_FSH_INDEX 49
+#define RULER_VSH_INDEX 30
+#define SMAA_BLENDING_WEIGHT_FSH_INDEX 56
+#define HATCHING_AREA_FSH_INDEX 23
+#define ROUTE_FSH_INDEX 37
+#define TEXT_FIXED_FSH_INDEX 53
+#define DEBUG_RECT_FSH_INDEX 55
+#define TEXT_OUTLINED_BILLBOARD_VSH_INDEX 3
+#define TRAFFIC_LINE_FSH_INDEX 46
+#define DASHED_LINE_FSH_INDEX 50
+#define TEXTURING3D_FSH_INDEX 51
+#define SMAA_BLENDING_WEIGHT_VSH_INDEX 34
 
 int const TEXTURING_PROGRAM = 0;
 int const MASKED_TEXTURING_PROGRAM = 1;
@@ -6317,83 +6317,83 @@ ShadersEnum GetVertexShaders(dp::ApiVersion apiVersion)
   ShadersEnum vertexEnum;
   if (apiVersion == dp::ApiVersion::OpenGLES2)
   {
-    vertexEnum.push_back(std::make_pair("AREA_VSH", std::string(AREA_VSH)));
-    vertexEnum.push_back(std::make_pair("AREA3D_VSH", std::string(AREA3D_VSH)));
-    vertexEnum.push_back(std::make_pair("AREA3D_OUTLINE_VSH", std::string(AREA3D_OUTLINE_VSH)));
-    vertexEnum.push_back(std::make_pair("ARROW3D_VSH", std::string(ARROW3D_VSH)));
-    vertexEnum.push_back(std::make_pair("ARROW3D_SHADOW_VSH", std::string(ARROW3D_SHADOW_VSH)));
-    vertexEnum.push_back(std::make_pair("CIRCLE_VSH", std::string(CIRCLE_VSH)));
-    vertexEnum.push_back(std::make_pair("CIRCLE_POINT_VSH", std::string(CIRCLE_POINT_VSH)));
-    vertexEnum.push_back(std::make_pair("COLORED_SYMBOL_VSH", std::string(COLORED_SYMBOL_VSH)));
-    vertexEnum.push_back(std::make_pair("COLORED_SYMBOL_BILLBOARD_VSH", std::string(COLORED_SYMBOL_BILLBOARD_VSH)));
-    vertexEnum.push_back(std::make_pair("DASHED_LINE_VSH", std::string(DASHED_LINE_VSH)));
-    vertexEnum.push_back(std::make_pair("DEBUG_RECT_VSH", std::string(DEBUG_RECT_VSH)));
-    vertexEnum.push_back(std::make_pair("HATCHING_AREA_VSH", std::string(HATCHING_AREA_VSH)));
-    vertexEnum.push_back(std::make_pair("LINE_VSH", std::string(LINE_VSH)));
-    vertexEnum.push_back(std::make_pair("MASKED_TEXTURING_VSH", std::string(MASKED_TEXTURING_VSH)));
-    vertexEnum.push_back(std::make_pair("MASKED_TEXTURING_BILLBOARD_VSH", std::string(MASKED_TEXTURING_BILLBOARD_VSH)));
-    vertexEnum.push_back(std::make_pair("MY_POSITION_VSH", std::string(MY_POSITION_VSH)));
-    vertexEnum.push_back(std::make_pair("PATH_SYMBOL_VSH", std::string(PATH_SYMBOL_VSH)));
-    vertexEnum.push_back(std::make_pair("POSITION_ACCURACY3D_VSH", std::string(POSITION_ACCURACY3D_VSH)));
-    vertexEnum.push_back(std::make_pair("ROUTE_VSH", std::string(ROUTE_VSH)));
-    vertexEnum.push_back(std::make_pair("ROUTE_ARROW_VSH", std::string(ROUTE_ARROW_VSH)));
-    vertexEnum.push_back(std::make_pair("RULER_VSH", std::string(RULER_VSH)));
-    vertexEnum.push_back(std::make_pair("SCREEN_QUAD_VSH", std::string(SCREEN_QUAD_VSH)));
-    vertexEnum.push_back(std::make_pair("SMAA_BLENDING_WEIGHT_VSH", std::string(SMAA_BLENDING_WEIGHT_VSH)));
     vertexEnum.push_back(std::make_pair("SMAA_EDGES_VSH", std::string(SMAA_EDGES_VSH)));
-    vertexEnum.push_back(std::make_pair("SMAA_FINAL_VSH", std::string(SMAA_FINAL_VSH)));
-    vertexEnum.push_back(std::make_pair("TEXT_VSH", std::string(TEXT_VSH)));
-    vertexEnum.push_back(std::make_pair("TEXT_BILLBOARD_VSH", std::string(TEXT_BILLBOARD_VSH)));
-    vertexEnum.push_back(std::make_pair("TEXT_OUTLINED_VSH", std::string(TEXT_OUTLINED_VSH)));
     vertexEnum.push_back(std::make_pair("TEXT_OUTLINED_BILLBOARD_VSH", std::string(TEXT_OUTLINED_BILLBOARD_VSH)));
-    vertexEnum.push_back(std::make_pair("TEXT_OUTLINED_GUI_VSH", std::string(TEXT_OUTLINED_GUI_VSH)));
-    vertexEnum.push_back(std::make_pair("TEXTURING_VSH", std::string(TEXTURING_VSH)));
-    vertexEnum.push_back(std::make_pair("TEXTURING_BILLBOARD_VSH", std::string(TEXTURING_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("AREA3D_OUTLINE_VSH", std::string(AREA3D_OUTLINE_VSH)));
+    vertexEnum.push_back(std::make_pair("MASKED_TEXTURING_BILLBOARD_VSH", std::string(MASKED_TEXTURING_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("SCREEN_QUAD_VSH", std::string(SCREEN_QUAD_VSH)));
+    vertexEnum.push_back(std::make_pair("CIRCLE_POINT_VSH", std::string(CIRCLE_POINT_VSH)));
     vertexEnum.push_back(std::make_pair("TEXTURING_GUI_VSH", std::string(TEXTURING_GUI_VSH)));
     vertexEnum.push_back(std::make_pair("TRAFFIC_VSH", std::string(TRAFFIC_VSH)));
-    vertexEnum.push_back(std::make_pair("TRAFFIC_LINE_VSH", std::string(TRAFFIC_LINE_VSH)));
-    vertexEnum.push_back(std::make_pair("USER_MARK_VSH", std::string(USER_MARK_VSH)));
+    vertexEnum.push_back(std::make_pair("TEXT_OUTLINED_VSH", std::string(TEXT_OUTLINED_VSH)));
+    vertexEnum.push_back(std::make_pair("TEXT_OUTLINED_GUI_VSH", std::string(TEXT_OUTLINED_GUI_VSH)));
+    vertexEnum.push_back(std::make_pair("PATH_SYMBOL_VSH", std::string(PATH_SYMBOL_VSH)));
+    vertexEnum.push_back(std::make_pair("HATCHING_AREA_VSH", std::string(HATCHING_AREA_VSH)));
+    vertexEnum.push_back(std::make_pair("ARROW3D_SHADOW_VSH", std::string(ARROW3D_SHADOW_VSH)));
+    vertexEnum.push_back(std::make_pair("AREA3D_VSH", std::string(AREA3D_VSH)));
+    vertexEnum.push_back(std::make_pair("SMAA_FINAL_VSH", std::string(SMAA_FINAL_VSH)));
     vertexEnum.push_back(std::make_pair("USER_MARK_BILLBOARD_VSH", std::string(USER_MARK_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("CIRCLE_VSH", std::string(CIRCLE_VSH)));
+    vertexEnum.push_back(std::make_pair("COLORED_SYMBOL_VSH", std::string(COLORED_SYMBOL_VSH)));
+    vertexEnum.push_back(std::make_pair("USER_MARK_VSH", std::string(USER_MARK_VSH)));
+    vertexEnum.push_back(std::make_pair("COLORED_SYMBOL_BILLBOARD_VSH", std::string(COLORED_SYMBOL_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("RULER_VSH", std::string(RULER_VSH)));
+    vertexEnum.push_back(std::make_pair("DEBUG_RECT_VSH", std::string(DEBUG_RECT_VSH)));
+    vertexEnum.push_back(std::make_pair("ROUTE_ARROW_VSH", std::string(ROUTE_ARROW_VSH)));
+    vertexEnum.push_back(std::make_pair("SMAA_BLENDING_WEIGHT_VSH", std::string(SMAA_BLENDING_WEIGHT_VSH)));
+    vertexEnum.push_back(std::make_pair("TEXTURING_BILLBOARD_VSH", std::string(TEXTURING_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("TEXT_VSH", std::string(TEXT_VSH)));
+    vertexEnum.push_back(std::make_pair("MY_POSITION_VSH", std::string(MY_POSITION_VSH)));
+    vertexEnum.push_back(std::make_pair("AREA_VSH", std::string(AREA_VSH)));
+    vertexEnum.push_back(std::make_pair("ARROW3D_VSH", std::string(ARROW3D_VSH)));
+    vertexEnum.push_back(std::make_pair("TEXT_BILLBOARD_VSH", std::string(TEXT_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("TEXTURING_VSH", std::string(TEXTURING_VSH)));
+    vertexEnum.push_back(std::make_pair("DASHED_LINE_VSH", std::string(DASHED_LINE_VSH)));
+    vertexEnum.push_back(std::make_pair("TRAFFIC_LINE_VSH", std::string(TRAFFIC_LINE_VSH)));
+    vertexEnum.push_back(std::make_pair("LINE_VSH", std::string(LINE_VSH)));
+    vertexEnum.push_back(std::make_pair("MASKED_TEXTURING_VSH", std::string(MASKED_TEXTURING_VSH)));
+    vertexEnum.push_back(std::make_pair("POSITION_ACCURACY3D_VSH", std::string(POSITION_ACCURACY3D_VSH)));
+    vertexEnum.push_back(std::make_pair("ROUTE_VSH", std::string(ROUTE_VSH)));
   }
   else if (apiVersion == dp::ApiVersion::OpenGLES3)
   {
-    vertexEnum.push_back(std::make_pair("GLES3_AREA_VSH", std::string(GLES3_AREA_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_AREA3D_VSH", std::string(GLES3_AREA3D_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_AREA3D_OUTLINE_VSH", std::string(GLES3_AREA3D_OUTLINE_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_ARROW3D_VSH", std::string(GLES3_ARROW3D_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_ARROW3D_SHADOW_VSH", std::string(GLES3_ARROW3D_SHADOW_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_CIRCLE_VSH", std::string(GLES3_CIRCLE_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_CIRCLE_POINT_VSH", std::string(GLES3_CIRCLE_POINT_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_COLORED_SYMBOL_VSH", std::string(GLES3_COLORED_SYMBOL_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_COLORED_SYMBOL_BILLBOARD_VSH", std::string(GLES3_COLORED_SYMBOL_BILLBOARD_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_DASHED_LINE_VSH", std::string(GLES3_DASHED_LINE_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_DEBUG_RECT_VSH", std::string(GLES3_DEBUG_RECT_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_HATCHING_AREA_VSH", std::string(GLES3_HATCHING_AREA_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_LINE_VSH", std::string(GLES3_LINE_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_MASKED_TEXTURING_VSH", std::string(GLES3_MASKED_TEXTURING_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_MASKED_TEXTURING_BILLBOARD_VSH", std::string(GLES3_MASKED_TEXTURING_BILLBOARD_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_MY_POSITION_VSH", std::string(GLES3_MY_POSITION_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_PATH_SYMBOL_VSH", std::string(GLES3_PATH_SYMBOL_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_POSITION_ACCURACY3D_VSH", std::string(GLES3_POSITION_ACCURACY3D_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_ROUTE_VSH", std::string(GLES3_ROUTE_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_ROUTE_ARROW_VSH", std::string(GLES3_ROUTE_ARROW_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_RULER_VSH", std::string(GLES3_RULER_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_SCREEN_QUAD_VSH", std::string(GLES3_SCREEN_QUAD_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_SMAA_BLENDING_WEIGHT_VSH", std::string(GLES3_SMAA_BLENDING_WEIGHT_VSH)));
     vertexEnum.push_back(std::make_pair("GLES3_SMAA_EDGES_VSH", std::string(GLES3_SMAA_EDGES_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_SMAA_FINAL_VSH", std::string(GLES3_SMAA_FINAL_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_TEXT_VSH", std::string(GLES3_TEXT_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_TEXT_BILLBOARD_VSH", std::string(GLES3_TEXT_BILLBOARD_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_TEXT_OUTLINED_VSH", std::string(GLES3_TEXT_OUTLINED_VSH)));
     vertexEnum.push_back(std::make_pair("GLES3_TEXT_OUTLINED_BILLBOARD_VSH", std::string(GLES3_TEXT_OUTLINED_BILLBOARD_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_TEXT_OUTLINED_GUI_VSH", std::string(GLES3_TEXT_OUTLINED_GUI_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_TEXTURING_VSH", std::string(GLES3_TEXTURING_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_TEXTURING_BILLBOARD_VSH", std::string(GLES3_TEXTURING_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_AREA3D_OUTLINE_VSH", std::string(GLES3_AREA3D_OUTLINE_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_MASKED_TEXTURING_BILLBOARD_VSH", std::string(GLES3_MASKED_TEXTURING_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_SCREEN_QUAD_VSH", std::string(GLES3_SCREEN_QUAD_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_CIRCLE_POINT_VSH", std::string(GLES3_CIRCLE_POINT_VSH)));
     vertexEnum.push_back(std::make_pair("GLES3_TEXTURING_GUI_VSH", std::string(GLES3_TEXTURING_GUI_VSH)));
     vertexEnum.push_back(std::make_pair("GLES3_TRAFFIC_VSH", std::string(GLES3_TRAFFIC_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_TRAFFIC_LINE_VSH", std::string(GLES3_TRAFFIC_LINE_VSH)));
-    vertexEnum.push_back(std::make_pair("GLES3_USER_MARK_VSH", std::string(GLES3_USER_MARK_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_TEXT_OUTLINED_VSH", std::string(GLES3_TEXT_OUTLINED_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_TEXT_OUTLINED_GUI_VSH", std::string(GLES3_TEXT_OUTLINED_GUI_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_PATH_SYMBOL_VSH", std::string(GLES3_PATH_SYMBOL_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_HATCHING_AREA_VSH", std::string(GLES3_HATCHING_AREA_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_ARROW3D_SHADOW_VSH", std::string(GLES3_ARROW3D_SHADOW_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_AREA3D_VSH", std::string(GLES3_AREA3D_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_SMAA_FINAL_VSH", std::string(GLES3_SMAA_FINAL_VSH)));
     vertexEnum.push_back(std::make_pair("GLES3_USER_MARK_BILLBOARD_VSH", std::string(GLES3_USER_MARK_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_CIRCLE_VSH", std::string(GLES3_CIRCLE_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_COLORED_SYMBOL_VSH", std::string(GLES3_COLORED_SYMBOL_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_USER_MARK_VSH", std::string(GLES3_USER_MARK_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_COLORED_SYMBOL_BILLBOARD_VSH", std::string(GLES3_COLORED_SYMBOL_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_RULER_VSH", std::string(GLES3_RULER_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_DEBUG_RECT_VSH", std::string(GLES3_DEBUG_RECT_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_ROUTE_ARROW_VSH", std::string(GLES3_ROUTE_ARROW_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_SMAA_BLENDING_WEIGHT_VSH", std::string(GLES3_SMAA_BLENDING_WEIGHT_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_TEXTURING_BILLBOARD_VSH", std::string(GLES3_TEXTURING_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_TEXT_VSH", std::string(GLES3_TEXT_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_MY_POSITION_VSH", std::string(GLES3_MY_POSITION_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_AREA_VSH", std::string(GLES3_AREA_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_ARROW3D_VSH", std::string(GLES3_ARROW3D_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_TEXT_BILLBOARD_VSH", std::string(GLES3_TEXT_BILLBOARD_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_TEXTURING_VSH", std::string(GLES3_TEXTURING_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_DASHED_LINE_VSH", std::string(GLES3_DASHED_LINE_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_TRAFFIC_LINE_VSH", std::string(GLES3_TRAFFIC_LINE_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_LINE_VSH", std::string(GLES3_LINE_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_MASKED_TEXTURING_VSH", std::string(GLES3_MASKED_TEXTURING_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_POSITION_ACCURACY3D_VSH", std::string(GLES3_POSITION_ACCURACY3D_VSH)));
+    vertexEnum.push_back(std::make_pair("GLES3_ROUTE_VSH", std::string(GLES3_ROUTE_VSH)));
   }
   return vertexEnum;
 }
@@ -6402,57 +6402,57 @@ ShadersEnum GetFragmentShaders(dp::ApiVersion apiVersion)
   ShadersEnum fragmentEnum;
   if (apiVersion == dp::ApiVersion::OpenGLES2)
   {
-    fragmentEnum.push_back(std::make_pair("ARROW3D_FSH", std::string(ARROW3D_FSH)));
-    fragmentEnum.push_back(std::make_pair("ARROW3D_OUTLINE_FSH", std::string(ARROW3D_OUTLINE_FSH)));
-    fragmentEnum.push_back(std::make_pair("ARROW3D_SHADOW_FSH", std::string(ARROW3D_SHADOW_FSH)));
     fragmentEnum.push_back(std::make_pair("CIRCLE_FSH", std::string(CIRCLE_FSH)));
-    fragmentEnum.push_back(std::make_pair("CIRCLE_POINT_FSH", std::string(CIRCLE_POINT_FSH)));
+    fragmentEnum.push_back(std::make_pair("ARROW3D_OUTLINE_FSH", std::string(ARROW3D_OUTLINE_FSH)));
     fragmentEnum.push_back(std::make_pair("COLORED_SYMBOL_FSH", std::string(COLORED_SYMBOL_FSH)));
-    fragmentEnum.push_back(std::make_pair("DASHED_LINE_FSH", std::string(DASHED_LINE_FSH)));
-    fragmentEnum.push_back(std::make_pair("DEBUG_RECT_FSH", std::string(DEBUG_RECT_FSH)));
-    fragmentEnum.push_back(std::make_pair("DISCARDED_TEXTURING_FSH", std::string(DISCARDED_TEXTURING_FSH)));
-    fragmentEnum.push_back(std::make_pair("HATCHING_AREA_FSH", std::string(HATCHING_AREA_FSH)));
-    fragmentEnum.push_back(std::make_pair("LINE_FSH", std::string(LINE_FSH)));
-    fragmentEnum.push_back(std::make_pair("MASKED_TEXTURING_FSH", std::string(MASKED_TEXTURING_FSH)));
-    fragmentEnum.push_back(std::make_pair("ROUTE_FSH", std::string(ROUTE_FSH)));
-    fragmentEnum.push_back(std::make_pair("ROUTE_DASH_FSH", std::string(ROUTE_DASH_FSH)));
-    fragmentEnum.push_back(std::make_pair("SMAA_BLENDING_WEIGHT_FSH", std::string(SMAA_BLENDING_WEIGHT_FSH)));
-    fragmentEnum.push_back(std::make_pair("SMAA_EDGES_FSH", std::string(SMAA_EDGES_FSH)));
+    fragmentEnum.push_back(std::make_pair("ARROW3D_SHADOW_FSH", std::string(ARROW3D_SHADOW_FSH)));
     fragmentEnum.push_back(std::make_pair("SMAA_FINAL_FSH", std::string(SMAA_FINAL_FSH)));
-    fragmentEnum.push_back(std::make_pair("SOLID_COLOR_FSH", std::string(SOLID_COLOR_FSH)));
-    fragmentEnum.push_back(std::make_pair("TEXT_FSH", std::string(TEXT_FSH)));
-    fragmentEnum.push_back(std::make_pair("TEXT_FIXED_FSH", std::string(TEXT_FIXED_FSH)));
-    fragmentEnum.push_back(std::make_pair("TEXTURING_FSH", std::string(TEXTURING_FSH)));
-    fragmentEnum.push_back(std::make_pair("TEXTURING3D_FSH", std::string(TEXTURING3D_FSH)));
     fragmentEnum.push_back(std::make_pair("TRAFFIC_FSH", std::string(TRAFFIC_FSH)));
+    fragmentEnum.push_back(std::make_pair("SOLID_COLOR_FSH", std::string(SOLID_COLOR_FSH)));
+    fragmentEnum.push_back(std::make_pair("HATCHING_AREA_FSH", std::string(HATCHING_AREA_FSH)));
+    fragmentEnum.push_back(std::make_pair("SMAA_EDGES_FSH", std::string(SMAA_EDGES_FSH)));
+    fragmentEnum.push_back(std::make_pair("CIRCLE_POINT_FSH", std::string(CIRCLE_POINT_FSH)));
+    fragmentEnum.push_back(std::make_pair("LINE_FSH", std::string(LINE_FSH)));
+    fragmentEnum.push_back(std::make_pair("DISCARDED_TEXTURING_FSH", std::string(DISCARDED_TEXTURING_FSH)));
+    fragmentEnum.push_back(std::make_pair("ROUTE_FSH", std::string(ROUTE_FSH)));
+    fragmentEnum.push_back(std::make_pair("MASKED_TEXTURING_FSH", std::string(MASKED_TEXTURING_FSH)));
+    fragmentEnum.push_back(std::make_pair("ROUTE_DASH_FSH", std::string(ROUTE_DASH_FSH)));
     fragmentEnum.push_back(std::make_pair("TRAFFIC_LINE_FSH", std::string(TRAFFIC_LINE_FSH)));
+    fragmentEnum.push_back(std::make_pair("ARROW3D_FSH", std::string(ARROW3D_FSH)));
+    fragmentEnum.push_back(std::make_pair("TEXTURING_FSH", std::string(TEXTURING_FSH)));
+    fragmentEnum.push_back(std::make_pair("DASHED_LINE_FSH", std::string(DASHED_LINE_FSH)));
+    fragmentEnum.push_back(std::make_pair("TEXTURING3D_FSH", std::string(TEXTURING3D_FSH)));
+    fragmentEnum.push_back(std::make_pair("TEXT_FIXED_FSH", std::string(TEXT_FIXED_FSH)));
+    fragmentEnum.push_back(std::make_pair("DEBUG_RECT_FSH", std::string(DEBUG_RECT_FSH)));
+    fragmentEnum.push_back(std::make_pair("SMAA_BLENDING_WEIGHT_FSH", std::string(SMAA_BLENDING_WEIGHT_FSH)));
+    fragmentEnum.push_back(std::make_pair("TEXT_FSH", std::string(TEXT_FSH)));
   }
   else if (apiVersion == dp::ApiVersion::OpenGLES3)
   {
-    fragmentEnum.push_back(std::make_pair("GLES3_ARROW3D_FSH", std::string(GLES3_ARROW3D_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_ARROW3D_OUTLINE_FSH", std::string(GLES3_ARROW3D_OUTLINE_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_ARROW3D_SHADOW_FSH", std::string(GLES3_ARROW3D_SHADOW_FSH)));
     fragmentEnum.push_back(std::make_pair("GLES3_CIRCLE_FSH", std::string(GLES3_CIRCLE_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_CIRCLE_POINT_FSH", std::string(GLES3_CIRCLE_POINT_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_ARROW3D_OUTLINE_FSH", std::string(GLES3_ARROW3D_OUTLINE_FSH)));
     fragmentEnum.push_back(std::make_pair("GLES3_COLORED_SYMBOL_FSH", std::string(GLES3_COLORED_SYMBOL_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_DASHED_LINE_FSH", std::string(GLES3_DASHED_LINE_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_DEBUG_RECT_FSH", std::string(GLES3_DEBUG_RECT_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_DISCARDED_TEXTURING_FSH", std::string(GLES3_DISCARDED_TEXTURING_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_HATCHING_AREA_FSH", std::string(GLES3_HATCHING_AREA_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_LINE_FSH", std::string(GLES3_LINE_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_MASKED_TEXTURING_FSH", std::string(GLES3_MASKED_TEXTURING_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_ROUTE_FSH", std::string(GLES3_ROUTE_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_ROUTE_DASH_FSH", std::string(GLES3_ROUTE_DASH_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_SMAA_BLENDING_WEIGHT_FSH", std::string(GLES3_SMAA_BLENDING_WEIGHT_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_SMAA_EDGES_FSH", std::string(GLES3_SMAA_EDGES_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_ARROW3D_SHADOW_FSH", std::string(GLES3_ARROW3D_SHADOW_FSH)));
     fragmentEnum.push_back(std::make_pair("GLES3_SMAA_FINAL_FSH", std::string(GLES3_SMAA_FINAL_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_SOLID_COLOR_FSH", std::string(GLES3_SOLID_COLOR_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_TEXT_FSH", std::string(GLES3_TEXT_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_TEXT_FIXED_FSH", std::string(GLES3_TEXT_FIXED_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_TEXTURING_FSH", std::string(GLES3_TEXTURING_FSH)));
-    fragmentEnum.push_back(std::make_pair("GLES3_TEXTURING3D_FSH", std::string(GLES3_TEXTURING3D_FSH)));
     fragmentEnum.push_back(std::make_pair("GLES3_TRAFFIC_FSH", std::string(GLES3_TRAFFIC_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_SOLID_COLOR_FSH", std::string(GLES3_SOLID_COLOR_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_HATCHING_AREA_FSH", std::string(GLES3_HATCHING_AREA_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_SMAA_EDGES_FSH", std::string(GLES3_SMAA_EDGES_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_CIRCLE_POINT_FSH", std::string(GLES3_CIRCLE_POINT_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_LINE_FSH", std::string(GLES3_LINE_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_DISCARDED_TEXTURING_FSH", std::string(GLES3_DISCARDED_TEXTURING_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_ROUTE_FSH", std::string(GLES3_ROUTE_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_MASKED_TEXTURING_FSH", std::string(GLES3_MASKED_TEXTURING_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_ROUTE_DASH_FSH", std::string(GLES3_ROUTE_DASH_FSH)));
     fragmentEnum.push_back(std::make_pair("GLES3_TRAFFIC_LINE_FSH", std::string(GLES3_TRAFFIC_LINE_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_ARROW3D_FSH", std::string(GLES3_ARROW3D_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_TEXTURING_FSH", std::string(GLES3_TEXTURING_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_DASHED_LINE_FSH", std::string(GLES3_DASHED_LINE_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_TEXTURING3D_FSH", std::string(GLES3_TEXTURING3D_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_TEXT_FIXED_FSH", std::string(GLES3_TEXT_FIXED_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_DEBUG_RECT_FSH", std::string(GLES3_DEBUG_RECT_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_SMAA_BLENDING_WEIGHT_FSH", std::string(GLES3_SMAA_BLENDING_WEIGHT_FSH)));
+    fragmentEnum.push_back(std::make_pair("GLES3_TEXT_FSH", std::string(GLES3_TEXT_FSH)));
   }
   return fragmentEnum;
 }

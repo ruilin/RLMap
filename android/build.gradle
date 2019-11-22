@@ -100,7 +100,7 @@ def gitCommitCount = Integer.parseInt('git rev-list HEAD --count'.execute([], pr
 
 
 project.ext.versionCodes = ['armeabi-v7a': 1, 'x86': 2]
-project.ext.appId = 'com.muyu.seeker.map'
+project.ext.appId = 'com.ruilin.rlmap'
 
 crashlytics {
   enableNdk true
